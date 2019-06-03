@@ -5,28 +5,31 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.remote.CapabilityType;
+
+import java.util.logging.Level;
 
 public class SharedDriver {
 
 	public SharedDriver() {
 
+		String headless = System.getProperty("headless", "false");
+		String webdriver = System.getProperty("browser", "chrome");
 		ChromeOptions options = new ChromeOptions();
 
-		//Add headless option
-		String headless = System.getProperty("headless", "false");
 		if(headless.equals("true")) options.addArguments("headless");
 		options.setExperimentalOption("useAutomationExtension", false);
 		util.printCurrentThread();
 
 		if (DriverFactory.getDriver() == null) {
-			String webdriver = System.getProperty("browser", "chrome");
 			switch(webdriver) {
 				case "firefox":
 					WebDriverManager.firefoxdriver().setup();
 					DriverFactory.addDriver(new FirefoxDriver());
 					break;
 				case "chrome":
-					//Permite guardar el log del chromeDriver
 					System.setProperty(ChromeDriverService.CHROME_DRIVER_LOG_PROPERTY, System.getProperty("user.dir") + "/target/chromedriver.log");
 					WebDriverManager.chromedriver().setup();
 					DriverFactory.addDriver(new ChromeDriver(options));
