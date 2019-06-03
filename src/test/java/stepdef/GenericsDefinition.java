@@ -1,9 +1,15 @@
 package stepdef;
 
+import com.neovisionaries.ws.client.WebSocketException;
 import cucumber.api.java.en.Given;
+import cucumber.api.java.en.When;
+import driver.BuilderMessages;
+import driver.ChromeDevTools;
 import driver.SharedDriver;
 import pageobject.EscritorioComercialPO;
 import pageobject.PaginaInicioPO;
+
+import java.io.IOException;
 
 public class GenericsDefinition {
 
@@ -21,6 +27,11 @@ public class GenericsDefinition {
         paginaInicioPO.get();
         paginaInicioPO.iniciarSesion(usuario, "Banco01").get();
         escritorioComercialPO.buscarPorRut("188640583");
+    }
+
+    @When("Se pierde la conexion de internet")
+    public void se_pierde_la_conexion_de_internet() throws InterruptedException, WebSocketException, IOException {
+        ChromeDevTools.sendWSMessage(BuilderMessages.buildNetworkEmulationOffline());
     }
 
 

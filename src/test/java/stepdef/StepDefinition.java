@@ -37,9 +37,6 @@ public class StepDefinition {
 
 
 
-	@When("Se pierde la conexion de internet")
-	public void se_pierde_la_conexion_de_internet() throws InterruptedException, WebSocketException, IOException {
-		ChromeDevTools.sendWSMessage(BuilderMessages.buildNetworkEmulationOffline());
-	}
+
 
 }
