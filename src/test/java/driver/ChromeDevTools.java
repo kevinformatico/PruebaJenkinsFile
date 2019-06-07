@@ -4,7 +4,6 @@ import com.neovisionaries.ws.client.WebSocketAdapter;
 import com.neovisionaries.ws.client.WebSocketException;
 import com.neovisionaries.ws.client.WebSocketFactory;
 import com.neovisionaries.ws.client.WebSocket;
-import com.sun.media.jfxmedia.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -158,14 +157,6 @@ public class ChromeDevTools {
         ws.sendText(message);
         synchronized (waitCoordinator) {
             waitCoordinator.wait(3*1000);
-        }
-    }
-
-    private void waitFor(long time){
-        try {
-            Thread.sleep(time);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 

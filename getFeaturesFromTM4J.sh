@@ -19,3 +19,5 @@ curl -u $USER:$PASSWORD $JIRA_URL/jira/rest/atm/1.0/automation/testcases?tql="te
 echo "Unzipping feature files"
 unzip $BUILD_DIR/$TARGET_PATH/$ZIP_FILE -d $BUILD_DIR/$TARGET_PATH
 echo "Finished"
+
+

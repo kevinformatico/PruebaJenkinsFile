@@ -1,7 +1,10 @@
 package driver;
 
 import cucumber.api.Scenario;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class util {
     public static void printCurrentThread(){
@@ -17,7 +20,6 @@ public class util {
         try {
             Thread.sleep(segundos*1000);
         }catch (InterruptedException e){
-            System.out.println("error de Thread.sleep");
             System.out.println(e.getMessage());
         }
     }
@@ -31,6 +33,7 @@ public class util {
         }
         return isVisible;
     }
+
 
 
     public static boolean isVisible(WebElement webElement){
@@ -47,5 +50,29 @@ public class util {
         while (util.isVisible(By.id("loading-bar"))) {
             util.waitFor(1);
         }
+    }
+
+    public static void waitUntilElementIsPresent(WebDriverWait wait, WebElement webElement){
+        wait.until(ExpectedConditions.visibilityOf(webElement));
+    }
+
+    public static void waitUntilElementIsPresent(WebElement webElement, int timeOutSec){
+        new WebDriverWait(DriverFactory.getDriver(), timeOutSec).until(ExpectedConditions.visibilityOf(webElement));
+    }
+
+    public static void waitUntilElementIsPresent(WebElement webElement){
+        new WebDriverWait(DriverFactory.getDriver(), 5).until(ExpectedConditions.visibilityOf(webElement));
+    }
+
+    public static void sleep(int timeOutSec){
+        try {
+            Thread.sleep(timeOutSec*1000);
+        }catch (InterruptedException e){
+            e.getMessage();
+        }
+    }
+
+    public static String elimininarTildes(String cadena){
+        return StringUtils.stripAccents(cadena);
     }
 }

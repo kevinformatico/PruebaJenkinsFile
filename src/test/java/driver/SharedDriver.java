@@ -1,6 +1,7 @@
 package driver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -13,8 +14,8 @@ import java.util.logging.Level;
 
 public class SharedDriver {
 
-	public SharedDriver() {
 
+	public SharedDriver() {
 		String headless = System.getProperty("headless", "false");
 		String webdriver = System.getProperty("browser", "chrome");
 		ChromeOptions options = new ChromeOptions();

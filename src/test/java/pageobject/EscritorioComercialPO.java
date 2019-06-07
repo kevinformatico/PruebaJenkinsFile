@@ -29,6 +29,7 @@ public class EscritorioComercialPO extends LoadableComponent<EscritorioComercial
     }
 
     public void buscarPorRut(String rut){
+        util.waitUntilElementIsPresent(inputRut);
         inputRut.sendKeys(rut);
         searchButton.click();
     }
