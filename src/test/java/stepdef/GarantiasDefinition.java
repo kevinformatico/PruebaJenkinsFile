@@ -2,9 +2,7 @@ package stepdef;
 
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import driver.DriverFactory;
 import driver.SharedDriver;
-import driver.util;
 import io.cucumber.datatable.DataTable;
 import pageobject.DetalleGarantiasPO;
 import pageobject.EscritorioComercialPO;

@@ -1,15 +1,12 @@
 package pageobject;
 
 import driver.DriverFactory;
-import driver.SharedDriver;
-import driver.util;
+import Generics.util;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.util.concurrent.TimeUnit;
 
 public class PaginaInicioPO extends LoadableComponent<PaginaInicioPO> {
 

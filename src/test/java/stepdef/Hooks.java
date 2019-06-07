@@ -4,7 +4,7 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.AfterStep;
 import cucumber.api.java.Before;
-import driver.util;
+import Generics.util;
 import org.openqa.selenium.WebDriverException;
 
 public class Hooks {

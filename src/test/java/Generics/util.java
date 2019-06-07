@@ -1,6 +1,7 @@
-package driver;
+package Generics;
 
 import cucumber.api.Scenario;
+import driver.DriverFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -12,7 +13,7 @@ public class util {
     }
 
     public static void takeAndEmbedScreenshot(Scenario scenario){
-        byte[] screenshot = ((TakesScreenshot)DriverFactory.getDriver()).getScreenshotAs(OutputType.BYTES);
+        byte[] screenshot = ((TakesScreenshot) DriverFactory.getDriver()).getScreenshotAs(OutputType.BYTES);
         scenario.embed(screenshot, "image/png");
     }
 
