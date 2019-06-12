@@ -1,13 +1,13 @@
 package stepdef;
 
+import cl.bancochile.qa.pcpageobjects.DetalleGarantiasPO;
+import cl.bancochile.qa.pcpageobjects.EscritorioComercialPO;
+import cl.bancochile.qa.pcpageobjects.PaginaInicioPO;
+import cl.bancochile.qa.pcpageobjects.Vista360ResumenPersonaPO;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import driver.SharedDriver;
 import io.cucumber.datatable.DataTable;
-import pageobject.DetalleGarantiasPO;
-import pageobject.EscritorioComercialPO;
-import pageobject.PaginaInicioPO;
-import pageobject.Vista360ResumenPersonaPO;
+import org.openqa.selenium.WebDriver;
 
 public class GarantiasDefinition {
 
@@ -16,7 +16,7 @@ public class GarantiasDefinition {
     Vista360ResumenPersonaPO vista360ResumenPersonaPO;
     DetalleGarantiasPO detalleGarantiasPO;
 
-    public GarantiasDefinition(SharedDriver driver, DetalleGarantiasPO detalleGarantiasPO,Vista360ResumenPersonaPO vista360ResumenPersonaPO, PaginaInicioPO paginaInicioPO, EscritorioComercialPO escritorioComercialPO){
+    public GarantiasDefinition(WebDriver driver, DetalleGarantiasPO detalleGarantiasPO, Vista360ResumenPersonaPO vista360ResumenPersonaPO, PaginaInicioPO paginaInicioPO, EscritorioComercialPO escritorioComercialPO){
         this.paginaInicioPO=paginaInicioPO;
         this.detalleGarantiasPO=detalleGarantiasPO;
         this.vista360ResumenPersonaPO=vista360ResumenPersonaPO;

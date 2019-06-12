@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriverException;
 public class Hooks {
 
     public Scenario scenario;
+
     @Before
     public void beforeHooks(Scenario scenario){
         this.scenario=scenario;
