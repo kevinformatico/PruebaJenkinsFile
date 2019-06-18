@@ -1,9 +1,6 @@
 package stepdef;
 
-import Generics.ConexionDB;
-import Generics.ManejadorTablaFrontEnd;
-import Generics.util;
-import com.google.common.base.Verify;
+import Generics.*;
 import com.neovisionaries.ws.client.WebSocketException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -15,14 +12,13 @@ import driver.SharedDriver;
 import io.cucumber.datatable.DataTable;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import pageobjects.*;
-import Generics.ResultSetConverter;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GenericsDefinition {
@@ -33,8 +29,10 @@ public class GenericsDefinition {
     Vista360ResumenPersonaPO vista360ResumenPersonaPO;
     AsideGarantiasEmpresaPO asideGarantiasEmpresaPO;
     Vista360ResumenEmpresaPO vista360ResumenEmpresaPO;
+    ArrayList<byte[]> screenshotList;
     ConexionDB conexionDB = new ConexionDB();
     public GenericsDefinition(SharedDriver driver,
+                              ArrayList<byte[]> screenshotList,
                               PaginaInicioPO paginaInicioPO,
                               EscritorioComercialPO escritorioComercialPO,
                               DetalleGarantiasPO detalleGarantiasPO,
@@ -42,6 +40,7 @@ public class GenericsDefinition {
                               AsideGarantiasEmpresaPO asideGarantiasEmpresaPO,
                               Vista360ResumenEmpresaPO vista360ResumenEmpresaPO)
     {
+      this.screenshotList=screenshotList;
       this.paginaInicioPO= paginaInicioPO;
       this.escritorioComercialPO= escritorioComercialPO;
       this.detalleGarantiasPO=detalleGarantiasPO;
@@ -105,12 +104,13 @@ public class GenericsDefinition {
     public void el_sistema_muestra_el_mensaje_string(String mensaje){
         detalleGarantiasPO.esperarAQueCargueLaPagina();
         DriverFactory.getDriver().findElement(By.xpath("//h5[contains(text(),'"+mensaje+"')]"));
+        byte[] screenshotByte = ((TakesScreenshot) DriverFactory.getDriver()).getScreenshotAs(OutputType.BYTES);
+        screenshotList.add(screenshotByte);
     }
 
     @Then("el nombre del tab indica {string}")
     public void el_nombre_del_tab_indica_string(String mensaje){
         detalleGarantiasPO.esperarAQueCargueLaPagina();
-        System.out.println(mensaje);
         DriverFactory.getDriver().findElement(By.xpath("//a[contains(text(),'"+mensaje+"')]"));
     }
 
