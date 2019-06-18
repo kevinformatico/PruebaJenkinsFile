@@ -1,5 +1,7 @@
 package Generics;
 
+import oracle.ucp.jdbc.oracle.OracleDriverConnectionFactoryAdapter;
+
 import java.sql.*;
 
 public class ConexionDB {

@@ -9,8 +9,10 @@ import org.openqa.selenium.support.FindBy;
 public class DetalleGarantiasPO extends BasePage {
 
     @FindBy(xpath = "//table[@class='table tabla-interactiva']")
-    private
-    WebElement tabla;
+    private WebElement tabla;
+
+    @FindBy(xpath = "//a[contains(text(),'Por constituir')]")
+    private WebElement tabPorConstituir;
 
     public DetalleGarantiasPO() {
         super(DriverFactory.getDriver());
@@ -37,5 +39,13 @@ public class DetalleGarantiasPO extends BasePage {
         return tabla;
     }
 
+    public void clickTabPorConstituir(){
+        waitUntilEscritorioComercialIsLoaded();
+        tabPorConstituir.click();
+    }
+
+    public void esperarAQueCargueLaPagina(){
+        waitUntilEscritorioComercialIsLoaded();
+    }
 }
 

@@ -11,6 +11,10 @@ public class Hooks {
 
     public Scenario scenario;
 
+    public Hooks(){
+
+    }
+
     @Before
     public void beforeHooks(Scenario scenario){
         this.scenario=scenario;
