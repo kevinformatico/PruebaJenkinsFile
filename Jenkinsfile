@@ -1,9 +1,5 @@
 pipeline {
-  agent {
-    docker {
-      image 'markhobson/maven-chrome'
-    }
-  }
+  agent any
   stages {
     stage('Clean Work Space'){
         steps {

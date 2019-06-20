@@ -13,7 +13,6 @@ import com.pgtoopx.ChromeDevTools;
 import driver.DriverFactory;
 import driver.SharedDriver;
 import io.cucumber.datatable.DataTable;
-import oracle.net.aso.l;
 
 import org.json.JSONException;
 import org.junit.Assert;
@@ -42,7 +41,7 @@ public class GenericsDefinition {
     AsideGarantiasEmpresaPO asideGarantiasEmpresaPO;
     Vista360ResumenEmpresaPO vista360ResumenEmpresaPO;
     ArrayList<byte[]> screenshotList;
-    ConexionDB conexionDB;
+    //ConexionDB conexionDB;
     Dimension dimensionActual;
     String cabecera;
     String folio;
@@ -299,10 +298,10 @@ public class GenericsDefinition {
 
     @Then("pruebo algo")
     public void prueba() throws SQLException {
-        conexionDB = new ConexionDB("jdbc:oracle:thin:@152.139.146.170:1521/DIANA.bch.bancodechile.cl","Siebel","siebelqa");
-        Connection connection= conexionDB.getConexion();
-        ResultSet resultSet= conexionDB.RunQuery(connection,"SELECT soe.name as rut, sa.build AS folio, sa.warranty_type_cd AS tipo_garantia, sa.cfg_type_cd AS tipo_bien, sa.curcy_cd as moneda, sa.asset_value_amt AS valor_comercial, sa.rplcmnt_val_amt AS valor_garantia, sa.exch_date AS tasacion, sa.extension_cd AS seguro, sa.status_cd as estado FROM siebel.s_asset sa, siebel.s_org_ext soe WHERE sa.type_cd = 'Warranty' AND soe.par_row_id = sa.owner_accnt_id AND UPPER(sa.status_cd) in ('CONSTITUIDA', 'POR ALZAR') AND instr(soe.NAME,'-')>8;");
-        System.out.println(resultSet);
+        //conexionDB = new ConexionDB("jdbc:oracle:thin:@152.139.146.170:1521/DIANA.bch.bancodechile.cl","Siebel","siebelqa");
+        //Connection connection= conexionDB.getConexion();
+        //ResultSet resultSet= conexionDB.RunQuery(connection,"SELECT soe.name as rut, sa.build AS folio, sa.warranty_type_cd AS tipo_garantia, sa.cfg_type_cd AS tipo_bien, sa.curcy_cd as moneda, sa.asset_value_amt AS valor_comercial, sa.rplcmnt_val_amt AS valor_garantia, sa.exch_date AS tasacion, sa.extension_cd AS seguro, sa.status_cd as estado FROM siebel.s_asset sa, siebel.s_org_ext soe WHERE sa.type_cd = 'Warranty' AND soe.par_row_id = sa.owner_accnt_id AND UPPER(sa.status_cd) in ('CONSTITUIDA', 'POR ALZAR') AND instr(soe.NAME,'-')>8;");
+        //System.out.println(resultSet);
         //System.out.println(ResultSetConverter.convert(resultSet));
     }
 
