@@ -107,7 +107,7 @@ Scenario: Validar funcionalidad del boton buscar en tab por constituir con rut e
         And ingreso a detalle de garantias empresa
         And me encuentro en el tab "Por constituir"
         And despliego el filtro
-        And ingreso un valor en el filtro
+        And ingreso el valor "117987" en el filtro "Folio"
         When presiono el boton "Buscar"
         Then se aplican los filtros
 
@@ -117,7 +117,7 @@ Scenario: Validar busqueda sobre el total de datos
         And ingreso a detalle de garantias empresa
         And me encuentro en el tab "Por constituir"
         And despliego el filtro
-        And ingreso un valor en el filtro
+        And ingreso el valor "117987" en el filtro "Folio"
         When presiono el boton "Buscar"
         Then se realiza la busqueda sobre el total de datos
 
@@ -136,28 +136,8 @@ Scenario: Validar funcionalidad del boton buscar en tab por constituir con rut e
         And ingreso a detalle de garantias empresa
         And me encuentro en el tab "Por constituir"
         And despliego el filtro
-        When ingreso un valor en el filtro combinado
+        When ingreso el valor "117987" en el filtro "Folio"
+        And ingreso el valor "Constituida" en el filtro "Estado"
         And presiono el boton "Buscar"
         Then se aplican los filtros
 
- @correr
-Scenario: Validar columnas Tab "Vigentes" con rut persona
-    Given el usuario "JLABORDEB" ingreso a V360
-    And busco el rut "10.000.102-0"
-    When ingreso a detalle de garantias persona
-    And me encuentro en el tab "Vigentes"
-    Then el sistema muestra una tabla con las siguientes columnas
-      | Folio                                                 |
-      | Tipo de Garantia                                      |
-      | Tipo de Bien                                          |
-      | Estado                                                |
-      | Grado                                                 |
-      | Valor Comercial (Miles)                               |
-      | Valor Garantia (Miles)                                |
-      | Tasacion                                              |
-      | Seguro                                                |
-
-
-
-
-#rut persona tab vigentes 10.000.102-0

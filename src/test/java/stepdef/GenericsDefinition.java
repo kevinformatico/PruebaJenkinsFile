@@ -186,6 +186,12 @@ public class GenericsDefinition {
         Assert.assertTrue(true);
     }
 
+    @Then("se invierte el orden de esa columna ")
+    public void se_invierte_el_orden_de_esa_columna(){
+        //TODO: implementar
+        Assert.assertTrue(true);
+    }
+
     @Then("se muestra el paginador")
     public void se_muestra_el_paginador() {
         Assert.assertTrue(detalleGarantiasPO.estaVisiblePaginador());
@@ -206,15 +212,21 @@ public class GenericsDefinition {
         detalleGarantiasPO.desplegarFiltro();
     }
 
-    @When("ingreso un valor en el filtro")
-    public void ingreso_un_valor_en_el_filtro(){
-        this.folio="282510";
-        detalleGarantiasPO.escribirEnCampoFiltroPorFolio(this.folio);
+    @When("ingreso el valor {string} en el filtro {string}")
+    public void ingreso_un_valor_en_el_filtro(String valor, String filtro){
+        this.folio=valor;
+        detalleGarantiasPO.escribirEnCampoFiltroPorFolio(valor);
     }
 
     @When("presiono el boton {string}")
     public void presiono_el_boton_string(String boton){
         detalleGarantiasPO.clickEnBotoneraFiltro(boton);
+    }
+
+    @Then("el sistema arroja el mensaje {string}")
+    public void el_sistema_arroja_el_mensaje_string(String mensaje){
+        detalleGarantiasPO.esperarAQueCargueLaPagina();
+        Assert.assertTrue(detalleGarantiasPO.validarMensaje(mensaje));
     }
 
     @Then("se colapsa la seccion de filtro")
@@ -244,7 +256,7 @@ public class GenericsDefinition {
         Assert.assertTrue(detalleGarantiasPO.validarBotones(botones.asList()));
     }
 
-    @Then("tiene las siguientes opciones")
+    @Then("el paginador tiene las siguientes opciones")
     public void tiene_las_siguientes_opciones(DataTable opciones){
         detalleGarantiasPO.scrollAlFondoDeLaPagina();
         detalleGarantiasPO.clickFlechaSelectPaginador();

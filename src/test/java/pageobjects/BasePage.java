@@ -66,7 +66,7 @@ public class BasePage {
 
     protected void waitUntilEscritorioComercialIsLoaded(){
         while (isVisible(barraCargando)) {
-            waitFor(1);
+
         }
     }
 

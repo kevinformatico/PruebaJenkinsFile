@@ -136,6 +136,12 @@ public class DetalleGarantiasPO extends BasePage {
         return inputFiltroPorFolio.getText().trim().isEmpty();
     }
 
+    public boolean validarMensaje(String mensaje){
+        return driver.findElement(
+                By.xpath("//section[contains(@class,'bch-mensaje-empresa')]//h5[contains(text(),'"+mensaje+"')]"))
+                .getText().trim().contains(mensaje);
+    }
+
 
 }
 
