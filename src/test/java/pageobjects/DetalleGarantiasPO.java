@@ -50,6 +50,7 @@ public class DetalleGarantiasPO extends BasePage {
     }
 
     public JsonArray getJsonFromTabla(){
+        waitForElementToAppear(tabla);
         return ManejadorTablaFrontEnd.extraerDatosDeTablaAJson(tabla);
     }
 
@@ -69,7 +70,7 @@ public class DetalleGarantiasPO extends BasePage {
 
     public void clickEnCabecera(String cabecera){
         waitForElementToAppear(tabla);
-        DriverFactory.getDriver().findElement(By.xpath(cabecera)).click();
+        DriverFactory.getDriver().findElement(By.xpath("//div[contains(@class,'table')]//th[contains(text(),'"+cabecera+"')]")).click();
     }
 
     public Dimension obtenerSizeCabecera(String cabecera){
@@ -140,6 +141,10 @@ public class DetalleGarantiasPO extends BasePage {
         return driver.findElement(
                 By.xpath("//section[contains(@class,'bch-mensaje-empresa')]//h5[contains(text(),'"+mensaje+"')]"))
                 .getText().trim().contains(mensaje);
+    }
+
+    public void clickEnCuerpoDeLaCabecera(String cabecera){
+        driver.findElement(By.xpath("//div[@class='col-xs-12 col-sm-12 col-md-12 col-lg-12 padd-none ng-scope']//tr[1]//td[3]")).click();
     }
 
 

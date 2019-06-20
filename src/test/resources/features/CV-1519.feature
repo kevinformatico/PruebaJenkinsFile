@@ -1,3 +1,4 @@
+# encoding: utf-8
 @correr
 Feature: CV-1519
 
@@ -36,10 +37,10 @@ Scenario: Validar campo faltante tab "Vigentes" con rut persona
 
 Scenario: Validar extension de columnas en el tab "Vigentes" con rut persona
     Given el usuario "JLABORDEB" ingreso a V360
-    And busco el rut "10.000.102-0"
+    And busco el rut "5.762.651-8"
     And ingreso a detalle de garantias persona
     And me encuentro en el tab "Vigentes"
-    When hago click en la cabecera de la columnas "Tipo de Garantía"
+    When hago click en el cuerpo de la columna "Tipo de Garantía"
     Then la columna se expande
 
 Scenario: Validar ordenamiento por defecto del listado de garantias vigentes con rut persona
@@ -49,12 +50,12 @@ Scenario: Validar ordenamiento por defecto del listado de garantias vigentes con
     When me encuentro en el tab "Vigentes"
     Then aparece el listado de garantias ordenado por defecto segun folio de manera ascendente
 
-Scenario: Reordenamiento del listado de Garantias vigentes con rut persona
+Scenario: Ordenamiento del listado de Garantias vigentes con rut persona
       Given el usuario "JLABORDEB" ingreso a V360
       And busco el rut "10.000.102-0"
       And ingreso a detalle de garantias persona
       And me encuentro en el tab "Vigentes"
-      When hago click en la cabecera de la columnas "Folio"
+      When hago click en la cabecera de la columna "Folio"
       Then se ordenara por esa columna
 
 Scenario: Reordenamiento del listado de Garantias vigentes con rut persona
@@ -62,12 +63,12 @@ Scenario: Reordenamiento del listado de Garantias vigentes con rut persona
       And busco el rut "10.000.102-0"
       And ingreso a detalle de garantias persona
       And me encuentro en el tab "Vigentes"
-      When hago click en la cabecera de la columnas "Folio"
+      When hago click en la cabecera de la columna "Folio"
       Then se invierte el orden de esa columna
 
-Scenario: Validar visualizacion del paginador del paginador
+Scenario: Validar visualizacion del paginador de tab vigente con rut persona 
       Given el usuario "JLABORDEB" ingreso a V360
-      And busco el rut "10.000.102-0"
+      And busco el rut "5.762.651-8"
       And ingreso a detalle de garantias persona
       When me encuentro en el tab "Vigentes"
       And el cliente tiene mas de 10 registros
@@ -75,9 +76,9 @@ Scenario: Validar visualizacion del paginador del paginador
 
 Scenario: Validar opciones del paginador del paginador
       Given el usuario "JLABORDEB" ingreso a V360
-      And busco el rut "10.000.102-0"
-      And ingreso a detalle de garantias empresa
-      When me encuentro en el tab "Por constituir"
+      And busco el rut "5.762.651-8"
+      And ingreso a detalle de garantias persona
+      When me encuentro en el tab "Vigentes"
       And el cliente tiene mas de 10 registros
       Then el paginador tiene las siguientes opciones
       | 10 |
@@ -103,7 +104,7 @@ Scenario: Validar funcionalidad del boton limpiar en tab vigentes con rut person
         And ingreso a detalle de garantias persona
         And me encuentro en el tab "Vigentes"
         And despliego el filtro
-        And ingreso un valor en el filtro
+        And ingreso el valor "117987" en el filtro "Folio"
         When presiono el boton "Limpiar"
         Then los filtros se limpian
 
@@ -113,7 +114,7 @@ Scenario: Validar funcionalidad del boton buscar en tab vigentes con rut persona
         And ingreso a detalle de garantias persona
         And me encuentro en el tab "Vigentes"
         And despliego el filtro
-        And ingreso el valor "117987" en el filtro "Folio"
+        And ingreso el valor "269163" en el filtro "Folio"
         When presiono el boton "Buscar"
         Then se aplican los filtros
 
@@ -123,7 +124,7 @@ Scenario: Validar busqueda sobre el total de datos en tab vigentes con rut perso
         And ingreso a detalle de garantias persona
         And me encuentro en el tab "Vigentes"
         And despliego el filtro
-        And ingreso el valor "117987" en el filtro "Folio"
+        And ingreso el valor "269163" en el filtro "Folio"
         When presiono el boton "Buscar"
         Then se realiza la busqueda sobre el total de datos
 
@@ -152,7 +153,6 @@ Scenario: Validar funcionalidad del boton buscar en tab vigentes con rut persona
         And ingreso a detalle de garantias persona
         And me encuentro en el tab "Vigentes"
         And despliego el filtro
-        When ingreso el valor "117987" en el filtro "Folio"
-        And ingreso el valor "Constituida" en el filtro "Estado"
+        When ingreso el valor "269163" en el filtro "Folio"
         And presiono el boton "Buscar"
         Then se aplican los filtros

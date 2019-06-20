@@ -6,6 +6,8 @@ import cucumber.api.java.AfterStep;
 import cucumber.api.java.Before;
 import Generics.util;
 import cucumber.api.java.BeforeStep;
+import driver.DriverFactory;
+
 import org.openqa.selenium.WebDriverException;
 
 import java.util.ArrayList;
@@ -23,6 +25,9 @@ public class Hooks {
     @Before
     public void beforeHooks(Scenario scenario){
         this.scenario=scenario;
+        if(DriverFactory.getDriver()!= null){
+            DriverFactory.getDriver().manage().deleteAllCookies();
+        }
     }
 
     @After

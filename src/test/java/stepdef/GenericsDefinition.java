@@ -13,6 +13,8 @@ import com.pgtoopx.ChromeDevTools;
 import driver.DriverFactory;
 import driver.SharedDriver;
 import io.cucumber.datatable.DataTable;
+import oracle.net.aso.l;
+
 import org.json.JSONException;
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -127,11 +129,16 @@ public class GenericsDefinition {
         Assert.assertTrue("",obj.contains("-"));
     }
 
-    @Then("hago click en la cabecera de la columnas {string}")
+    @Then("hago click en la cabecera de la columna {string}")
     public void hago_click_en_la_cabecera_de_la_columnas_string(String cabecera){
         this.cabecera=cabecera;
         dimensionActual= detalleGarantiasPO.obtenerSizeCabecera(cabecera);
-        detalleGarantiasPO.clickEnCabecera("//div[@class='col-xs-12 col-sm-12 col-md-12 col-lg-12 padd-none ng-scope']//tr[2]//td[2]");
+        detalleGarantiasPO.clickEnCabecera(cabecera);
+    }
+
+    @Then("hago click en el cuerpo de la columna {string}")
+    public void hago_clicl_en_el_cuerpo_de_la_columna_string(String columna){
+        detalleGarantiasPO.clickEnCuerpoDeLaCabecera(columna);
     }
 
     @Then("la columna se expande")
@@ -186,7 +193,7 @@ public class GenericsDefinition {
         Assert.assertTrue(true);
     }
 
-    @Then("se invierte el orden de esa columna ")
+    @Then("se invierte el orden de esa columna")
     public void se_invierte_el_orden_de_esa_columna(){
         //TODO: implementar
         Assert.assertTrue(true);
@@ -199,7 +206,7 @@ public class GenericsDefinition {
 
     @When("el cliente tiene mas de {int} registros")
     public void el_cliente_tiene_mas_de_int_registros(int limiteRegistros){
-        Assert.assertTrue(detalleGarantiasPO.getJsonFromTabla().size()>limiteRegistros);
+        Assert.assertTrue("Tiene menos de "+limiteRegistros+" registros",detalleGarantiasPO.getJsonFromTabla().size()>limiteRegistros);
     }
 
     @When("despliego el filtro")
@@ -267,13 +274,14 @@ public class GenericsDefinition {
 
     @Then("se aplican los filtros")
     public void se_aplican_los_filtros(){
-      JsonArray datosTabla = detalleGarantiasPO.getJsonFromTabla();
-      boolean seAplicaElFiltro= false;
-      for (int i=0; i<datosTabla.size(); i++){
+        detalleGarantiasPO.esperarAQueCargueLaPagina();
+        JsonArray datosTabla = detalleGarantiasPO.getJsonFromTabla();
+        boolean seAplicaElFiltro= false;
+        for (int i=0; i<datosTabla.size(); i++){
           if(!seAplicaElFiltro)
               seAplicaElFiltro = datosTabla.get(i).getAsJsonObject().get("Folio").getAsString().contains(this.folio);
-      }
-      Assert.assertTrue(seAplicaElFiltro);
+        }
+        Assert.assertTrue(seAplicaElFiltro);
     }
 
     @Then("se realiza la busqueda sobre el total de datos")
