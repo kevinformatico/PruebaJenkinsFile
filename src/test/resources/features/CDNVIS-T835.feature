@@ -1,6 +1,6 @@
 # encoding: utf-8
 Feature: 
-    @TestCaseKey=CDNVIS-T835
+    @TestCaseKey=CDNVIS-T835 @correr
     Scenario: Validar columnas Tab "Vigentes" con rut persona
         
         Given el usuario "JLABORDEB" ingreso a V360
