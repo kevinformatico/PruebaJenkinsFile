@@ -26,6 +26,15 @@ public class ConexionDB {
         this.password = PASSWORD;
     }
 
+    public ConexionDB (String driverUrl, String usuario, String password){
+        this.driverClassName=DRIVER_CLASS_NAME;
+        this.driverUrl=driverUrl;
+        this.usuario= usuario;
+        this.password = password;
+    }
+
+
+
     public Connection getConexion() {
         Connection conn = null;
         try {

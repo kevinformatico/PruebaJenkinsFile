@@ -76,4 +76,15 @@ public class util {
     public static String elimininarTildes(String cadena){
         return StringUtils.stripAccents(cadena);
     }
+
+    public static boolean seExpande(Dimension dimAnterior, Dimension dimNueva){
+        boolean seExpande = false;
+        int widthDimAnterior = dimAnterior.getWidth();
+        int heightDimAnterior = dimAnterior.getWidth();
+        int widthDimNueva = dimNueva.getWidth();
+        int heightDimNueva = dimNueva.getHeight();
+        if(widthDimAnterior<widthDimNueva) seExpande = true;
+        if(heightDimAnterior<heightDimNueva) seExpande =true;
+        return seExpande;
+    }
 }
