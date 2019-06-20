@@ -125,7 +125,7 @@
 		</plugins>
 	</build>
 
-	<repositories>
+<!--	<repositories>
 		<repository>
 			<id>maven.oracle.com</id>
 			<name>oracle-maven-repo</name>
@@ -148,5 +148,5 @@
 				<updatePolicy>always</updatePolicy>
 			</releases>
 		</pluginRepository>
-	</pluginRepositories>
+	</pluginRepositories>-->
 </project>
