@@ -12,7 +12,7 @@ pipeline {
          }
     stage('Integration Test') {
       steps {
-        sh 'mvn install'
+        sh 'mvn install -Dheadless=true'
       }
     }
   }
