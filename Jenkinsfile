@@ -20,6 +20,11 @@ pipeline {
     always {
       archiveArtifacts(artifacts: 'target/', fingerprint: true)
       junit 'target/cucumber.xml'
+      publishTestResults  serverAddress: 'http://jira.bch.bancodechile.cl:8080',
+                          projectKey: 'CDNVIS',
+                          filePath:'target/cucumber-report/cucumber.json',
+                          format: 'Cucumber',
+                          autoCreateTestCases: false
     }
   }
 }
