@@ -20,7 +20,6 @@ public class EscritorioComercialPO extends BasePage {
     }
 
     public void buscarPorRut(String rut){
-        waitUntilEscritorioComercialIsLoaded();
         waitForElementToAppear(inputRut);
         inputRut.sendKeys(rut);
         searchButton.click();

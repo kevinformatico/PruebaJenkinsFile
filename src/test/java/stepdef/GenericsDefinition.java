@@ -67,6 +67,8 @@ public class GenericsDefinition {
     @Given("el usuario {string} ingreso a V360")
     public void el_usuario_string_ingresa_a_v360(String usuario){
         paginaInicioPO.iniciarSesion(usuario, "Banco01");
+        detalleGarantiasPO.esperarAQueCargueLaPagina();
+        takeScreenshot();
     }
 
     @Given("busco el rut {string}")
@@ -104,9 +106,6 @@ public class GenericsDefinition {
         List<String> columnasEsperadas = columnas.asList(String.class);
         List<String> columnasActuales = ManejadorTablaFrontEnd.getNameColumns(detalleGarantiasPO.getTabla());
         Assert.assertArrayEquals("no contiene las mismas columnas", columnasEsperadas.toArray(), columnasActuales.toArray());
-        for(int i=0; i<columnasEsperadas.size(); i++){
-            //Verify.verify(columnasEsperadas.get(i).toString().contains(columnasActuales.get(i).toString()));
-        }
     }
 
     @Then("el sistema muestra el mensaje {string}")

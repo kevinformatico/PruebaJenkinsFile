@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class BasePage {
 
-    private static final int TIMEOUT = 5;
+    private static final int TIMEOUT = 20;
     private static final int POLLING = 100;
 
     final WebDriver driver;
