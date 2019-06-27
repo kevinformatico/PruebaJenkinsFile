@@ -104,6 +104,13 @@ public class GarantiasDefinition {
         this.cabecera=cabecera;
     }
 
+    @When("hago click nuevamente en la cabecera de la columna {string}")
+    public void hago_click_nuevamente_en_la_cabecera_de_la_columna_string(String cabecera){
+        this.datosTabla=detalleGarantiasPO.getJsonFromTabla();
+        detalleGarantiasPO.clickEnCabecera(cabecera);
+        this.cabecera=cabecera;
+    }
+
     @Then("hago click en el cuerpo de la columna {string}")
     public void hago_clicl_en_el_cuerpo_de_la_columna_string(String columna){
         this.dimensionActual=detalleGarantiasPO.obtenerSizeCabecera(columna);

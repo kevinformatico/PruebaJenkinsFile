@@ -10,14 +10,15 @@ Scenario: Validar columnas Tab "Vigentes" con rut persona
     And me encuentro en el tab "Vigentes"
     Then el sistema muestra una tabla con las siguientes columnas
       | Folio                                                 |
-      | Tipo de Garantia                                      |
+      | Tipo de Garantía                                      |
       | Tipo de Bien                                          |
       | Estado                                                |
       | Grado                                                 |
       | Valor Comercial (Miles)                               |
-      | Valor Garantia (Miles)                                |
-      | Tasacion                                              |
+      | Valor Garantía (Miles)                                |
+      | Tasación                                              |
       | Seguro                                                |
+
 Scenario: Validar mensaje en caso de no existir garantias vigentes con rut persona
     Given el usuario "JLABORDEB" ingreso a V360
     And busco el rut "1.658.793-1"
@@ -62,6 +63,7 @@ Scenario: Ordenamiento del listado de Garantias vigentes con rut persona
       And ingreso a detalle de garantias persona
       And me encuentro en el tab "Vigentes"
       When hago click en la cabecera de la columna "Tipo de Bien"
+      And hago click nuevamente en la cabecera de la columna "Tipo de Bien"
       Then se invierte el orden de esa columna
 
 Scenario: Validar visualizacion del paginador de tab vigente con rut persona
