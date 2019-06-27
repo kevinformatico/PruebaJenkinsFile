@@ -46,7 +46,7 @@ public class ManejadorTablaFrontEnd {
         List<WebElement> columnas = tabla.findElements(By.xpath("//thead/tr/th"));
         for (WebElement columna: columnas){
             if(!columna.getText().trim().equals("")){
-            nombreColumnas.add(util.elimininarTildes(columna.getText()));
+            nombreColumnas.add(columna.getText());
             }
         }
         return nombreColumnas;
@@ -64,6 +64,6 @@ public class ManejadorTablaFrontEnd {
     }
 
     public static String extraerTexto(WebElement element) {
-        return util.elimininarTildes(element.getText());
+        return element.getText();
     }
 }

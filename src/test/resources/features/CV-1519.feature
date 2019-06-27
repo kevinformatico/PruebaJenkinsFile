@@ -1,5 +1,4 @@
 # encoding: utf-8
-@correr
 Feature: CV-1519
 
 
@@ -19,7 +18,6 @@ Scenario: Validar columnas Tab "Vigentes" con rut persona
       | Valor Garantia (Miles)                                |
       | Tasacion                                              |
       | Seguro                                                |
-
 Scenario: Validar mensaje en caso de no existir garantias vigentes con rut persona
     Given el usuario "JLABORDEB" ingreso a V360
     And busco el rut "1.658.793-1"
@@ -29,19 +27,19 @@ Scenario: Validar mensaje en caso de no existir garantias vigentes con rut perso
     And el nombre del tab indica "Vigentes [0]"
 
 Scenario: Validar campo faltante tab "Vigentes" con rut persona
-    Given el usuario "JLABORDEB" ingreso a V360
-    And busco el rut "10.000.102-0"
-    And ingreso a detalle de garantias persona
-    When me encuentro en el tab "Vigentes"
-    Then el sistema muestra un guion en el campo faltante
+  Given el usuario "JLABORDEB" ingreso a V360
+  And busco el rut "10.000.102-0"
+  And ingreso a detalle de garantias persona
+  When me encuentro en el tab "Vigentes"
+  Then el sistema muestra un guion en el campo faltante
 
 Scenario: Validar extension de columnas en el tab "Vigentes" con rut persona
-    Given el usuario "JLABORDEB" ingreso a V360
-    And busco el rut "5.762.651-8"
-    And ingreso a detalle de garantias persona
-    And me encuentro en el tab "Vigentes"
-    When hago click en el cuerpo de la columna "Tipo de Garantía"
-    Then la columna se expande
+  Given el usuario "JLABORDEB" ingreso a V360
+  And busco el rut "5.762.651-8"
+  And ingreso a detalle de garantias persona
+  And me encuentro en el tab "Vigentes"
+  When hago click en el cuerpo de la columna "Tipo de Bien"
+  Then la columna se expande
 
 Scenario: Validar ordenamiento por defecto del listado de garantias vigentes con rut persona
     Given el usuario "JLABORDEB" ingreso a V360
@@ -51,22 +49,22 @@ Scenario: Validar ordenamiento por defecto del listado de garantias vigentes con
     Then aparece el listado de garantias ordenado por defecto segun folio de manera ascendente
 
 Scenario: Ordenamiento del listado de Garantias vigentes con rut persona
-      Given el usuario "JLABORDEB" ingreso a V360
-      And busco el rut "10.000.102-0"
-      And ingreso a detalle de garantias persona
-      And me encuentro en el tab "Vigentes"
-      When hago click en la cabecera de la columna "Folio"
-      Then se ordenara por esa columna
+  Given el usuario "JLABORDEB" ingreso a V360
+  And busco el rut "10.000.102-0"
+  And ingreso a detalle de garantias persona
+  And me encuentro en el tab "Vigentes"
+  When hago click en la cabecera de la columna "Folio"
+  Then se ordenara por esa columna
 
-Scenario: Reordenamiento del listado de Garantias vigentes con rut persona
+  Scenario: Reordenamiento del listado de Garantias vigentes con rut persona
       Given el usuario "JLABORDEB" ingreso a V360
-      And busco el rut "10.000.102-0"
+      And busco el rut "5.762.651-8"
       And ingreso a detalle de garantias persona
       And me encuentro en el tab "Vigentes"
-      When hago click en la cabecera de la columna "Folio"
+      When hago click en la cabecera de la columna "Tipo de Bien"
       Then se invierte el orden de esa columna
 
-Scenario: Validar visualizacion del paginador de tab vigente con rut persona 
+Scenario: Validar visualizacion del paginador de tab vigente con rut persona
       Given el usuario "JLABORDEB" ingreso a V360
       And busco el rut "5.762.651-8"
       And ingreso a detalle de garantias persona
@@ -94,6 +92,7 @@ Scenario: Validar campos filtro en Tab vigentes con rut persona
         Then se muestra el filtro para los siguientes campos
         |Folio|
         |Tipo de Garantía|
+        |Estado|
         And los siguientes botones
         | Limpiar |
         | Buscar |
@@ -104,7 +103,7 @@ Scenario: Validar funcionalidad del boton limpiar en tab vigentes con rut person
         And ingreso a detalle de garantias persona
         And me encuentro en el tab "Vigentes"
         And despliego el filtro
-        And ingreso el valor "117987" en el filtro "Folio"
+        And ingreso el valor "Prenda Industrial" en el filtro "Tipo de Garantía"
         When presiono el boton "Limpiar"
         Then los filtros se limpian
 

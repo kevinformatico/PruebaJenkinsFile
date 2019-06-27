@@ -2,8 +2,6 @@
 
 Feature: CV-1517
 
-  Scenario: Probar algo
-    Then pruebo algo
 #C1: El sistema debe permitir acceder al listado completo de todas las garantías por constituir asociadas a un cliente.
   Scenario: Validar columnas Tab "Por constituir" con rut empresa
     Given el usuario "JLABORDEB" ingreso a V360
@@ -20,7 +18,6 @@ Feature: CV-1517
       | Valor Garantia (Miles)                                |
       | Tasacion                                              |
       | Seguro                                                |
-
 
   Scenario: Validar mensaje en caso de no existir garantias por constituir con rut empresa
     Given el usuario "JLABORDEB" ingreso a V360

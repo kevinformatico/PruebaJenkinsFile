@@ -25,12 +25,11 @@ public class PaginaInicioPO extends BasePage {
         DriverFactory.getDriver().get("http://portalcomercial.qa.labchile.cl:8888/login/logout/platcom");
     }
 
-    public EscritorioComercialPO iniciarSesion(String user, String pass){
+    public void iniciarSesion(String user, String pass){
         waitForElementToAppear(username);
         username.sendKeys(user);
         password.sendKeys(pass);
         btnIngresar.click();
-        return new EscritorioComercialPO();
     }
 }
 

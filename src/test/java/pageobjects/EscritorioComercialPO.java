@@ -9,11 +9,9 @@ public class EscritorioComercialPO extends BasePage {
 
 
     @FindBy(id="rut")
-    private
-    WebElement inputRut;
+    private WebElement inputRut;
     @FindBy(name="searchButton")
-    private
-    WebElement searchButton;
+    private WebElement searchButton;
 
     public EscritorioComercialPO() {
         super(DriverFactory.getDriver());

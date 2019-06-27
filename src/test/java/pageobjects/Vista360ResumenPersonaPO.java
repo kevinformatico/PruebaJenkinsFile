@@ -1,7 +1,6 @@
 package pageobjects;
 
 import driver.DriverFactory;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -12,15 +11,13 @@ public class Vista360ResumenPersonaPO extends BasePage {
     }
 
     @FindBy(id = "v360_titulo")
-    WebElement titulo;
+    private WebElement titulo;
 
     @FindBy(xpath = "/html/body/div[1]/div[2]/section/section/ng-include/div[2]/label")
-    private
-    WebElement cambiarEmpresaPersona;
+    private WebElement cambiarEmpresaPersona;
 
     @FindBy(id = "v360_cabecera-persona_inteligencia-persona_garantias-persona_enlace")
-    private
-    WebElement botonGarantiasPersona;
+    private WebElement botonGarantiasPersona;
 
     public void clickCambiarEmpresaPersona() {
         waitForElementToAppear(cambiarEmpresaPersona);
@@ -28,7 +25,6 @@ public class Vista360ResumenPersonaPO extends BasePage {
     }
     public void clickBoxGarantias() {
         waitUntilEscritorioComercialIsLoaded();
-        waitForElementToAppear(botonGarantiasPersona);
         botonGarantiasPersona.click();
     }
 }

@@ -1,9 +1,7 @@
 package pageobjects;
 
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import driver.DriverFactory;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
@@ -11,10 +9,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Queue;
 
 public class BasePage {
 
-    private static final int TIMEOUT = 20;
+    private static final int TIMEOUT = 5;
     private static final int POLLING = 100;
 
     final WebDriver driver;
@@ -64,8 +64,8 @@ public class BasePage {
         return isVisible;
     }
 
-    protected void waitUntilEscritorioComercialIsLoaded(){
-        while (isVisible(barraCargando)) {
+    protected void waitUntilEscritorioComercialIsLoaded() {
+        while (isVisible(barraCargando)){
             waitFor(1);
         }
     }
@@ -85,6 +85,10 @@ public class BasePage {
         } catch (Exception e){
             e.printStackTrace();
         }
-
     }
+
+    public byte[] takeScreenshot(){
+         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+    }
+
 }
