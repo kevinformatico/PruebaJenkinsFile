@@ -1,7 +1,4 @@
-# Template parallel testing Junit-Cucumber-Selenium
-
-This code is provided on an "AS-IS” basis without warranty of any kind, either express or implied, including without limitation any implied warranties of condition, uninterrupted use, merchantability, fitness for a particular purpose, or non-infringement. Your tests and testing environments may require you to modify this framework. 
-this template allows you run testing with bdd aproach and selenium for automation, in parallel and diferent browser
+# V360 testing Junit-Cucumber-Selenium
 
 ### Environment Setup
 
