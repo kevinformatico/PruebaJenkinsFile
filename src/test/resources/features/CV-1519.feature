@@ -3,6 +3,7 @@ Feature: CV-1519
 
 
 #C1: El sistema debe permitir acceder al listado completo de todas las garantías vigentes asociadas a un cliente.
+@TestCaseKey=CDNVIS-T835
 Scenario: Validar columnas Tab "Vigentes" con rut persona
     Given el usuario "JLABORDEB" ingreso a V360
     And busco el rut "10.000.102-0"
@@ -19,6 +20,7 @@ Scenario: Validar columnas Tab "Vigentes" con rut persona
       | Tasación                                              |
       | Seguro                                                |
 
+  @TestCaseKey=CDNVIS-T836
 Scenario: Validar mensaje en caso de no existir garantias vigentes con rut persona
     Given el usuario "JLABORDEB" ingreso a V360
     And busco el rut "1.658.793-1"
@@ -27,6 +29,7 @@ Scenario: Validar mensaje en caso de no existir garantias vigentes con rut perso
     Then el sistema muestra el mensaje "Sin garantías vigentes"
     And el nombre del tab indica "Vigentes [0]"
 
+  @TestCaseKey=CDNVIS-T837
 Scenario: Validar campo faltante tab "Vigentes" con rut persona
   Given el usuario "JLABORDEB" ingreso a V360
   And busco el rut "10.000.102-0"
@@ -34,6 +37,7 @@ Scenario: Validar campo faltante tab "Vigentes" con rut persona
   When me encuentro en el tab "Vigentes"
   Then el sistema muestra un guion en el campo faltante
 
+  @TestCaseKey=CDNVIS-T838
 Scenario: Validar extension de columnas en el tab "Vigentes" con rut persona
   Given el usuario "JLABORDEB" ingreso a V360
   And busco el rut "5.762.651-8"
@@ -42,6 +46,7 @@ Scenario: Validar extension de columnas en el tab "Vigentes" con rut persona
   When hago click en el cuerpo de la columna "Tipo de Bien"
   Then la columna se expande
 
+  @TestCaseKey=CDNVIS-T839
 Scenario: Validar ordenamiento por defecto del listado de garantias vigentes con rut persona
     Given el usuario "JLABORDEB" ingreso a V360
     And busco el rut "10.000.102-0"
@@ -49,6 +54,7 @@ Scenario: Validar ordenamiento por defecto del listado de garantias vigentes con
     When me encuentro en el tab "Vigentes"
     Then aparece el listado de garantias ordenado por defecto segun folio de manera ascendente
 
+  @TestCaseKey=CDNVIS-T840
 Scenario: Ordenamiento del listado de Garantias vigentes con rut persona
   Given el usuario "JLABORDEB" ingreso a V360
   And busco el rut "10.000.102-0"
@@ -57,15 +63,17 @@ Scenario: Ordenamiento del listado de Garantias vigentes con rut persona
   When hago click en la cabecera de la columna "Folio"
   Then se ordenara por esa columna
 
-  Scenario: Reordenamiento del listado de Garantias vigentes con rut persona
-      Given el usuario "JLABORDEB" ingreso a V360
-      And busco el rut "5.762.651-8"
-      And ingreso a detalle de garantias persona
-      And me encuentro en el tab "Vigentes"
-      When hago click en la cabecera de la columna "Tipo de Bien"
-      And hago click nuevamente en la cabecera de la columna "Tipo de Bien"
-      Then se invierte el orden de esa columna
+  @TestCaseKey=CDNVIS-T841
+Scenario: Reordenamiento del listado de Garantias vigentes con rut persona
+  Given el usuario "JLABORDEB" ingreso a V360
+  And busco el rut "5.762.651-8"
+  And ingreso a detalle de garantias persona
+  And me encuentro en el tab "Vigentes"
+  When hago click en la cabecera de la columna "Tipo de Bien"
+  And hago click nuevamente en la cabecera de la columna "Tipo de Bien"
+  Then se invierte el orden de esa columna
 
+  @TestCaseKey=CDNVIS-T842
 Scenario: Validar visualizacion del paginador de tab vigente con rut persona
       Given el usuario "JLABORDEB" ingreso a V360
       And busco el rut "5.762.651-8"
@@ -74,6 +82,7 @@ Scenario: Validar visualizacion del paginador de tab vigente con rut persona
       And el cliente tiene mas de 10 registros
       Then se muestra el paginador
 
+  @TestCaseKey=CDNVIS-T843
 Scenario: Validar opciones del paginador del paginador
       Given el usuario "JLABORDEB" ingreso a V360
       And busco el rut "5.762.651-8"
@@ -85,6 +94,7 @@ Scenario: Validar opciones del paginador del paginador
       | 25 |
       | 50 |
 
+  @TestCaseKey=CDNVIS-T844
 Scenario: Validar campos filtro en Tab vigentes con rut persona
         Given el usuario "JLABORDEB" ingreso a V360
         And busco el rut "10.000.102-0"
@@ -99,6 +109,7 @@ Scenario: Validar campos filtro en Tab vigentes con rut persona
         | Limpiar |
         | Buscar |
 
+  @TestCaseKey=CDNVIS-T845
 Scenario: Validar funcionalidad del boton limpiar en tab vigentes con rut persona
         Given el usuario "JLABORDEB" ingreso a V360
         And busco el rut "10.000.102-0"
@@ -109,6 +120,7 @@ Scenario: Validar funcionalidad del boton limpiar en tab vigentes con rut person
         When presiono el boton "Limpiar"
         Then los filtros se limpian
 
+  @TestCaseKey=CDNVIS-T846
 Scenario: Validar funcionalidad del boton buscar en tab vigentes con rut persona
         Given el usuario "JLABORDEB" ingreso a V360
         And busco el rut "10.000.102-0"
@@ -119,6 +131,7 @@ Scenario: Validar funcionalidad del boton buscar en tab vigentes con rut persona
         When presiono el boton "Buscar"
         Then se aplican los filtros
 
+  @TestCaseKey=CDNVIS-T847
 Scenario: Validar busqueda sobre el total de datos en tab vigentes con rut persona
         Given el usuario "JLABORDEB" ingreso a V360
         And busco el rut "10.000.102-0"
@@ -129,6 +142,7 @@ Scenario: Validar busqueda sobre el total de datos en tab vigentes con rut perso
         When presiono el boton "Buscar"
         Then se realiza la busqueda sobre el total de datos
 
+  @TestCaseKey=CDNVIS-T848
 Scenario: Validar funcionamiento del icono lupa
         Given el usuario "JLABORDEB" ingreso a V360
         And busco el rut "10.000.102-0"
@@ -138,6 +152,7 @@ Scenario: Validar funcionamiento del icono lupa
         And colapso el filtro
         Then se colapsa la seccion de filtro
 
+  @TestCaseKey=CDNVIS-T849
 Scenario: Validar busqueda sobre el total de datos en tab vigentes con rut persona
         Given el usuario "JLABORDEB" ingreso a V360
         And busco el rut "10.000.102-0"
@@ -148,6 +163,7 @@ Scenario: Validar busqueda sobre el total de datos en tab vigentes con rut perso
         When presiono el boton "Buscar"
         Then el sistema arroja el mensaje "No se encontraron resultados"
 
+  @TestCaseKey=CDNVIS-T850
 Scenario: Validar funcionalidad del boton buscar en tab vigentes con rut persona
         Given el usuario "JLABORDEB" ingreso a V360
         And busco el rut "10.000.102-0"
