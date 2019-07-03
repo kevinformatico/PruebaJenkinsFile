@@ -1,5 +1,4 @@
 # encoding: utf-8
-  @run
 Feature: CV-1519
 
 

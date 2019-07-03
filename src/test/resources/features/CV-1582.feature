@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-Feature: CV-1519
+Feature: CV-1582
 
 
 #C1: El sistema debe permitir acceder al listado completo de todas las garantías Históricas asociadas a un cliente.
@@ -126,7 +126,7 @@ Scenario: Validar funcionalidad del boton buscar en tab Históricas con rut pers
         And ingreso a detalle de garantias persona
         And me encuentro en el tab "Históricas"
         And despliego el filtro
-        And ingreso el valor "269163" en el filtro "Folio"
+        And ingreso el valor "160503" en el filtro "Folio"
         When presiono el boton "Buscar"
         Then se aplican los filtros
 
@@ -137,7 +137,7 @@ Scenario: Validar busqueda sobre el total de datos en tab Históricas con rut pe
         And ingreso a detalle de garantias persona
         And me encuentro en el tab "Históricas"
         And despliego el filtro
-        And ingreso el valor "269163" en el filtro "Folio"
+        And ingreso el valor "160503" en el filtro "Folio"
         When presiono el boton "Buscar"
         Then se realiza la busqueda sobre el total de datos
 
@@ -162,13 +162,14 @@ Scenario: Validar busqueda sobre el total de datos en tab Históricas con rut pe
         When presiono el boton "Buscar"
         Then el sistema arroja el mensaje "No se encontraron resultados"
 
-  @TestCaseKey=CDNVIS-T891
+  @TestCaseKey=CDNVIS-T891 @run
 Scenario: Validar funcionalidad del boton buscar en tab Históricas con rut persona
         Given el usuario "JLABORDEB" ingreso a V360
     And busco el rut "3.681.806-9"
     And ingreso a detalle de garantias persona
     And me encuentro en el tab "Históricas"
     And despliego el filtro
-    When ingreso el valor "269163" en el filtro "Folio"
+    When ingreso el valor "160503" en el filtro "Folio"
     And presiono el boton "Buscar"
     Then se aplican los filtros
+

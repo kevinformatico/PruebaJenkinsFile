@@ -1,5 +1,5 @@
 # encoding: utf-8
-Feature: CV-1519
+Feature: CV-1581
 
 
 #C1: El sistema debe permitir acceder al listado completo de todas las garantías Por constituir asociadas a un cliente.
