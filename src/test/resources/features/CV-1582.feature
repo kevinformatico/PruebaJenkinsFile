@@ -4,7 +4,7 @@ Feature: CV-1582
 
 
 #C1: El sistema debe permitir acceder al listado completo de todas las garantías Históricas asociadas a un cliente.
-  @TestCaseKey=CDNVIS-T876
+  @TestCaseKey=CDNVIS-T892
 Scenario: Validar columnas Tab "Históricas" con rut persona
     Given el usuario "JLABORDEB" ingreso a V360
     And busco el rut "3.681.806-9"
@@ -21,7 +21,7 @@ Scenario: Validar columnas Tab "Históricas" con rut persona
       | Tasación                                              |
       | Seguro                                                |
 
-  @TestCaseKey=CDNVIS-T877
+  @TestCaseKey=CDNVIS-T893
 Scenario: Validar mensaje en caso de no existir garantias Históricas con rut persona
     Given el usuario "JLABORDEB" ingreso a V360
     And busco el rut "1.658.793-1"
@@ -30,7 +30,7 @@ Scenario: Validar mensaje en caso de no existir garantias Históricas con rut pe
     Then el sistema muestra el mensaje "Sin garantías históricas"
     And el nombre del tab indica "Históricas [0]"
 
-  @TestCaseKey=CDNVIS-T878
+  @TestCaseKey=CDNVIS-T894
 Scenario: Validar campo faltante tab "Históricas" con rut persona
   Given el usuario "JLABORDEB" ingreso a V360
   And busco el rut "3.681.806-9"
@@ -38,7 +38,7 @@ Scenario: Validar campo faltante tab "Históricas" con rut persona
   When me encuentro en el tab "Históricas"
   Then el sistema muestra un guion en el campo faltante
 
-  @TestCaseKey=CDNVIS-T879
+  @TestCaseKey=CDNVIS-T895
 Scenario: Validar extension de columnas en el tab "Históricas" con rut persona
   Given el usuario "JLABORDEB" ingreso a V360
   And busco el rut "3.681.806-9"
@@ -47,7 +47,7 @@ Scenario: Validar extension de columnas en el tab "Históricas" con rut persona
   When hago click en el cuerpo de la columna "Tipo de Bien"
   Then la columna se expande
 
-  @TestCaseKey=CDNVIS-T880
+  @TestCaseKey=CDNVIS-T896
 Scenario: Validar ordenamiento por defecto del listado de garantias Históricas con rut persona
     Given el usuario "JLABORDEB" ingreso a V360
     And busco el rut "3.681.806-9"
@@ -55,7 +55,7 @@ Scenario: Validar ordenamiento por defecto del listado de garantias Históricas 
     When me encuentro en el tab "Históricas"
     Then aparece el listado de garantias ordenado por defecto segun folio de manera ascendente
 
-  @TestCaseKey=CDNVIS-T881
+  @TestCaseKey=CDNVIS-T897
 Scenario: Ordenamiento del listado de Garantias Históricas con rut persona
   Given el usuario "JLABORDEB" ingreso a V360
   And busco el rut "3.681.806-9"
@@ -64,7 +64,7 @@ Scenario: Ordenamiento del listado de Garantias Históricas con rut persona
   When hago click en la cabecera de la columna "Folio"
   Then se ordenara por esa columna
 
-  @TestCaseKey=CDNVIS-T882
+  @TestCaseKey=CDNVIS-T898
 Scenario: Reordenamiento del listado de Garantias Históricas con rut persona
     Given el usuario "JLABORDEB" ingreso a V360
     And busco el rut "3.681.806-9"
@@ -74,7 +74,7 @@ Scenario: Reordenamiento del listado de Garantias Históricas con rut persona
     And hago click nuevamente en la cabecera de la columna "Tipo de Bien"
     Then se invierte el orden de esa columna
 
-  @TestCaseKey=CDNVIS-T883
+  @TestCaseKey=CDNVIS-T899
 Scenario: Validar visualizacion del paginador de tab vigente con rut persona
       Given el usuario "JLABORDEB" ingreso a V360
       And busco el rut "3.681.806-9"
@@ -83,7 +83,7 @@ Scenario: Validar visualizacion del paginador de tab vigente con rut persona
       And el cliente tiene mas de 10 registros
       Then se muestra el paginador
 
-  @TestCaseKey=CDNVIS-T884
+  @TestCaseKey=CDNVIS-T900
 Scenario: Validar opciones del paginador del paginador
       Given el usuario "JLABORDEB" ingreso a V360
       And busco el rut "3.681.806-9"
@@ -94,7 +94,7 @@ Scenario: Validar opciones del paginador del paginador
       | 10 |
       | 25 |
       | 50 |
-  @TestCaseKey=CDNVIS-T885
+  @TestCaseKey=CDNVIS-T901
 Scenario: Validar campos filtro en Tab Históricas con rut persona
         Given el usuario "JLABORDEB" ingreso a V360
         And busco el rut "3.681.806-9"
@@ -108,7 +108,7 @@ Scenario: Validar campos filtro en Tab Históricas con rut persona
         | Limpiar |
         | Buscar |
 
-  @TestCaseKey=CDNVIS-T886
+  @TestCaseKey=CDNVIS-T902
 Scenario: Validar funcionalidad del boton limpiar en tab Históricas con rut persona
         Given el usuario "JLABORDEB" ingreso a V360
         And busco el rut "3.681.806-9"
@@ -119,7 +119,7 @@ Scenario: Validar funcionalidad del boton limpiar en tab Históricas con rut per
         When presiono el boton "Limpiar"
         Then los filtros se limpian
 
-  @TestCaseKey=CDNVIS-T887
+  @TestCaseKey=CDNVIS-T903
 Scenario: Validar funcionalidad del boton buscar en tab Históricas con rut persona
         Given el usuario "JLABORDEB" ingreso a V360
         And busco el rut "3.681.806-9"
@@ -130,7 +130,7 @@ Scenario: Validar funcionalidad del boton buscar en tab Históricas con rut pers
         When presiono el boton "Buscar"
         Then se aplican los filtros
 
-  @TestCaseKey=CDNVIS-T888
+  @TestCaseKey=CDNVIS-T904
 Scenario: Validar busqueda sobre el total de datos en tab Históricas con rut persona
         Given el usuario "JLABORDEB" ingreso a V360
         And busco el rut "3.681.806-9"
@@ -141,7 +141,7 @@ Scenario: Validar busqueda sobre el total de datos en tab Históricas con rut pe
         When presiono el boton "Buscar"
         Then se realiza la busqueda sobre el total de datos
 
-  @TestCaseKey=CDNVIS-T889
+  @TestCaseKey=CDNVIS-T905
 Scenario: Validar funcionamiento del icono lupa
         Given el usuario "JLABORDEB" ingreso a V360
         And busco el rut "3.681.806-9"
@@ -151,7 +151,7 @@ Scenario: Validar funcionamiento del icono lupa
         And colapso el filtro
         Then se colapsa la seccion de filtro
 
-  @TestCaseKey=CDNVIS-T890
+  @TestCaseKey=CDNVIS-T906
 Scenario: Validar busqueda sobre el total de datos en tab Históricas con rut persona
         Given el usuario "JLABORDEB" ingreso a V360
         And busco el rut "3.681.806-9"
@@ -162,9 +162,9 @@ Scenario: Validar busqueda sobre el total de datos en tab Históricas con rut pe
         When presiono el boton "Buscar"
         Then el sistema arroja el mensaje "No se encontraron resultados"
 
-  @TestCaseKey=CDNVIS-T891 @run
+  @TestCaseKey=CDNVIS-T907 @run
 Scenario: Validar funcionalidad del boton buscar en tab Históricas con rut persona
-        Given el usuario "JLABORDEB" ingreso a V360
+    Given el usuario "JLABORDEB" ingreso a V360
     And busco el rut "3.681.806-9"
     And ingreso a detalle de garantias persona
     And me encuentro en el tab "Históricas"
