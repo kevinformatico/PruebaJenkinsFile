@@ -70,6 +70,7 @@ public class DetalleGarantiasPO extends BasePage {
     }
 
     public void clickTab(String tab){
+        waitUntilEscritorioComercialIsLoaded();
         driver.findElement(By.xpath("//a[contains(text(),'"+tab+"')]")).click();
     }
 
@@ -185,6 +186,11 @@ public class DetalleGarantiasPO extends BasePage {
         }else{
             driver.findElement(By.xpath(seccionFiltro+objFiltro+"//input")).sendKeys(valor);
         }
+    }
+
+    public String getTextMensajeTablaGarantias(){
+        waitUntilEscritorioComercialIsLoaded();
+        return driver.findElement(By.xpath("//section[@id='error-handler_alerta_error-template' and not(contains(@class,'ng-hide'))]//h5")).getText();
     }
 }
 

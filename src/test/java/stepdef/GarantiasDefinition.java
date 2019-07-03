@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.regex.Matcher;
 
 public class GarantiasDefinition {
 
@@ -80,8 +81,7 @@ public class GarantiasDefinition {
 
     @Then("el sistema muestra el mensaje {string}")
     public void el_sistema_muestra_el_mensaje_string(String mensaje){
-        detalleGarantiasPO.esperarAQueCargueLaPagina();
-        DriverFactory.getDriver().findElement(By.xpath("//h5[contains(text(),'"+mensaje+"')]"));
+        Assert.assertEquals("El mensaje no es igual al esperado", mensaje, detalleGarantiasPO.getTextMensajeTablaGarantias());
     }
 
     @Then("el nombre del tab indica {string}")
@@ -135,6 +135,7 @@ public class GarantiasDefinition {
     @Then("aparece el listado de garantias ordenado por defecto segun folio de manera ascendente")
     public void aparece_el_listado_de_garantias_ordenado_por_defecto_segun_folio_de_manera_ascendente(){
         JsonArray datosTabla = detalleGarantiasPO.getJsonFromTabla();
+        System.out.println("Los datos originales de la tabla son:" + datosTabla);
         JsonArray sortedJsonArray = new JsonArray();
 
         List<JsonObject> datosAOrdenar = new ArrayList<>();
@@ -143,8 +144,7 @@ public class GarantiasDefinition {
         }
 
         Collections.sort( datosAOrdenar, new Comparator<JsonObject>() {
-            private static final String KEY_NAME = "Folio";
-
+            private static final String KEY_NAME = "Seguro";
             @Override
             public int compare(JsonObject a, JsonObject b) {
                 String valA = new String();
@@ -164,8 +164,7 @@ public class GarantiasDefinition {
         for (int i = 0; i < datosAOrdenar.size(); i++) {
             sortedJsonArray.add(datosAOrdenar.get(i));
         }
-
-
+        System.out.println("Los datos ordenados son: " + sortedJsonArray);
 
     }
 
