@@ -3,7 +3,7 @@
 Feature: No impacto R29 - V360
 
 
-  @TestCaseKey=CDNVIS-T848
+  @TestCaseKey=CDNVIS-T908
   Scenario: Validar funcionamiento despliegue filtro
     Given el usuario "JLABORDEB" ingreso a V360
     And busco el rut "10.000.102-0"
@@ -13,7 +13,7 @@ Feature: No impacto R29 - V360
     And colapso el filtro
     Then se colapsa la seccion de filtro
 
-  @TestCaseKey=CDNVIS-T845
+  @TestCaseKey=CDNVIS-T909
   Scenario: Validar funcionalidad del boton limpiar en tab vigentes con rut persona
     Given el usuario "JLABORDEB" ingreso a V360
     And busco el rut "10.000.102-0"

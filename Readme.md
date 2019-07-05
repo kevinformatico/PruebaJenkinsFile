@@ -1,5 +1,17 @@
 # V360 testing Junit-Cucumber-Selenium
 
+### __IMPORTANTE__: Se debe configurar la siguiente variable de entorno para asegurar la correcta ejecución del proyecto
+``JAVA_TOOL_OPTIONS = -Dfile.encoding=UTF8`` 
+
+
+## Ejecución de pruebas
+
+ - __No impacto__: Se debe ejecutar el siguiente comando ``mvn clean install -Dcucumber.options='--tags @NoImpactoR29'``
+ - __Historia de usuario__: Se debe ejecutar el siguiente comando ``mvn clean install -Dcucumber.options='--tags @CV-1519'``, 
+    donde el ``@CV-1519`` indica la historia en jira.
+ - __Ejecución todas las historias de usuarios__: ``mvn clean install -Dcucumber.options='--tags ~@NoImpactoR29'`` la ``~``indica que se debe ignorar el tag
+
+
 ### Environment Setup
 
 - Install [JDK 8](https://www3.ntu.edu.sg/home/ehchua/programming/howto/JDK_Howto.html) 
