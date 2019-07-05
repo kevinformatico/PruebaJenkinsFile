@@ -95,7 +95,7 @@
 						</goals>
 						<configuration>
 							<includes>
-								<include>**/*Runner.java</include>
+								<include>**/Runner*.java</include>
 							</includes>
 
 							<!--<parallel>methods</parallel>
