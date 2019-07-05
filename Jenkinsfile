@@ -13,7 +13,7 @@ pipeline {
          }
     stage('Integration Test') {
       steps {
-        sh 'mvn install -Dheadless=true'
+        sh 'mvn install -Dcucumber.options='--tags @NoImpactoR29' -Dheadless=true'
       }
     }
   }
