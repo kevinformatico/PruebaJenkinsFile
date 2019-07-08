@@ -11,7 +11,7 @@ pipeline {
             sh 'mvn clean'
             }
          }
-    stage('Integration Test') {
+    stage('No impacto') {
       steps {
         sh 'mvn install -Dcucumber.options='--tags @NoImpactoR29' -Dheadless=true'
       }
