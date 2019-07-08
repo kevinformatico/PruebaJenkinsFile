@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('No impacto') {
       steps {
-        sh 'mvn install -Dcucumber.options=--tags @NoImpactoR29 -Dheadless=true'
+        sh 'mvn clean install -Dheadless=true'
       }
     }
   }
