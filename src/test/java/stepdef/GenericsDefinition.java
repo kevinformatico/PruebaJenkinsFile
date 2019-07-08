@@ -1,5 +1,6 @@
 package stepdef;
 
+import Generics.util;
 import com.neovisionaries.ws.client.WebSocketException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -8,6 +9,7 @@ import com.pgtoopx.BuilderMessages;
 import com.pgtoopx.ChromeDevTools;
 import driver.SharedDriver;
 
+import org.junit.Assert;
 import pageobjects.*;
 
 import java.io.IOException;
@@ -46,13 +48,40 @@ public class GenericsDefinition {
 
     @Given("el usuario {string} ingreso a V360")
     public void el_usuario_string_ingresa_a_v360(String usuario){
-        paginaInicioPO.iniciarSesion(usuario, "Banco01");
+        String password;
+
+        switch (usuario){
+            case "MNILOS": password="Venta01";break;
+            default:password="Banco01";break;
+        }
+        paginaInicioPO.iniciarSesion(usuario, password);
         detalleGarantiasPO.takeScreenshot();
     }
 
     @Given("busco el rut {string}")
     public void busco_el_rut_string(String rut){
         escritorioComercialPO.buscarPorRut(rut);
+    }
+
+    @Given("ingreso a Vista 360 {string}")
+    public void ingreso_a_vista_360_empresa_persona(String tipo){
+        switch (tipo){
+            case "empresa":
+                if (!vista360ResumenPersonaPO.getTituloVista360().toLowerCase().contains("empresa")&&
+                vista360ResumenPersonaPO.isVisibleBtnCambiarEmpresaPersona()){
+                    vista360ResumenPersonaPO.clickCambiarEmpresaPersona();
+                }else{
+                    Assert.fail("El rut ingresado no tiene perfil empresa");
+                }
+                break;
+            case "persona":
+                if(!vista360ResumenPersonaPO.getTituloVista360().toLowerCase().contains("persona")&&
+                vista360ResumenPersonaPO.isVisibleBtnCambiarEmpresaPersona()){
+                    vista360ResumenPersonaPO.clickCambiarEmpresaPersona();
+                }else{
+                    Assert.fail("El rut ingresado no tiene perfil persona");
+                }
+        }
     }
 
     @When("Se pierde la conexion de internet")

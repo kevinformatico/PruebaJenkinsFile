@@ -11,13 +11,19 @@ public class Vista360ResumenEmpresaPO extends BasePage{
     }
 
     @FindBy(id = "v360_cabecera-empresa_inteligencia-empresa_garantias-empresa_enlace")
-    private
-    WebElement botonGarantiasEmpresa;
+    private WebElement botonGarantiasEmpresa;
 
+    @FindBy(xpath = "//ng-include[not(contains(@class,'hide'))]//button[contains(@ng-click,'linkContrar')]")
+    private WebElement botonContratarProductos;
 
 
     public void clickBotonGarantiasEmpresa(){
         waitUntilEscritorioComercialIsLoaded();
         botonGarantiasEmpresa.click();
+    }
+
+    public void clickBotonContratarProductos(){
+        waitUntilEscritorioComercialIsLoaded();
+        botonContratarProductos.click();
     }
 }

@@ -19,9 +19,18 @@ public class Vista360ResumenPersonaPO extends BasePage {
     @FindBy(id = "v360_cabecera-persona_inteligencia-persona_garantias-persona_enlace")
     private WebElement botonGarantiasPersona;
 
-    public void clickCambiarEmpresaPersona() {
+    public Vista360ResumenEmpresaPO clickCambiarEmpresaPersona() {
         waitForElementToAppear(cambiarEmpresaPersona);
         cambiarEmpresaPersona.click();
+        return new Vista360ResumenEmpresaPO();
+    }
+
+    public boolean isVisibleBtnCambiarEmpresaPersona(){
+        return isVisible(cambiarEmpresaPersona);
+    }
+
+    public String getTituloVista360(){
+        return titulo.getText();
     }
     public void clickBoxGarantias() {
         waitUntilEscritorioComercialIsLoaded();
