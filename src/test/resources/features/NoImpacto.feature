@@ -2,9 +2,11 @@
 Feature: No Impacto Venta Empresa
   @run
   Scenario: Validar flujo PYME MN
-    #Given el usuario "MNILOS" ingreso a V360
-    #And busco el rut "4.889.509-3"
-    And ingreso a Vista 360 empresa
+    Given el usuario "MNILOS" ingreso a V360
+    And busco el rut "4.889.509-3"
+    And ingreso a Vista 360 "empresa"
+    And voy a contratar el producto "Cta. Cte. Normal - PYME"
+    And espero por 2 segundos
 
 
 

@@ -1,4 +1,4 @@
-package pageobjects;
+package pageobjects.garantias;
 
 import Generics.ManejadorTablaFrontEnd;
 import Generics.util;
@@ -12,6 +12,7 @@ import org.openqa.selenium.interactions.SourceType;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
+import pageobjects.BasePage;
 
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
@@ -71,7 +72,7 @@ public class DetalleGarantiasPO extends BasePage {
 
     public void clickTab(String tab){
         waitUntilEscritorioComercialIsLoaded();
-        driver.findElement(By.xpath("//a[contains(text(),'"+tab+"')]")).click();
+        getDriver().findElement(By.xpath("//a[contains(text(),'"+tab+"')]")).click();
     }
 
     public void esperarAQueCargueLaPagina(){
@@ -80,12 +81,12 @@ public class DetalleGarantiasPO extends BasePage {
 
     public void clickEnCabecera(String cabecera){
         waitForElementToAppear(tabla);
-        DriverFactory.getDriver().findElement(By.xpath("//div[contains(@class,'table')]//th[contains(text(),'"+cabecera+"')]")).click();
+        getDriver().findElement(By.xpath("//div[contains(@class,'table')]//th[contains(text(),'"+cabecera+"')]")).click();
     }
 
     public Dimension obtenerSizeCabecera(String cabecera){
         waitForElementToAppear(tabla);
-        return DriverFactory.getDriver().findElement(By.xpath("//th[contains(text(),'"+cabecera+"')]")).getSize();
+        return getDriver().findElement(By.xpath("//th[contains(text(),'"+cabecera+"')]")).getSize();
     }
 
     public boolean estaVisiblePaginador(){
@@ -151,7 +152,7 @@ public class DetalleGarantiasPO extends BasePage {
     }
 
     public void clickEnBotoneraFiltro(String boton) {
-        driver.findElement(By
+        getDriver().findElement(By
                 .xpath("//div[contains(@class,'search-bar__buttonset')]//button[contains(text(),'"+boton.trim()+"')]"))
                 .click();
     }
@@ -161,7 +162,7 @@ public class DetalleGarantiasPO extends BasePage {
     }
 
     public boolean validarMensaje(String mensaje){
-        return driver.findElement(
+        return getDriver().findElement(
                 By.xpath("//section[contains(@class,'bch-mensaje-empresa')]//h5[contains(text(),'"+mensaje+"')]"))
                 .getText().trim().contains(mensaje);
     }
@@ -170,7 +171,7 @@ public class DetalleGarantiasPO extends BasePage {
         List<String> cabeceras = ManejadorTablaFrontEnd.getNameColumns(tabla);
         for(int i=0;i<cabeceras.size();i++){
             if(cabeceras.get(i).equals(cabecera)){
-                driver.findElement(By.xpath("//div[contains(@ng-if,'listadoGarantias')]//tr[1]/td["+(i+1)+"]")).click();
+                getDriver().findElement(By.xpath("//div[contains(@ng-if,'listadoGarantias')]//tr[1]/td["+(i+1)+"]")).click();
             }
         }
     }
@@ -180,17 +181,17 @@ public class DetalleGarantiasPO extends BasePage {
         String objFiltro="//div[contains(label, '"+filtro+"')]";
         String desplegarLista="//i[contains(@ng-click,'event')]";
         String seleccion= "//li//a[contains(span,'"+valor+"')]";
-        if(driver.findElement(By.xpath(seccionFiltro+objFiltro+"//input")).getAttribute("class").contains("select")){
-            driver.findElement(By.xpath(seccionFiltro+objFiltro+desplegarLista)).click();
-            driver.findElement(By.xpath(seleccion)).click();
+        if(getDriver().findElement(By.xpath(seccionFiltro+objFiltro+"//input")).getAttribute("class").contains("select")){
+            getDriver().findElement(By.xpath(seccionFiltro+objFiltro+desplegarLista)).click();
+            getDriver().findElement(By.xpath(seleccion)).click();
         }else{
-            driver.findElement(By.xpath(seccionFiltro+objFiltro+"//input")).sendKeys(valor);
+            getDriver().findElement(By.xpath(seccionFiltro+objFiltro+"//input")).sendKeys(valor);
         }
     }
 
     public String getTextMensajeTablaGarantias(){
         waitUntilEscritorioComercialIsLoaded();
-        return driver.findElement(By.xpath("//section[@id='error-handler_alerta_error-template' and not(contains(@class,'ng-hide'))]//h5")).getText();
+        return getDriver().findElement(By.xpath("//section[@id='error-handler_alerta_error-template' and not(contains(@class,'ng-hide'))]//h5")).getText();
     }
 }
 

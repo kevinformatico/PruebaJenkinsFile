@@ -1,6 +1,5 @@
 package pageobjects;
 
-import driver.DriverFactory;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -8,9 +7,6 @@ import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Queue;
 
 public class BasePage {
 
@@ -21,8 +17,7 @@ public class BasePage {
     private final WebDriverWait wait;
 
     @FindBy(id = "loading-bar")
-    private
-    WebElement barraCargando;
+    private WebElement barraCargando;
 
     protected BasePage(WebDriver driver){
         this.driver=driver;
@@ -40,6 +35,10 @@ public class BasePage {
         this.driver=driver;
         this.wait= new WebDriverWait(driver, timeOutSec, pollingSec);
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, timeOutSec), this);
+    }
+
+    protected WebDriver getDriver(){
+        return driver;
     }
 
     protected void waitForElementToAppear(WebElement element) {

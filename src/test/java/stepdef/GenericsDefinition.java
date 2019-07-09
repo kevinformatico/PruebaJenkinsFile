@@ -11,6 +11,8 @@ import driver.SharedDriver;
 
 import org.junit.Assert;
 import pageobjects.*;
+import pageobjects.garantias.AsideGarantiasEmpresaPO;
+import pageobjects.garantias.DetalleGarantiasPO;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -25,7 +27,6 @@ public class GenericsDefinition {
     AsideGarantiasEmpresaPO asideGarantiasEmpresaPO;
     Vista360ResumenEmpresaPO vista360ResumenEmpresaPO;
     ArrayList<byte[]> screenshotList;
-    //ConexionDB conexionDB;
 
     public GenericsDefinition(SharedDriver driver,
                               ArrayList<byte[]> screenshotList,
@@ -87,6 +88,11 @@ public class GenericsDefinition {
     @When("Se pierde la conexion de internet")
     public void se_pierde_la_conexion_de_internet() throws InterruptedException, WebSocketException, IOException {
         ChromeDevTools.sendWSMessage(BuilderMessages.buildNetworkEmulationOffline());
+    }
+
+    @When("espero por {int} segundos")
+    public void se_pierde_la_conexion_de_internet(int segundos) {
+        util.waitFor(segundos);
     }
 
     @Then("pruebo algo")
