@@ -3,10 +3,13 @@ package stepdef;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 import driver.SharedDriver;
+import io.cucumber.datatable.DataTable;
 import pageobjects.*;
 import pageobjects.ventaEmpresa.ConfiguracionDeProductosPO;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class VentaEmpresaDefinition {
 
@@ -33,14 +36,28 @@ public class VentaEmpresaDefinition {
         this.configuracionDeProductosPO=configuracionDeProductosPO;
     }
 
-
-
-    @Given("voy a contratar el producto {string}")
-    public void voy_a_contratar_el_producto_string (String nombreProducto){
+    @Given("voy a contratar un producto")
+    public void voy_a_contratar_un_producto(){
         vista360ResumenEmpresaPO.clickBotonContratarProductos();
-        configuracionDeProductosPO.expanderFamilia("Líneas");
+    }
 
-        // TODO: 2019-07-08 realizar flujo para contratar producto
+    @Given("despliego familia {string}")
+    public void despliego_familia_string(String nombreFamilia){
+        configuracionDeProductosPO.expanderFamilia(nombreFamilia);
+    }
+
+
+
+    @Given("voy a contratar el producto {string} con los siguientes valores:")
+    public void voy_a_contratar_el_producto_string (String producto, DataTable tabla){
+        configuracionDeProductosPO.seleccionoElProducto(producto);
+        configuracionDeProductosPO.ingresarValoresAlProducto(tabla);
+        configuracionDeProductosPO.clickAgregarAOportunidad();
+    }
+    
+    @Given("continuo a presentación de productos")
+    public void continuo_a_presentacion_de_productos (){
+        configuracionDeProductosPO.continuarAPresentacionDelProducto();
     }
 
 

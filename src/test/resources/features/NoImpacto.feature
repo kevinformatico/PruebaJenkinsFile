@@ -5,8 +5,18 @@ Feature: No Impacto Venta Empresa
     Given el usuario "MNILOS" ingreso a V360
     And busco el rut "4.889.509-3"
     And ingreso a Vista 360 "empresa"
-    And voy a contratar el producto "Cta. Cte. Normal - PYME"
-    And espero por 2 segundos
+    And voy a contratar un producto
+    And despliego familia "Líneas"
+    And voy a contratar el producto "Línea de Crédito Privada" con los siguientes valores:
+    | clave | valor |
+    | Monto a Solicitar| 300000000 |
+    | Spread| 3 |
+    | Tipo Plazo| Indefinido |
+    | cuenta asociada| 003680717700 |
+    | Aumento programado de cupo| 3 veces ingreso mensual |
+    And continuo a presentación de productos
+
+    And espero por 20 segundos
 
 
 
