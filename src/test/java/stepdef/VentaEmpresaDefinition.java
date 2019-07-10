@@ -60,6 +60,11 @@ public class VentaEmpresaDefinition {
         configuracionDeProductosPO.continuarAPresentacionDelProducto();
     }
 
+    @Given("agrego los siguientes datos adicionales")
+    public void agrego_los_siguientes_datos_adicionales(DataTable datosAdicionales){
+
+    }
+
 
 
 }

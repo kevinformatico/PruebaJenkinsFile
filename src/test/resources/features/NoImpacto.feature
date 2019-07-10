@@ -13,9 +13,15 @@ Feature: No Impacto Venta Empresa
     | Spread| 3 |
     | Tipo Plazo| Indefinido |
     | cuenta asociada| 003680717700 |
-    | Aumento programado de cupo| 3 veces ingreso mensual |
+    | Aumento programado de cupo | 3 veces ingreso mensual |
     And continuo a presentación de productos
-
+    And agrego los siguientes datos adicionales
+    |clave|valor|
+    |clave|valor|
+    And Adjunto los siguientes documentos
+      |clave|valor|
+      |clave|valor|
+    Then envio a previsado
     And espero por 20 segundos
 
 

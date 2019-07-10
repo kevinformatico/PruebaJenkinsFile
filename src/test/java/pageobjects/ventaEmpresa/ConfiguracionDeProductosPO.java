@@ -22,6 +22,7 @@ public class ConfiguracionDeProductosPO extends BasePage {
     String familia;
 
 
+
     @FindBy(xpath = "//div[contains(@role,'ROLE_VTAPYMECONTR_EJECUTAR')]/div[contains(@ng-class,'vm.showCarro')]")
     private WebElement contenedorFamilias;
 
