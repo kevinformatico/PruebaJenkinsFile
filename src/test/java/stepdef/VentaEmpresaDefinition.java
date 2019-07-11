@@ -1,15 +1,16 @@
 package stepdef;
 
 import cucumber.api.java.en.Given;
-import cucumber.api.java.en.When;
+import driver.DriverFactory;
 import driver.SharedDriver;
 import io.cucumber.datatable.DataTable;
 import pageobjects.*;
 import pageobjects.ventaEmpresa.ConfiguracionDeProductosPO;
+import pageobjects.ventaEmpresa.DatosAdicionalesPO;
+import pageobjects.ventaEmpresa.DocumentosAdjuntosPO;
+import pageobjects.ventaEmpresa.PresentacionDeProductosPO;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public class VentaEmpresaDefinition {
 
@@ -18,6 +19,9 @@ public class VentaEmpresaDefinition {
     Vista360ResumenPersonaPO vista360ResumenPersonaPO;
     Vista360ResumenEmpresaPO vista360ResumenEmpresaPO;
     ConfiguracionDeProductosPO configuracionDeProductosPO;
+    PresentacionDeProductosPO presentacionDeProductosPO;
+    DatosAdicionalesPO datosAdicionalesPO;
+    DocumentosAdjuntosPO documentosAdjuntosPO;
     ArrayList<byte[]> screenshotList;
 
     public VentaEmpresaDefinition(SharedDriver driver,
@@ -26,6 +30,9 @@ public class VentaEmpresaDefinition {
                               EscritorioComercialPO escritorioComercialPO,
                               Vista360ResumenPersonaPO vista360ResumenPersonaPO,
                               ConfiguracionDeProductosPO configuracionDeProductosPO,
+                              PresentacionDeProductosPO presentacionDeProductosPO,
+                              DatosAdicionalesPO datosAdicionalesPO,
+                              DocumentosAdjuntosPO documentosAdjuntosPO,
                               Vista360ResumenEmpresaPO vista360ResumenEmpresaPO)
     {
         this.screenshotList=screenshotList;
@@ -34,6 +41,9 @@ public class VentaEmpresaDefinition {
         this.vista360ResumenPersonaPO= vista360ResumenPersonaPO;
         this.vista360ResumenEmpresaPO=vista360ResumenEmpresaPO;
         this.configuracionDeProductosPO=configuracionDeProductosPO;
+        this.presentacionDeProductosPO=presentacionDeProductosPO;
+        this.datosAdicionalesPO=datosAdicionalesPO;
+        this.documentosAdjuntosPO=documentosAdjuntosPO;
     }
 
     @Given("voy a contratar un producto")
@@ -62,7 +72,9 @@ public class VentaEmpresaDefinition {
 
     @Given("agrego los siguientes datos adicionales")
     public void agrego_los_siguientes_datos_adicionales(DataTable datosAdicionales){
-
+        presentacionDeProductosPO.extraerDatosPresentacionDelProducto();
+        datosAdicionalesPO = presentacionDeProductosPO.clickDatosAdicionales();
+        datosAdicionalesPO.probarDatosAdicionales();
     }
 
 

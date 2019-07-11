@@ -27,6 +27,7 @@ public class Hooks {
         this.scenario=scenario;
         if(DriverFactory.getDriver()!= null){
             DriverFactory.getDriver().manage().deleteAllCookies();
+            DriverFactory.getDriver().manage().window().maximize();
         }
     }
 

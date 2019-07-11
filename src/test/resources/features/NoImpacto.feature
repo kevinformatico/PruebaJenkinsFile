@@ -18,11 +18,14 @@ Feature: No Impacto Venta Empresa
     And agrego los siguientes datos adicionales
     |clave|valor|
     |clave|valor|
-    And Adjunto los siguientes documentos
-      |clave|valor|
-      |clave|valor|
-    Then envio a previsado
+    #And Adjunto los siguientes documentos
+    #  |clave|valor|
+    #  |clave|valor|
+    #Then envio a previsado
     And espero por 20 segundos
+
+
+
 
 
 
