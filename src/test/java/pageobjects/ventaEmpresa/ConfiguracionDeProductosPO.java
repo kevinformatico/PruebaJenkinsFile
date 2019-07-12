@@ -2,7 +2,6 @@ package pageobjects.ventaEmpresa;
 
 import driver.DriverFactory;
 import io.cucumber.datatable.DataTable;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,17 +16,19 @@ public class ConfiguracionDeProductosPO extends BasePage {
         super(DriverFactory.getDriver());
     }
 
+    //No sirve, fue reemplazado por ingresarValores *
     String xpathToGetSelectProductoFromFamilia="//cdn-detalle-familia-directive//div[label[contains(text(),'Producto')]]";
     String botonAgregarAOportunidad = "//button[contains(@class,'agregar-producto') and contains(text(),'Agregar a oportunidad')]";
     String familia;
 
 
+    final String XPATH_PARA_FLECHA_DESPLEGAR_FAMILIA = "//div[contains(@class,'actions')]/a[contains(@ng-click,'productos')]";
+
+    final String XPATH_PARA_CARRITO = "//div[contains(@role,'ROLE_VTAPYMECONTR_EJECUTAR')]/div[contains(@ng-class,'vm.compraActiva')]//div[contains(@class,'body')]//div[contains(@ng-repeat,'compraActiva')]//div[contains(p,'Línea de Crédito Privada')]";
+
 
     @FindBy(xpath = "//div[contains(@role,'ROLE_VTAPYMECONTR_EJECUTAR')]/div[contains(@ng-class,'vm.showCarro')]")
     private WebElement contenedorFamilias;
-
-    @FindBy(xpath = "//div[contains(@role,'ROLE_VTAPYMECONTR_EJECUTAR')]/div[contains(@ng-if,'vm.showCarro')]")
-    private WebElement contenedorProductosDeLaOportunidad; //TODO: fix
 
     @FindBy(xpath = "//a[contains(@ng-click,'vm.asideFacilitador')]")
     private WebElement linkFacilitadoresYPreferenciasDeAtencion;
@@ -35,6 +36,10 @@ public class ConfiguracionDeProductosPO extends BasePage {
     @FindBy(xpath = "//cdn-venta-taller-directive//div[contains(@ng-repeat,'listadoFamilias')]")
     private List<WebElement> familiasDisponibles;
 
+    @FindBy(xpath = "//div[contains(@ng-if,'vm.showCarro')]//a[contains(text(),'Continuar')]")
+    private WebElement botonContinuarAPresentacionDelProducto;
+
+    private WebElement formularioFamilia;
 
 
     /*
@@ -44,23 +49,26 @@ public class ConfiguracionDeProductosPO extends BasePage {
     public void expanderFamilia(String nombreFamilia){
         this.familia=nombreFamilia;
         waitUntilEscritorioComercialIsLoaded();
-        getDriver().findElement(By.xpath(crearXpathFamilia(nombreFamilia)+"//div[contains(@class,'actions')]/a")).click();
-
+        getDriver().findElement(By.xpath(crearXpathFamilia(nombreFamilia)+XPATH_PARA_FLECHA_DESPLEGAR_FAMILIA)).click();
     }
 
     public void seleccionoElProducto(String nombreProducto){
         pickValorSelect(crearXpathFamilia(this.familia)+xpathToGetSelectProductoFromFamilia,nombreProducto);
+        //WebElement formFamilia = getDriver().findElement(By.xpath(crearXpathFamilia(this.familia)));
+        //ingresarValorEnInput(formFamilia, "Producto", nombreProducto);
         waitUntilEscritorioComercialIsLoaded();
     }
 
     public void ingresarValorAlProducto(String clave, String valor){
-        ingresarValorEnInput(clave, valor);
+        WebElement formularioFamilia=getDriver().findElement(By.xpath(crearXpathFamilia(familia)));
+        ingresarValorEnInput(formularioFamilia, clave, valor);
     }
 
     public void ingresarValoresAlProducto(DataTable datos){
+        formularioFamilia= getDriver().findElement(By.xpath(crearXpathFamilia(familia)));
         List<Map<String,String>> tablaProducto = datos.asMaps();
         for (Map<String, String> fila :tablaProducto){
-            ingresarValorEnInput(fila.get("clave"),fila.get("valor"));
+            ingresarValorEnInput(fila.get("clave"), fila.get("valor"));
         }
     }
 
@@ -71,7 +79,7 @@ public class ConfiguracionDeProductosPO extends BasePage {
 
     public void continuarAPresentacionDelProducto(){
         waitUntilEscritorioComercialIsLoaded();
-        getDriver().findElement(By.xpath("//div[contains(@ng-if,'vm.showCarro')]//a[contains(text(),'Continuar')]")).click();
+        botonContinuarAPresentacionDelProducto.click();
     }
 
 
@@ -105,5 +113,25 @@ public class ConfiguracionDeProductosPO extends BasePage {
             getDriver().findElement(By.xpath(seccionProducto+objFiltro+"//input")).sendKeys(valor);
         }
     }
+
+    public void ingresarValorEnInput(WebElement formulario, String campo, String valor){
+        WebElement objFormulario= formulario.findElement(By.xpath("//div[contains(label, '"+campo+"')]"));
+        System.out.println("xpath Objeto "+campo);
+        System.out.println(objFormulario);
+        if(objFormulario.findElement(By.xpath("/div")).getAttribute("class").contains("select")){
+            objFormulario.findElement(By.xpath("//i[contains(@ng-click,'event')]")).click();
+            objFormulario.findElement(By.xpath("//li//a[contains(span,'"+valor+"')]")).click();
+        }else{
+            objFormulario.findElement(By.xpath("//input")).sendKeys(valor);
+        }
+
+    }
+
+    public boolean existeProductoEnElCarro(String nombreProducto){
+        WebElement producto = getDriver().findElement(By.xpath("//div[contains(@role,'ROLE_VTAPYMECONTR_EJECUTAR')]/div[contains(@ng-class,'vm.compraActiva')]//div[contains(@class,'body')]//div[contains(@ng-repeat,'compraActiva')]//div[contains(p,'"+nombreProducto+"')]"));
+        return isVisible(producto);
+    }
+
+
 
 }

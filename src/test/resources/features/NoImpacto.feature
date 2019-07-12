@@ -7,17 +7,18 @@ Feature: No Impacto Venta Empresa
     And ingreso a Vista 360 "empresa"
     And voy a contratar un producto
     And despliego familia "Líneas"
-    And voy a contratar el producto "Línea de Crédito Privada" con los siguientes valores:
+    When voy a contratar el producto "Línea de Crédito Privada" con los siguientes valores:
     | clave | valor |
     | Monto a Solicitar| 300000000 |
     | Spread| 3 |
     | Tipo Plazo| Indefinido |
     | cuenta asociada| 003680717700 |
     | Aumento programado de cupo | 3 veces ingreso mensual |
-    And continuo a presentación de productos
-    And agrego los siguientes datos adicionales
-    |clave|valor|
-    |clave|valor|
+    Then se agrega al carro correctamente
+    #And continuo a presentación de productos
+    #And agrego los siguientes datos adicionales
+    #|clave|valor|
+    #|clave|valor|
     #And Adjunto los siguientes documentos
     #  |clave|valor|
     #  |clave|valor|

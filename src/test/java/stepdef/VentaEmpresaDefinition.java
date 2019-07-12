@@ -1,9 +1,11 @@
 package stepdef;
 
 import cucumber.api.java.en.Given;
+import cucumber.api.java.en.When;
 import driver.DriverFactory;
 import driver.SharedDriver;
 import io.cucumber.datatable.DataTable;
+import org.junit.Assert;
 import pageobjects.*;
 import pageobjects.ventaEmpresa.ConfiguracionDeProductosPO;
 import pageobjects.ventaEmpresa.DatosAdicionalesPO;
@@ -23,6 +25,7 @@ public class VentaEmpresaDefinition {
     DatosAdicionalesPO datosAdicionalesPO;
     DocumentosAdjuntosPO documentosAdjuntosPO;
     ArrayList<byte[]> screenshotList;
+    String producto;
 
     public VentaEmpresaDefinition(SharedDriver driver,
                               ArrayList<byte[]> screenshotList,
@@ -60,6 +63,7 @@ public class VentaEmpresaDefinition {
 
     @Given("voy a contratar el producto {string} con los siguientes valores:")
     public void voy_a_contratar_el_producto_string (String producto, DataTable tabla){
+        this.producto=producto;
         configuracionDeProductosPO.seleccionoElProducto(producto);
         configuracionDeProductosPO.ingresarValoresAlProducto(tabla);
         configuracionDeProductosPO.clickAgregarAOportunidad();
@@ -68,13 +72,19 @@ public class VentaEmpresaDefinition {
     @Given("continuo a presentación de productos")
     public void continuo_a_presentacion_de_productos (){
         configuracionDeProductosPO.continuarAPresentacionDelProducto();
+        //Solo imprime por consola los valores de PresentacionDelProducto
+        presentacionDeProductosPO.extraerDatosPresentacionDelProducto();
     }
 
     @Given("agrego los siguientes datos adicionales")
     public void agrego_los_siguientes_datos_adicionales(DataTable datosAdicionales){
-        presentacionDeProductosPO.extraerDatosPresentacionDelProducto();
         datosAdicionalesPO = presentacionDeProductosPO.clickDatosAdicionales();
         datosAdicionalesPO.probarDatosAdicionales();
+    }
+
+    @When("se agrega al carro correctamente")
+    public void se_agrega_al_carro_correctamente (){
+        Assert.assertTrue(configuracionDeProductosPO.existeProductoEnElCarro(this.producto));
     }
 
 
