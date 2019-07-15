@@ -22,8 +22,8 @@ public class PageObjectManager {
     private DocumentosAdjuntosPO documentosAdjuntosPO;
     private PresentacionDeProductosPO presentacionDeProductosPO;
 
-    public PageObjectManager(WebDriver driver){
-        this.driver=driver;
+    public PageObjectManager(){
+        this.driver=DriverFactory.getDriver();
     }
 
     public EscritorioComercialPO getEscritorioComercialPO() {
