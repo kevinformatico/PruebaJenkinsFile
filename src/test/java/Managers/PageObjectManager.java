@@ -1,5 +1,6 @@
-package driver;
+package Managers;
 
+import Managers.driver.DriverFactory;
 import org.openqa.selenium.WebDriver;
 import pageobjects.EscritorioComercialPO;
 import pageobjects.PaginaInicioPO;
@@ -23,7 +24,7 @@ public class PageObjectManager {
     private PresentacionDeProductosPO presentacionDeProductosPO;
 
     public PageObjectManager(){
-        this.driver=DriverFactory.getDriver();
+        this.driver= DriverFactory.getDriver();
     }
 
     public EscritorioComercialPO getEscritorioComercialPO() {

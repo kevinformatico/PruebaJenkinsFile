@@ -4,7 +4,8 @@ import Generics.util;
 import com.neovisionaries.ws.client.WebSocketException;
 import com.pgtoopx.BuilderMessages;
 import com.pgtoopx.ChromeDevTools;
-import driver.SharedDriver;
+import Managers.PageObjectManager;
+import Managers.driver.SharedDriver;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -23,6 +24,8 @@ public class GenericsDefinition {
     final String DEFAULT_USERNAME="mnilos";
     final String DEFAULT_PASSWORD="Venta01";
 
+    PageObjectManager pageObjectManager;
+
     PaginaInicioPO paginaInicioPO;
     EscritorioComercialPO escritorioComercialPO;
     Vista360ResumenPersonaPO vista360ResumenPersonaPO;
@@ -31,16 +34,17 @@ public class GenericsDefinition {
 
     public GenericsDefinition(SharedDriver driver,
                               ArrayList<byte[]> screenshotList,
+                              PageObjectManager pageObjectManager,
                               PaginaInicioPO paginaInicioPO,
                               EscritorioComercialPO escritorioComercialPO,
                               Vista360ResumenPersonaPO vista360ResumenPersonaPO,
                               Vista360ResumenEmpresaPO vista360ResumenEmpresaPO)
     {
       this.screenshotList=screenshotList;
-      this.paginaInicioPO= paginaInicioPO;
-      this.escritorioComercialPO= escritorioComercialPO;
-      this.vista360ResumenPersonaPO= vista360ResumenPersonaPO;
-      this.vista360ResumenEmpresaPO=vista360ResumenEmpresaPO;
+      this.paginaInicioPO= pageObjectManager.getPaginaInicioPO();
+      this.escritorioComercialPO= pageObjectManager.getEscritorioComercialPO();
+      this.vista360ResumenPersonaPO= pageObjectManager.getVista360ResumenPersonaPO();
+      this.vista360ResumenEmpresaPO= pageObjectManager.getVista360ResumenEmpresaPO();
     }
 
 
@@ -115,6 +119,8 @@ public class GenericsDefinition {
                 if (!vista360ResumenPersonaPO.getTituloVista360().toLowerCase().contains("empresa")&&
                         vista360ResumenPersonaPO.isVisibleBtnCambiarEmpresaPersona()){
                     vista360ResumenPersonaPO.clickCambiarEmpresaPersona();
+                }else if(vista360ResumenPersonaPO.getTituloVista360().toLowerCase().contains("empresa")) {
+                    //hace nada xd
                 }else{
                     Assert.fail("El rut ingresado no tiene perfil empresa");
                 }

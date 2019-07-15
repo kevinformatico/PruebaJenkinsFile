@@ -1,6 +1,6 @@
 package Generics;
 
-import driver.DriverFactory;
+import Managers.driver.DriverFactory;
 import io.cucumber.core.api.Scenario;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.*;

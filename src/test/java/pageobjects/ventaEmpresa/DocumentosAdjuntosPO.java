@@ -1,6 +1,6 @@
 package pageobjects.ventaEmpresa;
 
-import driver.DriverFactory;
+import Managers.driver.DriverFactory;
 import pageobjects.BasePage;
 
 public class DocumentosAdjuntosPO extends BasePage {
