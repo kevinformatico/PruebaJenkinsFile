@@ -11,8 +11,6 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import pageobjects.*;
-import pageobjects.garantias.AsideGarantiasEmpresaPO;
-import pageobjects.garantias.DetalleGarantiasPO;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -27,9 +25,7 @@ public class GenericsDefinition {
 
     PaginaInicioPO paginaInicioPO;
     EscritorioComercialPO escritorioComercialPO;
-    DetalleGarantiasPO detalleGarantiasPO;
     Vista360ResumenPersonaPO vista360ResumenPersonaPO;
-    AsideGarantiasEmpresaPO asideGarantiasEmpresaPO;
     Vista360ResumenEmpresaPO vista360ResumenEmpresaPO;
     ArrayList<byte[]> screenshotList;
 
@@ -37,17 +33,13 @@ public class GenericsDefinition {
                               ArrayList<byte[]> screenshotList,
                               PaginaInicioPO paginaInicioPO,
                               EscritorioComercialPO escritorioComercialPO,
-                              DetalleGarantiasPO detalleGarantiasPO,
                               Vista360ResumenPersonaPO vista360ResumenPersonaPO,
-                              AsideGarantiasEmpresaPO asideGarantiasEmpresaPO,
                               Vista360ResumenEmpresaPO vista360ResumenEmpresaPO)
     {
       this.screenshotList=screenshotList;
       this.paginaInicioPO= paginaInicioPO;
       this.escritorioComercialPO= escritorioComercialPO;
-      this.detalleGarantiasPO=detalleGarantiasPO;
       this.vista360ResumenPersonaPO= vista360ResumenPersonaPO;
-      this.asideGarantiasEmpresaPO= asideGarantiasEmpresaPO;
       this.vista360ResumenEmpresaPO=vista360ResumenEmpresaPO;
     }
 
