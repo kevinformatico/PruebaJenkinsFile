@@ -2,13 +2,13 @@ package stepdef;
 
 import Generics.util;
 import com.neovisionaries.ws.client.WebSocketException;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
 import com.pgtoopx.BuilderMessages;
 import com.pgtoopx.ChromeDevTools;
 import driver.SharedDriver;
 
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.junit.Assert;
 import pageobjects.*;
 import pageobjects.garantias.AsideGarantiasEmpresaPO;
@@ -19,6 +19,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class GenericsDefinition {
+
+    final String PERFIL_EMPRESA="empresa";
+    final String PERFIL_PERSONA="persona";
+    final String DEFAULT_USERNAME="mnilos";
+    final String DEFAULT_PASSWORD="Venta01";
 
     PaginaInicioPO paginaInicioPO;
     EscritorioComercialPO escritorioComercialPO;
@@ -49,14 +54,7 @@ public class GenericsDefinition {
 
     @Given("el usuario {string} ingreso a V360")
     public void el_usuario_string_ingresa_a_v360(String usuario){
-        String password;
-
-        switch (usuario){
-            case "MNILOS": password="Venta01";break;
-            default:password="Banco01";break;
-        }
-        paginaInicioPO.iniciarSesion(usuario, password);
-        detalleGarantiasPO.takeScreenshot();
+        paginaInicioPO.iniciarSesion(usuario, getPasswordForUsuario(usuario));
     }
 
     @Given("busco el rut {string}")
@@ -64,25 +62,40 @@ public class GenericsDefinition {
         escritorioComercialPO.buscarPorRut(rut);
     }
 
-    @Given("ingreso a Vista 360 {string}")
-    public void ingreso_a_vista_360_empresa_persona(String tipo){
-        switch (tipo){
-            case "empresa":
-                if (!vista360ResumenPersonaPO.getTituloVista360().toLowerCase().contains("empresa")&&
-                vista360ResumenPersonaPO.isVisibleBtnCambiarEmpresaPersona()){
-                    vista360ResumenPersonaPO.clickCambiarEmpresaPersona();
-                }else{
-                    Assert.fail("El rut ingresado no tiene perfil empresa");
-                }
-                break;
-            case "persona":
-                if(!vista360ResumenPersonaPO.getTituloVista360().toLowerCase().contains("persona")&&
-                vista360ResumenPersonaPO.isVisibleBtnCambiarEmpresaPersona()){
-                    vista360ResumenPersonaPO.clickCambiarEmpresaPersona();
-                }else{
-                    Assert.fail("El rut ingresado no tiene perfil persona");
-                }
-        }
+    @Given("busco el rut {string} con perfil empresa")
+    public void  busco_el_rut_string_con_perfil_empresa(String rut){
+        escritorioComercialPO.buscarPorRut(rut);
+        configurarPerfil(PERFIL_EMPRESA);
+    }
+
+    @Given("busco el rut {string} con perfil persona")
+    public void  busco_el_rut_string_con_perfil_persona(String rut){
+        escritorioComercialPO.buscarPorRut(rut);
+        configurarPerfil(PERFIL_PERSONA);
+    }
+
+    @Given("el usuario busca el rut {string} con perfil empresa")
+    public void  el_usuario_busca_el_rut_string_con_perfil_empresa(String rut){
+        paginaInicioPO.iniciarSesion(DEFAULT_USERNAME, getPasswordForUsuario(DEFAULT_USERNAME));
+        escritorioComercialPO.buscarPorRut(rut);
+        configurarPerfil("empresa");
+    }
+
+    @Given("el usuario busca el rut {string} con perfil persona")
+    public void  el_usuario_busca_el_rut_string_con_perfil_persona(String rut){
+        paginaInicioPO.iniciarSesion("MNILOS", getPasswordForUsuario("MNILOS"));
+        escritorioComercialPO.buscarPorRut(rut);
+        configurarPerfil(PERFIL_PERSONA);
+    }
+
+    @Given("ingreso a Vista 360 persona")
+    public void ingreso_a_vista_360_persona(){
+        configurarPerfil(PERFIL_PERSONA);
+    }
+
+    @Given("ingreso a Vista 360 empresa")
+    public void ingreso_a_vista_360_empresa(){
+        configurarPerfil(PERFIL_EMPRESA);
     }
 
     @When("Se pierde la conexion de internet")
@@ -103,4 +116,36 @@ public class GenericsDefinition {
         //System.out.println(resultSet);
         //System.out.println(ResultSetConverter.convert(resultSet));
     }
+
+    public void configurarPerfil(String tipo){
+        switch (tipo){
+            case "empresa":
+                if (!vista360ResumenPersonaPO.getTituloVista360().toLowerCase().contains("empresa")&&
+                        vista360ResumenPersonaPO.isVisibleBtnCambiarEmpresaPersona()){
+                    vista360ResumenPersonaPO.clickCambiarEmpresaPersona();
+                }else if(vista360ResumenPersonaPO.getTituloVista360().toLowerCase().contains("empresa")) {
+                  //hace nada xd
+                } else{
+                    Assert.fail("El rut ingresado no tiene perfil empresa");
+                }
+                break;
+            case "persona":
+                if(!vista360ResumenPersonaPO.getTituloVista360().toLowerCase().contains("persona")&&
+                        vista360ResumenPersonaPO.isVisibleBtnCambiarEmpresaPersona()){
+                    vista360ResumenPersonaPO.clickCambiarEmpresaPersona();
+                }else if(vista360ResumenPersonaPO.getTituloVista360().toLowerCase().contains("persona")) {
+                    //hace nada xd
+                }else{
+                    Assert.fail("El rut ingresado no tiene perfil persona");
+                }
+        }
+    }
+
+    public String getPasswordForUsuario(String usuario){
+        switch (usuario){
+            case "MNILOS": return "Venta01";
+            default: return DEFAULT_PASSWORD;
+        }
+    }
+
 }

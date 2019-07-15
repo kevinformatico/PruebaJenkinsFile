@@ -30,6 +30,7 @@ public class Vista360ResumenPersonaPO extends BasePage {
     }
 
     public String getTituloVista360(){
+        waitForElementToAppear(titulo);
         return titulo.getText();
     }
     public void clickBoxGarantias() {

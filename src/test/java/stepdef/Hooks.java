@@ -1,17 +1,16 @@
 package stepdef;
 
-import cucumber.api.Scenario;
-import cucumber.api.java.After;
-import cucumber.api.java.AfterStep;
-import cucumber.api.java.Before;
 import Generics.util;
-import cucumber.api.java.BeforeStep;
 import driver.DriverFactory;
 
+import io.cucumber.core.api.Scenario;
+import io.cucumber.java.After;
+import io.cucumber.java.AfterStep;
+import io.cucumber.java.Before;
+import io.cucumber.java.BeforeStep;
 import org.openqa.selenium.WebDriverException;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Hooks {
 

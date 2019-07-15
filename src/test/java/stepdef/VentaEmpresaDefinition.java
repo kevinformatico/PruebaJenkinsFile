@@ -1,10 +1,10 @@
 package stepdef;
 
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.When;
-import driver.DriverFactory;
 import driver.SharedDriver;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.junit.Assert;
 import pageobjects.*;
 import pageobjects.ventaEmpresa.ConfiguracionDeProductosPO;
@@ -13,6 +13,8 @@ import pageobjects.ventaEmpresa.DocumentosAdjuntosPO;
 import pageobjects.ventaEmpresa.PresentacionDeProductosPO;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class VentaEmpresaDefinition {
 
@@ -49,9 +51,22 @@ public class VentaEmpresaDefinition {
         this.documentosAdjuntosPO=documentosAdjuntosPO;
     }
 
-    @Given("voy a contratar un producto")
+    @When("voy a contratar un producto")
     public void voy_a_contratar_un_producto(){
         vista360ResumenEmpresaPO.clickBotonContratarProductos();
+    }
+
+    @When("voy a contratar el siguiente producto")
+    public void voy_a_contratar_el_siguiente_producto(DataTable valores){
+        List<Map<String,String>> tablaProducto = valores.asMaps();
+        this.producto=tablaProducto.get(1).get("Producto");
+        String  familia = tablaProducto.get(1).get("Familia");
+        System.out.println(tablaProducto);
+        vista360ResumenEmpresaPO.clickBotonContratarProductos();
+        configuracionDeProductosPO.expanderFamilia(familia);
+        configuracionDeProductosPO.seleccionoElProducto(producto);
+        //configuracionDeProductosPO.ingresarValoresAlProducto(valores);
+        //configuracionDeProductosPO.clickAgregarAOportunidad();
     }
 
     @Given("despliego familia {string}")
@@ -59,9 +74,7 @@ public class VentaEmpresaDefinition {
         configuracionDeProductosPO.expanderFamilia(nombreFamilia);
     }
 
-
-
-    @Given("voy a contratar el producto {string} con los siguientes valores:")
+    @When("voy a contratar el producto {string} con los siguientes valores:")
     public void voy_a_contratar_el_producto_string (String producto, DataTable tabla){
         this.producto=producto;
         configuracionDeProductosPO.seleccionoElProducto(producto);
@@ -84,8 +97,15 @@ public class VentaEmpresaDefinition {
 
     @When("se agrega al carro correctamente")
     public void se_agrega_al_carro_correctamente (){
+        Assert.assertTrue("No se ha agregado el producto al carro correctamente",configuracionDeProductosPO.existeProductoEnElCarro(this.producto));
+    }
+
+    @Then("se agrega el producto correctamente")
+    public void se_agrega_el_producto_correctamente(){
         Assert.assertTrue(configuracionDeProductosPO.existeProductoEnElCarro(this.producto));
     }
+
+
 
 
 

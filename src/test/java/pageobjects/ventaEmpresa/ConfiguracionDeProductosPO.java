@@ -16,7 +16,6 @@ public class ConfiguracionDeProductosPO extends BasePage {
         super(DriverFactory.getDriver());
     }
 
-    //No sirve, fue reemplazado por ingresarValores *
     String xpathToGetSelectProductoFromFamilia="//cdn-detalle-familia-directive//div[label[contains(text(),'Producto')]]";
     String botonAgregarAOportunidad = "//button[contains(@class,'agregar-producto') and contains(text(),'Agregar a oportunidad')]";
     String familia;
@@ -68,7 +67,7 @@ public class ConfiguracionDeProductosPO extends BasePage {
         formularioFamilia= getDriver().findElement(By.xpath(crearXpathFamilia(familia)));
         List<Map<String,String>> tablaProducto = datos.asMaps();
         for (Map<String, String> fila :tablaProducto){
-            ingresarValorEnInput(fila.get("clave"), fila.get("valor"));
+                ingresarValorEnInput(fila.get("clave"), fila.get("valor"));
         }
     }
 
@@ -103,9 +102,12 @@ public class ConfiguracionDeProductosPO extends BasePage {
 
     public void ingresarValorEnInput(String campo, String valor){
         String seccionProducto=crearXpathFamilia(familia);
-        String objFiltro="//div[contains(label, '"+campo+"')]";
+        String objFiltro="//div[label='"+campo+"']";
         String desplegarLista="//i[contains(@ng-click,'event')]";
         String seleccion= "//li//a[contains(span,'"+valor+"')]";
+        if(valor.equals("r")){
+            seleccion = "//li//a[1]";
+        }
         if(getDriver().findElement(By.xpath(seccionProducto+objFiltro+"//input")).getAttribute("class").contains("select")){
             getDriver().findElement(By.xpath(seccionProducto+objFiltro+desplegarLista)).click();
             getDriver().findElement(By.xpath(seleccion)).click();
@@ -130,6 +132,10 @@ public class ConfiguracionDeProductosPO extends BasePage {
     public boolean existeProductoEnElCarro(String nombreProducto){
         WebElement producto = getDriver().findElement(By.xpath("//div[contains(@role,'ROLE_VTAPYMECONTR_EJECUTAR')]/div[contains(@ng-class,'vm.compraActiva')]//div[contains(@class,'body')]//div[contains(@ng-repeat,'compraActiva')]//div[contains(p,'"+nombreProducto+"')]"));
         return isVisible(producto);
+    }
+
+    public String addSpaceToFormText(String valor){
+        return " "+valor.trim()+" ";
     }
 
 

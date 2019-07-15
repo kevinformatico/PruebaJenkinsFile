@@ -1,7 +1,7 @@
 package Generics;
 
-import cucumber.api.Scenario;
 import driver.DriverFactory;
+import io.cucumber.core.api.Scenario;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
