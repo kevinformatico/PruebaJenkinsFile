@@ -1,7 +1,6 @@
 # encoding: utf-8
 Feature: No Impacto Venta Empresa
 
-  @run
   Scenario: Validar flujo PYME MN
     Given el usuario "MNILOS" ingreso a V360
     And busco el rut "4.889.509-3"

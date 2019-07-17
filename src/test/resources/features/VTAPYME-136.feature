@@ -5,6 +5,8 @@ Feature: Configuración Líneas de Crédito PYME
   DESEO configurar las condiciones comerciales
   PARA una LDC nueva
 
+
+  @TestCaseKey=VTAPYME-T1316 @run
   Scenario: Verificar atributos para un cliente PCG que tiene al menos una cta cte Normal MN vigente sin LDC
     Given el usuario busca el rut "4.889.509-3" con perfil empresa
     When voy a contratar el siguiente producto
