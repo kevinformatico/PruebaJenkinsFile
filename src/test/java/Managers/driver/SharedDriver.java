@@ -17,6 +17,7 @@ public class SharedDriver {
 
 		if(headless.equals("true")) options.addArguments("headless");
 		options.setExperimentalOption("useAutomationExtension", false);
+		options.addArguments("--window-size=1440,808");
 		util.printCurrentThread();
 
 		if (DriverFactory.getDriver() == null) {
