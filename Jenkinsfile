@@ -17,7 +17,7 @@ pipeline {
       archiveArtifacts(artifacts: 'target/', fingerprint: true)
       junit 'target/cucumber.xml'
       publishTestResults  serverAddress: 'http://jira.bch.bancodechile.cl:8080',
-                          projectKey: 'CDNVIS',
+                          projectKey: 'VTAPYME',
                           filePath:'target/cucumber-report/cucumber.json',
                           format: 'Cucumber',
                           autoCreateTestCases: false

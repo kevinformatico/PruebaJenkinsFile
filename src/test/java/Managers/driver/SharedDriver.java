@@ -1,4 +1,4 @@
-package driver;
+package Managers.driver;
 
 import Generics.util;
 import io.github.bonigarcia.wdm.WebDriverManager;

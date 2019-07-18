@@ -1,11 +1,10 @@
 # encoding: utf-8
 Feature: No Impacto Venta Empresa
 
-
   Scenario: Validar flujo PYME MN
     Given el usuario "MNILOS" ingreso a V360
     And busco el rut "4.889.509-3"
-    And ingreso a Vista 360 "empresa"
+    And ingreso a Vista 360 empresa
     And voy a contratar un producto
     And despliego familia "Líneas"
     When voy a contratar el producto "Línea de Crédito Privada" con los siguientes valores:
@@ -17,7 +16,6 @@ Feature: No Impacto Venta Empresa
     | Aumento programado de cupo | 3 veces ingreso mensual |
     Then se agrega al carro correctamente
 
-  @run
   Scenario: Validar flujo PYME MN
     Given el usuario busca el rut "86.881.400-4" con perfil empresa
     And voy a contratar un producto

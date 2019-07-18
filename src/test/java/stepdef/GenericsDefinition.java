@@ -4,7 +4,8 @@ import Generics.util;
 import com.neovisionaries.ws.client.WebSocketException;
 import com.pgtoopx.BuilderMessages;
 import com.pgtoopx.ChromeDevTools;
-import driver.SharedDriver;
+import Managers.PageObjectManager;
+import Managers.driver.SharedDriver;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -22,6 +23,8 @@ public class GenericsDefinition {
     final String PERFIL_PERSONA="persona";
     final String DEFAULT_USERNAME="mnilos";
     final String DEFAULT_PASSWORD="Venta01";
+
+    PageObjectManager pageObjectManager;
 
     PaginaInicioPO paginaInicioPO;
     EscritorioComercialPO escritorioComercialPO;
@@ -116,8 +119,8 @@ public class GenericsDefinition {
                         vista360ResumenPersonaPO.isVisibleBtnCambiarEmpresaPersona()){
                     vista360ResumenPersonaPO.clickCambiarEmpresaPersona();
                 }else if(vista360ResumenPersonaPO.getTituloVista360().toLowerCase().contains("empresa")) {
-                  //hace nada xd
-                } else{
+                    //hace nada xd
+                }else{
                     Assert.fail("El rut ingresado no tiene perfil empresa");
                 }
                 break;

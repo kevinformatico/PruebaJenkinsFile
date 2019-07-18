@@ -1,6 +1,6 @@
 package pageobjects.ventaEmpresa;
 
-import driver.DriverFactory;
+import Managers.driver.DriverFactory;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import pageobjects.BasePage;

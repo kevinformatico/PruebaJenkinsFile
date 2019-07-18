@@ -1,6 +1,6 @@
 package pageobjects.ventaEmpresa;
 
-import driver.DriverFactory;
+import Managers.driver.DriverFactory;
 import io.cucumber.datatable.DataTable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
