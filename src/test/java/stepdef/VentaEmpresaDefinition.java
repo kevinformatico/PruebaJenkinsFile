@@ -7,12 +7,10 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import pageobjects.*;
-import pageobjects.ventaEmpresa.ConfiguracionDeProductosPO;
-import pageobjects.ventaEmpresa.DatosAdicionalesPO;
-import pageobjects.ventaEmpresa.DocumentosAdjuntosPO;
-import pageobjects.ventaEmpresa.PresentacionDeProductosPO;
+import pageobjects.ventaEmpresa.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +26,7 @@ public class VentaEmpresaDefinition {
     DocumentosAdjuntosPO documentosAdjuntosPO;
     ArrayList<byte[]> screenshotList;
     String producto;
+    ArrayList<InputFormulario> datosFormulario = new ArrayList<>();
 
     public VentaEmpresaDefinition(SharedDriver driver,
                               ArrayList<byte[]> screenshotList,
@@ -56,17 +55,10 @@ public class VentaEmpresaDefinition {
         vista360ResumenEmpresaPO.clickBotonContratarProductos();
     }
 
-    @When("voy a contratar el siguiente producto")
-    public void voy_a_contratar_el_siguiente_producto(DataTable valores){
-        List<Map<String,String>> tablaProducto = valores.asMaps();
-        this.producto=tablaProducto.get(1).get("Producto");
-        String  familia = tablaProducto.get(1).get("Familia");
-        System.out.println(tablaProducto);
+    @Given("voy a contratar una LDC")
+    public void voy_a_contratar_una_LDC(){
         vista360ResumenEmpresaPO.clickBotonContratarProductos();
-        configuracionDeProductosPO.expanderFamilia(familia);
-        configuracionDeProductosPO.seleccionoElProducto(producto);
-        //configuracionDeProductosPO.ingresarValoresAlProducto(valores);
-        //configuracionDeProductosPO.clickAgregarAOportunidad();
+        configuracionDeProductosPO.expanderFamilia("Líneas");
     }
 
     @Given("despliego familia {string}")
@@ -74,8 +66,22 @@ public class VentaEmpresaDefinition {
         configuracionDeProductosPO.expanderFamilia(nombreFamilia);
     }
 
+    @Given("contrato el producto {string}")
+    public void voy_a_contratar_el_producto_string(String producto){
+        this.producto=producto;
+        configuracionDeProductosPO.seleccionoElProducto(producto);
+    }
+
     @When("voy a contratar el producto {string} con los siguientes valores:")
-    public void voy_a_contratar_el_producto_string (String producto, DataTable tabla){
+    public void voy_a_contratar_el_producto_string(String producto, DataTable tabla){
+        this.producto=producto;
+        configuracionDeProductosPO.seleccionoElProducto(producto);
+        configuracionDeProductosPO.ingresarValoresAlProducto(tabla);
+        configuracionDeProductosPO.clickAgregarAOportunidad();
+    }
+
+    @When("contrato el producto {string} con los siguientes valores:")
+    public void contrato_el_producto_string_con_los_siguientes_valores(String producto, DataTable tabla){
         this.producto=producto;
         configuracionDeProductosPO.seleccionoElProducto(producto);
         configuracionDeProductosPO.ingresarValoresAlProducto(tabla);
@@ -83,7 +89,7 @@ public class VentaEmpresaDefinition {
     }
     
     @Given("continuo a presentación de productos")
-    public void continuo_a_presentacion_de_productos (){
+    public void continuo_a_presentacion_de_productos(){
         configuracionDeProductosPO.continuarAPresentacionDelProducto();
         //Solo imprime por consola los valores de PresentacionDelProducto
         presentacionDeProductosPO.extraerDatosPresentacionDelProducto();
@@ -105,7 +111,61 @@ public class VentaEmpresaDefinition {
         Assert.assertTrue(configuracionDeProductosPO.existeProductoEnElCarro(this.producto));
     }
 
+    @Then("se muestra el mensaje de error {string}")
+    public void se_muestra_el_mensaje_de_error_string (String mensaje){
+        Assert.assertEquals(mensaje, configuracionDeProductosPO.obtenerMensajeDeErrorDelInput(mensaje));
+    }
 
+    @Then("permite seleccionar el valor {string}")
+    public void permite_seleccionar_el_valor_string (String valor){
+        // TODO: 2019-07-18 pgtoopx Realizar mapeo de valores seleccionados
+        Assert.assertTrue(true);
+    }
+
+    @Then("no entrega mensaje de error")
+    public void no_entrega_mensaje_de_error (){
+        //hace algo
+        // TODO: 2019-07-18 pgtoopx Deberia validar que no muestre el mensaje de error en el input asignado
+        Assert.fail("No implementado");
+    }
+
+    @Then("se refleja frecuencia entrega cartola {string}")
+    public void se_refleja_frecuencia_entrega_cartola_string (String valor){
+        Assert.assertEquals(valor,configuracionDeProductosPO.obtenerEmisionCartolaText());
+    }
+
+    @When("ingreso el monto a solicitar {int}")
+    public void ingreso_el_monto_a_solicitar_int (int monto){
+        String MONTO_A_SOLICITAR_SELECTOR="Monto a Solicitar ($)";
+        datosFormulario.add(new InputFormulario(MONTO_A_SOLICITAR_SELECTOR,monto+""));
+        configuracionDeProductosPO.ingresarValorEnInput(MONTO_A_SOLICITAR_SELECTOR, monto+"");
+    }
+
+    @When("ingreso un spread de {}%")
+    public void ingreso_un_spread_de_porcentaje (String porcentajeSpread){
+        String SPREAD_SELECTOR="Spread (%)";
+        datosFormulario.add(new InputFormulario(SPREAD_SELECTOR,porcentajeSpread));
+        configuracionDeProductosPO.ingresarValorEnInput(SPREAD_SELECTOR, porcentajeSpread);
+    }
+
+    @When("lo agrego a oportunidad")
+    public void lo_agrego_a_oportunidad(){
+        configuracionDeProductosPO.clickAgregarAOportunidad();
+    }
+
+    @Then("no entrega mensaje de error para los campos llenados")
+    public void no_entrega_mensaje_de_error_para_los_campos_llenados (){
+        for (InputFormulario i:datosFormulario) {
+            Assert.assertFalse(configuracionDeProductosPO.contieneErrorElInput(i.getKey()));
+        }
+    }
+
+    @When("ingreso {string} en aumento programado de cupo")
+    public void ingreso_string_en_aumento_programado_de_cupo(String aumento){
+        String AUMENTO_PROGRAMADO_DE_CUPO_SELECTOR="Aumento programado de cupo";
+        datosFormulario.add(new InputFormulario(AUMENTO_PROGRAMADO_DE_CUPO_SELECTOR,aumento));
+        configuracionDeProductosPO.ingresarValorEnInput(AUMENTO_PROGRAMADO_DE_CUPO_SELECTOR, aumento);
+    }
 
 
 
