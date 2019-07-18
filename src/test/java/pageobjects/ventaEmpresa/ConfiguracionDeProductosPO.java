@@ -11,6 +11,7 @@ import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class ConfiguracionDeProductosPO extends BasePage {
 
@@ -32,8 +33,8 @@ public class ConfiguracionDeProductosPO extends BasePage {
     final String XPATH_PARA_CARRITO = "//div[contains(@role,'ROLE_VTAPYMECONTR_EJECUTAR')]/div[contains(@ng-class,'vm.compraActiva')]//div[contains(@class,'body')]//div[contains(@ng-repeat,'compraActiva')]//div[contains(p,'Línea de Crédito Privada')]";
     final String SELECTOR_INPUT_FORMULARIO="%s//div[label='%s']";
     final String GET_ELEMENT_FROM_CARRO="//div[contains(@role,'ROLE_VTAPYMECONTR_EJECUTAR')]/div[contains(@ng-class,'vm.compraActiva')]//div[contains(@class,'body')]//div[contains(@ng-repeat,'compraActiva')]//div[contains(p,'%s')]";
-
-
+    final String GET_ERROR_MESSAGE_OF_INPUT_FROM_INPUT="%s//small[contains(@class,'invalid') and not(contains(@class,'ng-hide'))]";
+    final String GET_ERROR_MESSAGE_OF_INPUT="//small[contains(@class,'invalid') and not(contains(@class,'ng-hide')) and contains(text(),'%s')]";
 
     @FindBy(xpath = "//a[contains(@ng-click,'vm.asideFacilitador')]")
     private WebElement linkFacilitadoresYPreferenciasDeAtencion;
@@ -76,7 +77,54 @@ public class ConfiguracionDeProductosPO extends BasePage {
         botonContinuarAPresentacionDelProducto.click();
     }
 
+    public String obtenerMensajeDeErrorDelInput(String mensaje){
+        waitUntilEscritorioComercialIsLoaded();
+        WebElement smallMessageError= getElementFrom(By.xpath(String.format(GET_ERROR_MESSAGE_OF_INPUT,mensaje)));
+        return smallMessageError.getText();
+    }
 
+    public Boolean existeMensajeDeErrorDelInput(String mensaje){
+        waitUntilEscritorioComercialIsLoaded();
+        WebElement smallMessageError= getElementFrom(By.xpath(String.format(GET_ERROR_MESSAGE_OF_INPUT,mensaje)));
+        return isVisible(smallMessageError);
+    }
+
+    public String obtenerValorDeInput(String campo){
+        String inputDiv=String.format(SELECTOR_INPUT_FORMULARIO,selectorFamilia(familia),campo);
+        WebElement input = getElementFrom(By.xpath(inputDiv));
+        return input.getText();
+    }
+
+    public String obtenerEmisionCartolaText(){
+        String inputDiv=String.format(SELECTOR_INPUT_FORMULARIO,selectorFamilia(familia),"Emisión Cartola");
+        return getElementFrom(By.xpath(inputDiv+"//p")).getText();
+    }
+
+    public void ingresarMontoASolicitar(int monto){
+        ingresarValorEnInput("Monto a Solicitar ($)", monto+"");
+    }
+
+    public void ingresarSpread(String porcentaje){
+        ingresarValorEnInput("Spread(%)", porcentaje);
+    }
+
+    public String getMensajeDeErrorFromInput(String campo){
+        String inputDiv=String.format(SELECTOR_INPUT_FORMULARIO,selectorFamilia(familia),campo);
+        WebElement mensajeError=getElementFrom(By.xpath(String.format(GET_ERROR_MESSAGE_OF_INPUT_FROM_INPUT,inputDiv)));
+        return mensajeError.getText();
+    }
+
+    public Boolean contieneErrorElInput(String campo){
+        String inputDiv=String.format(SELECTOR_INPUT_FORMULARIO,selectorFamilia(familia),campo);
+        try {
+            getDriver().findElement(By.xpath(String.format(GET_ERROR_MESSAGE_OF_INPUT_FROM_INPUT,inputDiv)));
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+
+
+    }
     /*
     * Utilidades
     * */
@@ -155,7 +203,5 @@ public class ConfiguracionDeProductosPO extends BasePage {
         }
         click(valorSelect);
     }
-
-
 
 }
