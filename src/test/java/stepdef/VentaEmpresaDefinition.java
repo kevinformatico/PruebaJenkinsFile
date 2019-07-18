@@ -56,6 +56,12 @@ public class VentaEmpresaDefinition {
         vista360ResumenEmpresaPO.clickBotonContratarProductos();
     }
 
+    @Given("voy a contratar una LDC")
+    public void voy_a_contratar_una_LDC(){
+        vista360ResumenEmpresaPO.clickBotonContratarProductos();
+        configuracionDeProductosPO.expanderFamilia("Líneas");
+    }
+
     @When("voy a contratar el siguiente producto")
     public void voy_a_contratar_el_siguiente_producto(DataTable valores){
         List<Map<String,String>> tablaProducto = valores.asMaps();
@@ -76,6 +82,14 @@ public class VentaEmpresaDefinition {
 
     @When("voy a contratar el producto {string} con los siguientes valores:")
     public void voy_a_contratar_el_producto_string (String producto, DataTable tabla){
+        this.producto=producto;
+        configuracionDeProductosPO.seleccionoElProducto(producto);
+        configuracionDeProductosPO.ingresarValoresAlProducto(tabla);
+        configuracionDeProductosPO.clickAgregarAOportunidad();
+    }
+
+    @When("contrato el producto {string} con los siguientes valores:")
+    public void contrato_el_producto_string_con_los_siguientes_valores(String producto, DataTable tabla){
         this.producto=producto;
         configuracionDeProductosPO.seleccionoElProducto(producto);
         configuracionDeProductosPO.ingresarValoresAlProducto(tabla);

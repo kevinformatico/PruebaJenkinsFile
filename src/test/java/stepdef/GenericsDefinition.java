@@ -34,17 +34,16 @@ public class GenericsDefinition {
 
     public GenericsDefinition(SharedDriver driver,
                               ArrayList<byte[]> screenshotList,
-                              PageObjectManager pageObjectManager,
                               PaginaInicioPO paginaInicioPO,
                               EscritorioComercialPO escritorioComercialPO,
                               Vista360ResumenPersonaPO vista360ResumenPersonaPO,
                               Vista360ResumenEmpresaPO vista360ResumenEmpresaPO)
     {
-      this.screenshotList=screenshotList;
-      this.paginaInicioPO= pageObjectManager.getPaginaInicioPO();
-      this.escritorioComercialPO= pageObjectManager.getEscritorioComercialPO();
-      this.vista360ResumenPersonaPO= pageObjectManager.getVista360ResumenPersonaPO();
-      this.vista360ResumenEmpresaPO= pageObjectManager.getVista360ResumenEmpresaPO();
+        this.screenshotList=screenshotList;
+        this.paginaInicioPO= paginaInicioPO;
+        this.escritorioComercialPO= escritorioComercialPO;
+        this.vista360ResumenPersonaPO= vista360ResumenPersonaPO;
+        this.vista360ResumenEmpresaPO=vista360ResumenEmpresaPO;
     }
 
 
@@ -74,12 +73,12 @@ public class GenericsDefinition {
     public void  el_usuario_busca_el_rut_string_con_perfil_empresa(String rut){
         paginaInicioPO.iniciarSesion(DEFAULT_USERNAME, getPasswordForUsuario(DEFAULT_USERNAME));
         escritorioComercialPO.buscarPorRut(rut);
-        configurarPerfil("empresa");
+        configurarPerfil(PERFIL_EMPRESA);
     }
 
     @Given("el usuario busca el rut {string} con perfil persona")
     public void  el_usuario_busca_el_rut_string_con_perfil_persona(String rut){
-        paginaInicioPO.iniciarSesion("MNILOS", getPasswordForUsuario("MNILOS"));
+        paginaInicioPO.iniciarSesion(DEFAULT_USERNAME, getPasswordForUsuario(DEFAULT_USERNAME));
         escritorioComercialPO.buscarPorRut(rut);
         configurarPerfil(PERFIL_PERSONA);
     }
@@ -113,7 +112,7 @@ public class GenericsDefinition {
         //System.out.println(ResultSetConverter.convert(resultSet));
     }
 
-    public void configurarPerfil(String tipo){
+    private void configurarPerfil(String tipo){
         switch (tipo){
             case "empresa":
                 if (!vista360ResumenPersonaPO.getTituloVista360().toLowerCase().contains("empresa")&&
@@ -137,7 +136,7 @@ public class GenericsDefinition {
         }
     }
 
-    public String getPasswordForUsuario(String usuario){
+    private String getPasswordForUsuario(String usuario){
         switch (usuario){
             case "MNILOS": return "Venta01";
             default: return DEFAULT_PASSWORD;

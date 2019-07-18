@@ -90,4 +90,8 @@ public class BasePage {
          return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 
+    protected WebElement getElementFrom(By locator){
+        return getDriver().findElement(locator);
+    }
+
 }
