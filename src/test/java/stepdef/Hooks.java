@@ -3,11 +3,13 @@ package stepdef;
 import Generics.util;
 import Managers.driver.DriverFactory;
 
+import Managers.driver.DriverType;
 import io.cucumber.core.api.Scenario;
 import io.cucumber.java.After;
 import io.cucumber.java.AfterStep;
 import io.cucumber.java.Before;
 import io.cucumber.java.BeforeStep;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriverException;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ public class Hooks {
         if(DriverFactory.getDriver()!= null){
             DriverFactory.getDriver().manage().deleteAllCookies();
             DriverFactory.getDriver().manage().window().maximize();
+            DriverFactory.getDriver().manage().window().setSize(new Dimension(1440,808));
         }
     }
 
