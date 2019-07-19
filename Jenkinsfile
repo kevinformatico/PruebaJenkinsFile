@@ -16,6 +16,7 @@ pipeline {
                           filePath:'target/cucumber-report/cucumber.json',
                           format: 'Cucumber',
                           autoCreateTestCases: false
+      cucumber fileIncludePattern: 'target/cucumber-report/cucumber.json', sortingMethod:'ALPHABETICAL'
     }
   }
 }
