@@ -1,10 +1,5 @@
 pipeline {
-  agent {
-      docker {
-        image 'markhobson/maven-chrome'
-      }
-
-    }
+  agent { dockerfile true }
   stages {
     stage('No impacto') {
       steps {
