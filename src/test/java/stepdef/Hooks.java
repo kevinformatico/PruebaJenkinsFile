@@ -54,7 +54,6 @@ public class Hooks {
 
     @AfterStep
     public void takeScreenshotAfterStep(Scenario scenario){
-
         if(screenshotList != null){
             for (byte[] sc: screenshotList) {
                 scenario.embed(sc, "image/png");
