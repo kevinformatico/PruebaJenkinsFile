@@ -1,5 +1,8 @@
 pipeline {
-  agent { dockerfile true }
+  agent { docker {
+                  image 'pgtoopx/bch-maven-chrome'
+                }
+  }
   stages {
     stage('No impacto') {
       steps {
