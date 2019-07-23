@@ -28,7 +28,7 @@ public class SharedDriver {
 					break;
 				case "chrome":
 					System.setProperty(ChromeDriverService.CHROME_DRIVER_LOG_PROPERTY, System.getProperty("user.dir") + "/target/chromedriver.log");
-					WebDriverManager.chromedriver().setup();
+					//WebDriverManager.chromedriver().setup();
 					DriverFactory.addDriver(new ChromeDriver(options));
 					break;
 				case "safari":
