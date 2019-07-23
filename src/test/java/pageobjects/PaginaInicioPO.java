@@ -1,7 +1,6 @@
 package pageobjects;
 
 import Managers.driver.DriverFactory;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
