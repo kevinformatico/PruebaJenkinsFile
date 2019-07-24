@@ -47,7 +47,7 @@ Feature: Configuración Líneas de Crédito PYME
     And ingreso un spread de -1,99%
     Then se muestra el mensaje de error "Debe ser mayor a 0"
 
-  @TestCaseKey=VTAPYME-T1423
+  @TestCaseKey=VTAPYME-T1423 @demo
   Scenario: Validar fallo ingreso de spread con mayor a la maxima convencional
     Given el usuario busca el rut "4.889.509-3" con perfil empresa
     And voy a contratar una LDC
@@ -71,7 +71,7 @@ Feature: Configuración Líneas de Crédito PYME
     And contrato el producto "Línea de Crédito PYME"
     Then se refleja frecuencia entrega cartola "Mensual"
 
-  @TestCaseKey=VTAPYME-T1425 @demo
+  @TestCaseKey=VTAPYME-T1425
   Scenario: Validar monto de cupo segun parametros de taller
     Given el usuario busca el rut "4.889.509-3" con perfil empresa
     And voy a contratar una LDC
