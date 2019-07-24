@@ -24,8 +24,6 @@ public class PaginaInicioPO extends BasePage {
     }
 
     public void iniciarSesion(String user, String pass){
-        System.out.println("URL ACTUAL");
-        System.out.println(DriverFactory.getDriver().getCurrentUrl());
         waitForElementToAppear(username);
         username.sendKeys(user);
         password.sendKeys(pass);

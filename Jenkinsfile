@@ -2,7 +2,7 @@ pipeline {
   agent {
     docker {
       image 'pgtoopx/bch-maven-chrome'
-      args '-v /etc/hosts:/etc/hosts --add-host="portalcomercial.qa.labchile.cl:200.14.169.120"'
+      args '--add-host="portalcomercial.qa.labchile.cl:200.14.169.120"'
     }
   }
   stages {
