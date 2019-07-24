@@ -10,9 +10,6 @@ import pageobjects.*;
 import pageobjects.ventaEmpresa.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class VentaEmpresaDefinition {
 
@@ -27,6 +24,12 @@ public class VentaEmpresaDefinition {
     ArrayList<byte[]> screenshotList;
     String producto;
     ArrayList<InputFormulario> datosFormulario = new ArrayList<>();
+
+    // Constantes
+
+    String MONTO_A_SOLICITAR_SELECTOR="Monto a Solicitar ($)";
+    String SPREAD_SELECTOR="Spread (%)";
+    String AUMENTO_PROGRAMADO_DE_CUPO_SELECTOR="Aumento programado de cupo";
 
     public VentaEmpresaDefinition(SharedDriver driver,
                               ArrayList<byte[]> screenshotList,
@@ -91,7 +94,6 @@ public class VentaEmpresaDefinition {
     @Given("continuo a presentación de productos")
     public void continuo_a_presentacion_de_productos(){
         configuracionDeProductosPO.continuarAPresentacionDelProducto();
-        //Solo imprime por consola los valores de PresentacionDelProducto
         presentacionDeProductosPO.extraerDatosPresentacionDelProducto();
     }
 
@@ -136,14 +138,12 @@ public class VentaEmpresaDefinition {
 
     @When("ingreso el monto a solicitar {int}")
     public void ingreso_el_monto_a_solicitar_int (int monto){
-        String MONTO_A_SOLICITAR_SELECTOR="Monto a Solicitar ($)";
         datosFormulario.add(new InputFormulario(MONTO_A_SOLICITAR_SELECTOR,monto+""));
         configuracionDeProductosPO.ingresarValorEnInput(MONTO_A_SOLICITAR_SELECTOR, monto+"");
     }
 
     @When("ingreso un spread de {}%")
     public void ingreso_un_spread_de_porcentaje (String porcentajeSpread){
-        String SPREAD_SELECTOR="Spread (%)";
         datosFormulario.add(new InputFormulario(SPREAD_SELECTOR,porcentajeSpread));
         configuracionDeProductosPO.ingresarValorEnInput(SPREAD_SELECTOR, porcentajeSpread);
     }
@@ -162,7 +162,6 @@ public class VentaEmpresaDefinition {
 
     @When("ingreso {string} en aumento programado de cupo")
     public void ingreso_string_en_aumento_programado_de_cupo(String aumento){
-        String AUMENTO_PROGRAMADO_DE_CUPO_SELECTOR="Aumento programado de cupo";
         datosFormulario.add(new InputFormulario(AUMENTO_PROGRAMADO_DE_CUPO_SELECTOR,aumento));
         configuracionDeProductosPO.ingresarValorEnInput(AUMENTO_PROGRAMADO_DE_CUPO_SELECTOR, aumento);
     }

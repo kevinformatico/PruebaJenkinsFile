@@ -47,7 +47,7 @@ Feature: Configuración Líneas de Crédito PYME
     And ingreso un spread de -1,99%
     Then se muestra el mensaje de error "Debe ser mayor a 0"
 
-  @TestCaseKey=VTAPYME-T1423 @demo
+  @TestCaseKey=VTAPYME-T1423
   Scenario: Validar fallo ingreso de spread con mayor a la maxima convencional
     Given el usuario busca el rut "4.889.509-3" con perfil empresa
     And voy a contratar una LDC
