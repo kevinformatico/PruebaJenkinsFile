@@ -13,6 +13,7 @@ public class SharedDriver {
 	public SharedDriver() {
 		String headless = System.getProperty("headless", "false");
 		String webdriver = System.getProperty("browser", "chrome");
+		String isOnDocker= System.getProperty("docker", "false");
 		ChromeOptions options = new ChromeOptions();
 
 		if(headless.equals("true")) options.addArguments("headless");
@@ -28,7 +29,7 @@ public class SharedDriver {
 					break;
 				case "chrome":
 					System.setProperty(ChromeDriverService.CHROME_DRIVER_LOG_PROPERTY, System.getProperty("user.dir") + "/target/chromedriver.log");
-					WebDriverManager.chromedriver().setup();
+					if(isOnDocker.equals("false"))WebDriverManager.chromedriver().setup();
 					DriverFactory.addDriver(new ChromeDriver(options));
 					break;
 				case "safari":

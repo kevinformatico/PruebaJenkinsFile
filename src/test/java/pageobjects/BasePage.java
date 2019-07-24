@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BasePage {
 
-    private static final int TIMEOUT = 5;
+    private static final int TIMEOUT = 10;
     private static final int POLLING = 100;
 
     final WebDriver driver;

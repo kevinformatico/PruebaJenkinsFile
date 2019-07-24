@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('No impacto') {
       steps {
-        sh 'mvn clean install -Dheadless=true'
+        sh 'mvn clean install -Dheadless=true -Ddocker=true'
       }
     }
   }
