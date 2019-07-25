@@ -1,15 +1,19 @@
 package stepdef;
 
+import Managers.driver.DriverFactory;
 import Managers.driver.SharedDriver;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+import org.openqa.selenium.interactions.SourceType;
+
 import pageobjects.*;
 import pageobjects.ventaEmpresa.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class VentaEmpresaDefinition {
 
@@ -30,6 +34,7 @@ public class VentaEmpresaDefinition {
     String MONTO_A_SOLICITAR_SELECTOR="Monto a Solicitar ($)";
     String SPREAD_SELECTOR="Spread (%)";
     String AUMENTO_PROGRAMADO_DE_CUPO_SELECTOR="Aumento programado de cupo";
+    String DEGRAVAMEN_LINEA_DE_CREDITO = "Desgravamen Línea de Crédito";
 
     public VentaEmpresaDefinition(SharedDriver driver,
                               ArrayList<byte[]> screenshotList,
@@ -166,6 +171,26 @@ public class VentaEmpresaDefinition {
         configuracionDeProductosPO.ingresarValorEnInput(AUMENTO_PROGRAMADO_DE_CUPO_SELECTOR, aumento);
     }
 
+    @When("aparece degravamen de linea de credito habilitado")
+    public void aparece_degravamen(){
+        Assert.assertEquals("Si", configuracionDeProductosPO.getSeleccionDegravamen(DEGRAVAMEN_LINEA_DE_CREDITO));
+    }
 
+    @Then("el spread debe debe ser {}%")
+    public void el_spread_debe_ser_x(String valorSpread){
+        Assert.assertEquals(valorSpread, configuracionDeProductosPO.getValorSpread());
+    }
+
+    @Then("el campo {string} contiene los siguientes valores")
+    public void el_campo_string_contiene_los_siguientes_valores(String campo, DataTable valores){
+        Assert.assertEquals(valores.asList(), configuracionDeProductosPO.getValoresInput(campo));
+    }
+
+    @Then("el campo {string} contiene solo el valor {string}")
+    public void el_campo_string_contiene_solo_el_valor_string(String campo, String valor){
+        List<String> valores = configuracionDeProductosPO.getValoresInput(campo);
+        if(valores.size() != 1) Assert.fail("Tiene mas de un valor\n valores:"+valores.toString());
+        Assert.assertEquals(valor, configuracionDeProductosPO.getValoresInput(campo).get(1));
+    }
 
 }

@@ -3,7 +3,6 @@ package stepdef;
 import Generics.util;
 import Managers.driver.DriverFactory;
 
-import Managers.driver.DriverType;
 import io.cucumber.core.api.Scenario;
 import io.cucumber.java.After;
 import io.cucumber.java.AfterStep;
@@ -11,8 +10,12 @@ import io.cucumber.java.Before;
 import io.cucumber.java.BeforeStep;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogEntry;
+import org.openqa.selenium.logging.LogType;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class Hooks {
 
@@ -45,6 +48,7 @@ public class Hooks {
                 System.err.println(somePlatformsDontSupportScreenshots.getMessage());
             }
         }
+
     }
 
     @BeforeStep
@@ -54,6 +58,7 @@ public class Hooks {
 
     @AfterStep
     public void takeScreenshotAfterStep(Scenario scenario){
+        scenario.write(DriverFactory.getDriver().getCurrentUrl());
         if(screenshotList != null){
             for (byte[] sc: screenshotList) {
                 scenario.embed(sc, "image/png");

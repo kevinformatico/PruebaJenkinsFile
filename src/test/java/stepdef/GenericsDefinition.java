@@ -1,6 +1,7 @@
 package stepdef;
 
 import Generics.util;
+import Managers.driver.DriverFactory;
 import com.neovisionaries.ws.client.WebSocketException;
 import com.pgtoopx.BuilderMessages;
 import com.pgtoopx.ChromeDevTools;
@@ -11,6 +12,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+import org.openqa.selenium.JavascriptExecutor;
 import pageobjects.*;
 
 import java.io.IOException;
@@ -110,6 +112,10 @@ public class GenericsDefinition {
         //ResultSet resultSet= conexionDB.RunQuery(connection,"SELECT soe.name as rut, sa.build AS folio, sa.warranty_type_cd AS tipo_garantia, sa.cfg_type_cd AS tipo_bien, sa.curcy_cd as moneda, sa.asset_value_amt AS valor_comercial, sa.rplcmnt_val_amt AS valor_garantia, sa.exch_date AS tasacion, sa.extension_cd AS seguro, sa.status_cd as estado FROM siebel.s_asset sa, siebel.s_org_ext soe WHERE sa.type_cd = 'Warranty' AND soe.par_row_id = sa.owner_accnt_id AND UPPER(sa.status_cd) in ('CONSTITUIDA', 'POR ALZAR') AND instr(soe.NAME,'-')>8;");
         //System.out.println(resultSet);
         //System.out.println(ResultSetConverter.convert(resultSet));
+
+        String scriptToExecute = "var performance = window.performance || window.mozPerformance || window.msPerformance || window.webkitPerformance || {}; var network = performance.getEntries() || {}; return network;";
+        String netData = ((JavascriptExecutor) DriverFactory.getDriver()).executeScript(scriptToExecute).toString();
+        System.out.println(netData);
     }
 
     private void configurarPerfil(String tipo){

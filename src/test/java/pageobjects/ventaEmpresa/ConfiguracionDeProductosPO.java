@@ -3,15 +3,14 @@ package pageobjects.ventaEmpresa;
 import Managers.driver.DriverFactory;
 import io.cucumber.datatable.DataTable;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import pageobjects.BasePage;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 public class ConfiguracionDeProductosPO extends BasePage {
 
@@ -115,6 +114,7 @@ public class ConfiguracionDeProductosPO extends BasePage {
     }
 
     public Boolean contieneErrorElInput(String campo){
+        waitUntilEscritorioComercialIsLoaded();
         String inputDiv=String.format(SELECTOR_INPUT_FORMULARIO,selectorFamilia(familia),campo);
         try {
             getDriver().findElement(By.xpath(String.format(GET_ERROR_MESSAGE_OF_INPUT_FROM_INPUT,inputDiv)));
@@ -122,13 +122,22 @@ public class ConfiguracionDeProductosPO extends BasePage {
         }catch (Exception e){
             return false;
         }
-
-
     }
+
+    public String getValorSpread(){
+        waitUntilEscritorioComercialIsLoaded();
+        return getValorDelCampo("Spread (%)");
+    }
+
+
     /*
     * Utilidades
     * */
 
+    public String getValorDelCampo(String campo){
+        String inputDiv=String.format(SELECTOR_INPUT_FORMULARIO,selectorFamilia(familia),campo);
+        return getDriver().findElement(By.xpath(inputDiv+"//input")).getAttribute("value");
+    }
     public String selectorFamilia(String nombreFamilia){
         return String.format(SELECCIONAR_FAMILIA_XPATH, nombreFamilia);
     }
@@ -144,6 +153,11 @@ public class ConfiguracionDeProductosPO extends BasePage {
         }else{
             getElementFrom(By.xpath(inputDiv+"//input")).sendKeys(valor);
         }
+        getElementFrom(By.xpath(inputDiv+"//input")).sendKeys(Keys.TAB);
+    }
+
+    public List<String> getValoresInput(String campo){
+        return getTextFromSelectValues(String.format(SELECTOR_INPUT_FORMULARIO,selectorFamilia(familia),campo));
     }
 
     public boolean existeProductoEnElCarro(String nombreProducto){
@@ -155,6 +169,14 @@ public class ConfiguracionDeProductosPO extends BasePage {
         return " "+valor.trim()+" ";
     }
 
+    public String getSeleccionDegravamen(String campo){
+        String inputDiv=String.format(SELECTOR_INPUT_FORMULARIO,selectorFamilia(familia),campo);
+        if(isVisible(getDriver().findElement(By.xpath(inputDiv+"//label[contains(@class,'bch-custom-check')]//input[@value=1]")))){
+            return getDriver().findElement(By.xpath(inputDiv+"//label[contains(@class,'bch-custom-check')]//input[@value=1]")).getText();
+        }
+
+        return null;
+    }
 
     // Manejador de select
 
@@ -168,14 +190,13 @@ public class ConfiguracionDeProductosPO extends BasePage {
         element.click();
     }
 
-    public ArrayList<String> getTextFromSelectValues(String elementXpath){
+    public List<String> getTextFromSelectValues(String elementXpath){
         ArrayList<String> valores = new ArrayList<>();
         clickFlechaSelect(elementXpath);//se expande
         List<WebElement> vals = getDriver().findElements(By.xpath(elementXpath+"//li//a[contains(span,'')]"));
         for (WebElement el : vals) {
             if(!el.getText().equals("")) valores.add(el.getText());
         }
-        clickFlechaSelect(elementXpath);
         return valores;
     }
 
