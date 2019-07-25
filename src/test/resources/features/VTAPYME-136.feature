@@ -82,5 +82,3 @@ Feature: Configuración Líneas de Crédito PYME
       | N° de cuenta asociada | FIRST |
       | Aumento programado de cupo | FIRST |
     Then se agrega al carro correctamente
-    And continuo a presentación de productos
-    And espero por 5 segundos
