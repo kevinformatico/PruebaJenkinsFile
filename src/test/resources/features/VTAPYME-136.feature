@@ -69,7 +69,7 @@ Feature: Configuración Líneas de Crédito PYME
     Then se refleja frecuencia entrega cartola "Mensual"
 
   @TestCaseKey=VTAPYME-T1425
-  Scenario: Validar Frecuencia entrega cartola "Mensual"
+  Scenario: Validar degravamen de linea de credito habilitado
     Then aparece degravamen de linea de credito habilitado
 
   @TestCaseKey=VTAPYME-T1425 @notrun
