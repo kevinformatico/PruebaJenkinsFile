@@ -1,5 +1,5 @@
 #encoding:utf-8
-@notrun
+#@notrun
 Feature: Configuración Líneas de Crédito EMPRESAS
 COMO Ejecutivo de cuenta, asistente comercial, agente, jefe de plataforma
 DESEO configurar las condiciones comerciales
@@ -16,16 +16,7 @@ PARA una LDC nueva
     When ingreso el monto a solicitar 200000
     And lo agrego a oportunidad
     Then se muestra el mensaje de error "Menor al monto mínimo"
-
-  Scenario: Validar fallo al ingreso de monto de cupo mayor al maximo segun parametros de taller
-    When ingreso el monto a solicitar 300000000
-    And lo agrego a oportunidad
-    Then se muestra el mensaje de error "Supera el monto máximo"
-
-  Scenario: Validar valor de spread entregado por taller
-    When ingreso el monto a solicitar 500000
-    Then el spread debe debe ser 1.9%
-
+@run
   Scenario: Validar ingreso de spread con valor numerico y dos decimales
     When ingreso el monto a solicitar 500000
     And ingreso un spread de 1.99%
@@ -33,7 +24,7 @@ PARA una LDC nueva
 
   Scenario: Validar fallo ingreso de spread con valor negativo
     When ingreso el monto a solicitar 500000
-    And ingreso un spread de -1.99%
+    And ingreso un spread de 0%
     Then se muestra el mensaje de error "Debe ser mayor a 0"
 
   Scenario: Validar fallo ingreso de spread con mayor a la maxima convencional
@@ -41,23 +32,30 @@ PARA una LDC nueva
     And ingreso un spread de 5.99%
     Then se muestra el mensaje de error "Debe ser inferior a máx. convencional"
 
-  Scenario: Validar opciones para aumento Programado de cupo
-    Then el campo "Aumento programado de cupo" contiene los siguientes valores
-    |3 veces ingreso mensual|
-    |4 veces ingreso mensual|
-    |5 veces ingreso mensual|
-    |6 veces ingreso mensual|
-    |No aplica|
+  Scenario: Validar opciones para Tipo plazo
+    Then el campo "Tipo Plazo" contiene los siguientes valores
+    |Fijo|
+    |Indefinido|
+    
+  Scenario: Validar ingreso de plazo entre 3 y 11 meses
+    When ingreso tipo plazo "Fijo"
+    And ingreso 3 meses en el campo plazo
+    Then no entrega mensaje de error para los campos llenados
+  
+  Scenario: Validar fallo al ingreso plazo menor a tres meses
+    When ingreso tipo plazo "Fijo"
+    And ingreso 3 meses en el campo plazo
+    Then se muestra el mensaje de error "Menor al monto mínimo"
 
-  Scenario: Permitir seleccionar sólo el Tipo de Plazo "Indefinido"
-    Then el campo "Tipo Plazo" contiene solo el valor "Indefinido"
+  Scenario: Validar fallo al ingreso plazo mayor a 11 meses
+    When ingreso tipo plazo "Fijo"
+    And ingreso 12 meses en el campo plazo
+    Then se muestra el mensaje de error "Supera el monto máximo"
 
   Scenario: Validar Frecuencia entrega cartola "Mensual"
     Then se refleja frecuencia entrega cartola "Mensual"
 
-  Scenario: Validar degravamen de linea de credito habilitado
-    Then aparece degravamen de linea de credito habilitado
-
+@notrun
   Scenario: Validar monto de cupo segun parametros de taller
     When contrato el producto "Línea de Crédito PYME" con los siguientes valores:
       | clave | valor |

@@ -63,7 +63,7 @@ public class BasePage {
         return isVisible;
     }
 
-    protected void waitUntilEscritorioComercialIsLoaded() {
+    public void waitUntilEscritorioComercialIsLoaded() {
         while (isVisible(barraCargando)){
             waitFor(1);
         }

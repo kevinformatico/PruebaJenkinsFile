@@ -33,7 +33,7 @@ Feature: Configuración Líneas de Crédito PYME
     When ingreso el monto a solicitar 500000
     Then el spread debe debe ser 1.9%
 
-  @TestCaseKey=VTAPYME-T1421 @run
+  @TestCaseKey=VTAPYME-T1421 
   Scenario: Validar ingreso de spread con valor numerico y dos decimales
     When ingreso el monto a solicitar 500000
     And ingreso un spread de 1.99%
@@ -67,10 +67,6 @@ Feature: Configuración Líneas de Crédito PYME
   @TestCaseKey=VTAPYME-T1425
   Scenario: Validar Frecuencia entrega cartola "Mensual"
     Then se refleja frecuencia entrega cartola "Mensual"
-
-  @TestCaseKey=VTAPYME-T1425
-  Scenario: Validar degravamen de linea de credito habilitado
-    Then aparece degravamen de linea de credito habilitado
 
   @TestCaseKey=VTAPYME-T1425 @notrun
   Scenario: Validar monto de cupo segun parametros de taller

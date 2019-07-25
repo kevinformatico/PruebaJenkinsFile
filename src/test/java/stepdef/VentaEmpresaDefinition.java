@@ -35,6 +35,8 @@ public class VentaEmpresaDefinition {
     String SPREAD_SELECTOR="Spread (%)";
     String AUMENTO_PROGRAMADO_DE_CUPO_SELECTOR="Aumento programado de cupo";
     String DEGRAVAMEN_LINEA_DE_CREDITO = "Desgravamen Línea de Crédito";
+    String TIPO_PLAZO = "Tipo Plazo";
+    String PLAZO = "Plazo";
 
     public VentaEmpresaDefinition(SharedDriver driver,
                               ArrayList<byte[]> screenshotList,
@@ -120,6 +122,8 @@ public class VentaEmpresaDefinition {
 
     @Then("se muestra el mensaje de error {string}")
     public void se_muestra_el_mensaje_de_error_string (String mensaje){
+        configuracionDeProductosPO.clickAgregarAOportunidad();
+        //configuracionDeProductosPO.waitUntilEscritorioComercialIsLoaded();
         Assert.assertEquals(mensaje, configuracionDeProductosPO.obtenerMensajeDeErrorDelInput(mensaje));
     }
 
@@ -141,10 +145,10 @@ public class VentaEmpresaDefinition {
         Assert.assertEquals(valor,configuracionDeProductosPO.obtenerEmisionCartolaText());
     }
 
-    @When("ingreso el monto a solicitar {int}")
-    public void ingreso_el_monto_a_solicitar_int (int monto){
-        datosFormulario.add(new InputFormulario(MONTO_A_SOLICITAR_SELECTOR,monto+""));
-        configuracionDeProductosPO.ingresarValorEnInput(MONTO_A_SOLICITAR_SELECTOR, monto+"");
+    @When("ingreso el monto a solicitar {}")
+    public void ingreso_el_monto_a_solicitar_int (String monto){
+        datosFormulario.add(new InputFormulario(MONTO_A_SOLICITAR_SELECTOR,monto));
+        configuracionDeProductosPO.ingresarValorEnInput(MONTO_A_SOLICITAR_SELECTOR, monto);
     }
 
     @When("ingreso un spread de {}%")
@@ -171,6 +175,24 @@ public class VentaEmpresaDefinition {
         configuracionDeProductosPO.ingresarValorEnInput(AUMENTO_PROGRAMADO_DE_CUPO_SELECTOR, aumento);
     }
 
+    @When("ingreso tipo plazo {String}")
+    public void ingreso_tipo_plazo_string(String plazo){
+        datosFormulario.add(new InputFormulario(TIPO_PLAZO, plazo));
+        configuracionDeProductosPO.ingresarValorEnInput(TIPO_PLAZO, plazo);
+    }
+
+    @Then("me permite ingresar {string} meses en el campo plazo")
+    public void me_permite_ingresar_string_meses_en_el_campo_plazo(String meses){
+        datosFormulario.add(new InputFormulario(PLAZO, meses));
+        configuracionDeProductosPO.ingresarValorEnInput(PLAZO, meses);
+    }
+
+    @Then("ingreso {string} meses en el campo plazo")
+    public void ingreso_string_meses_en_el_campo_plazo(String meses){
+        datosFormulario.add(new InputFormulario(PLAZO, meses));
+        configuracionDeProductosPO.ingresarValorEnInput(PLAZO, meses);
+    } 
+
     @When("aparece degravamen de linea de credito habilitado")
     public void aparece_degravamen(){
         Assert.assertEquals("Si", configuracionDeProductosPO.getSeleccionDegravamen(DEGRAVAMEN_LINEA_DE_CREDITO));
@@ -180,6 +202,8 @@ public class VentaEmpresaDefinition {
     public void el_spread_debe_ser_x(String valorSpread){
         Assert.assertEquals(valorSpread, configuracionDeProductosPO.getValorSpread());
     }
+
+
 
     @Then("el campo {string} contiene los siguientes valores")
     public void el_campo_string_contiene_los_siguientes_valores(String campo, DataTable valores){
