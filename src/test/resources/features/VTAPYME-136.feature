@@ -42,7 +42,7 @@ Feature: Configuración Líneas de Crédito PYME
   @TestCaseKey=VTAPYME-T1422
   Scenario: Validar fallo ingreso de spread con valor negativo
     When ingreso el monto a solicitar 500000
-    And ingreso un spread de -1.99%
+    And ingreso un spread de 0%
     Then se muestra el mensaje de error "Debe ser mayor a 0"
 
   @TestCaseKey=VTAPYME-T1423
