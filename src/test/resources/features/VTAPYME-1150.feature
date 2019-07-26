@@ -16,7 +16,7 @@ PARA una LDC nueva
     When ingreso el monto a solicitar 200000
     And lo agrego a oportunidad
     Then se muestra el mensaje de error "Menor al monto mínimo"
-@run
+
   Scenario: Validar ingreso de spread con valor numerico y dos decimales
     When ingreso el monto a solicitar 500000
     And ingreso un spread de 1.99%

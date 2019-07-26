@@ -1,13 +1,11 @@
 package stepdef;
 
-import Managers.driver.DriverFactory;
 import Managers.driver.SharedDriver;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
-import org.openqa.selenium.interactions.SourceType;
 
 import pageobjects.*;
 import pageobjects.ventaEmpresa.*;
@@ -130,7 +128,7 @@ public class VentaEmpresaDefinition {
     @Then("permite seleccionar el valor {string}")
     public void permite_seleccionar_el_valor_string (String valor){
         // TODO: 2019-07-18 pgtoopx Realizar mapeo de valores seleccionados
-        Assert.assertTrue(true);
+        Assert.fail("No implementado");
     }
 
     @Then("no entrega mensaje de error")
@@ -154,6 +152,7 @@ public class VentaEmpresaDefinition {
     @When("ingreso un spread de {}%")
     public void ingreso_un_spread_de_porcentaje (String porcentajeSpread){
         datosFormulario.add(new InputFormulario(SPREAD_SELECTOR,porcentajeSpread));
+        configuracionDeProductosPO.waitUntilEscritorioComercialIsLoaded();
         configuracionDeProductosPO.ingresarValorEnInput(SPREAD_SELECTOR, porcentajeSpread);
     }
 
@@ -203,8 +202,6 @@ public class VentaEmpresaDefinition {
         Assert.assertEquals(valorSpread, configuracionDeProductosPO.getValorSpread());
     }
 
-
-
     @Then("el campo {string} contiene los siguientes valores")
     public void el_campo_string_contiene_los_siguientes_valores(String campo, DataTable valores){
         Assert.assertEquals(valores.asList(), configuracionDeProductosPO.getValoresInput(campo));
@@ -214,7 +211,6 @@ public class VentaEmpresaDefinition {
     public void el_campo_string_contiene_solo_el_valor_string(String campo, String valor){
         List<String> valores = configuracionDeProductosPO.getValoresInput(campo);
         if(valores.size() != 1) Assert.fail("Tiene mas de un valor\n valores:"+valores.toString());
-        Assert.assertEquals(valor, configuracionDeProductosPO.getValoresInput(campo).get(1));
+        Assert.assertEquals(valor, valores.get(0));
     }
-
 }
