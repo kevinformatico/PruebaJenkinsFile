@@ -1,5 +1,5 @@
 #encoding:utf-8
-#@notrun
+@VTAPYME-1150
 Feature: Configuración Líneas de Crédito EMPRESAS
 COMO Ejecutivo de cuenta, asistente comercial, agente, jefe de plataforma
 DESEO configurar las condiciones comerciales
