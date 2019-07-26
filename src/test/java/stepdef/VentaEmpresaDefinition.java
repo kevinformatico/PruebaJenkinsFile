@@ -175,7 +175,7 @@ public class VentaEmpresaDefinition {
         configuracionDeProductosPO.ingresarValorEnInput(AUMENTO_PROGRAMADO_DE_CUPO_SELECTOR, aumento);
     }
 
-    @When("ingreso tipo plazo {String}")
+    @When("ingreso tipo plazo {string}")
     public void ingreso_tipo_plazo_string(String plazo){
         datosFormulario.add(new InputFormulario(TIPO_PLAZO, plazo));
         configuracionDeProductosPO.ingresarValorEnInput(TIPO_PLAZO, plazo);
