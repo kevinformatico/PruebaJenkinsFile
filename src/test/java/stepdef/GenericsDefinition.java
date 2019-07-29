@@ -23,8 +23,8 @@ public class GenericsDefinition {
 
     final String PERFIL_EMPRESA="empresa";
     final String PERFIL_PERSONA="persona";
-    final String DEFAULT_USERNAME="mnilos";
-    final String DEFAULT_PASSWORD="Venta01";
+    final String DEFAULT_USERNAME="aestela";
+    final String DEFAULT_PASSWORD="Venta75";
 
     PageObjectManager pageObjectManager;
 
