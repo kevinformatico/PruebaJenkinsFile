@@ -60,7 +60,6 @@ Feature: Configuración Líneas de Crédito PYME
     |6 veces ingreso mensual|
     |No aplica|
 
-@run
   Scenario: Permitir seleccionar sólo el Tipo de Plazo "Indefinido"
     Then el campo "Tipo Plazo" contiene solo el valor "Indefinido"
 

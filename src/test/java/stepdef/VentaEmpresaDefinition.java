@@ -153,6 +153,7 @@ public class VentaEmpresaDefinition {
     public void ingreso_un_spread_de_porcentaje (String porcentajeSpread){
         datosFormulario.add(new InputFormulario(SPREAD_SELECTOR,porcentajeSpread));
         configuracionDeProductosPO.waitUntilEscritorioComercialIsLoaded();
+        configuracionDeProductosPO.limpiarValorEnInput(SPREAD_SELECTOR);
         configuracionDeProductosPO.ingresarValorEnInput(SPREAD_SELECTOR, porcentajeSpread);
     }
 

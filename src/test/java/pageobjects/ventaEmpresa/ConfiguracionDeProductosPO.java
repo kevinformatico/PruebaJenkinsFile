@@ -156,6 +156,11 @@ public class ConfiguracionDeProductosPO extends BasePage {
         getElementFrom(By.xpath(inputDiv+"//input")).sendKeys(Keys.TAB);
     }
 
+    public void limpiarValorEnInput(String campo){
+        String inputDiv=String.format(SELECTOR_INPUT_FORMULARIO,selectorFamilia(familia),campo);
+        getElementFrom(By.xpath(inputDiv+"//input")).clear();
+    }
+
     public List<String> getValoresInput(String campo){
         List<String> values = getTextFromSelectValues(String.format(SELECTOR_INPUT_FORMULARIO,selectorFamilia(familia),campo));
         System.out.println("Los valores del campo "+campo+" son: "+values);
