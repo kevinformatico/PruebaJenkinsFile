@@ -113,9 +113,12 @@ public class GenericsDefinition {
         //System.out.println(resultSet);
         //System.out.println(ResultSetConverter.convert(resultSet));
 
-        String scriptToExecute = "var performance = window.performance || window.mozPerformance || window.msPerformance || window.webkitPerformance || {}; var network = performance.getEntries() || {}; return network;";
-        String netData = ((JavascriptExecutor) DriverFactory.getDriver()).executeScript(scriptToExecute).toString();
-        System.out.println(netData);
+        //String scriptToExecute = "var performance = window.performance || window.mozPerformance || window.msPerformance || window.webkitPerformance || {}; var network = performance.getEntries() || {}; return network;";
+        //String netData = ((JavascriptExecutor) DriverFactory.getDriver()).executeScript(scriptToExecute).toString();
+        //System.out.println(netData);
+
+        
+
     }
 
     private void configurarPerfil(String tipo){
