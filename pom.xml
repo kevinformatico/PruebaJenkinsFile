@@ -91,11 +91,6 @@
                 <version>12.2.0.1</version>
             </dependency>
     -->
-		<dependency>
-			<groupId>bch.cdn</groupId>
-			<artifactId>continuidad</artifactId>
-			<version>0.1.2-PO-continuidad</version>
-		</dependency>
 
 	</dependencies>
 
