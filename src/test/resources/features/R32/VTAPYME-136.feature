@@ -66,14 +66,3 @@ Feature: Configuración Líneas de Crédito PYME
   @TestCaseKey=VTAPYME-T1425
   Scenario: Validar Frecuencia entrega cartola "Mensual"
     Then se refleja frecuencia entrega cartola "Mensual"
-
-  @TestCaseKey=VTAPYME-T1425 @notrun
-  Scenario: Validar monto de cupo segun parametros de taller
-    When contrato el producto "Línea de Crédito PYME" con los siguientes valores:
-      | clave | valor |
-      | Monto a Solicitar ($)| 3000000 |
-      | Spread (%)| 3 |
-      | Tipo Plazo| Indefinido |
-      | N° de cuenta asociada | FIRST |
-      | Aumento programado de cupo | FIRST |
-    Then se agrega al carro correctamente

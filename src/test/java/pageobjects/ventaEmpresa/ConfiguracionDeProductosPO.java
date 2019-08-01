@@ -143,7 +143,8 @@ public class ConfiguracionDeProductosPO extends BasePage {
     }
 
     public void clickAgregarAOportunidad(){
-        getDriver().findElement(By.xpath(selectorFamilia(familia)+botonAgregarAOportunidad)).click();
+        waitUntilEscritorioComercialIsLoaded();
+        getElementFrom(By.xpath(selectorFamilia(familia)+botonAgregarAOportunidad)).click();
     }
 
     public void ingresarValorEnInput(String campo, String valor){
