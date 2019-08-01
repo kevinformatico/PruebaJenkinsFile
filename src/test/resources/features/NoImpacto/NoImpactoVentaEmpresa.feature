@@ -7,5 +7,5 @@
      # And voy a contratar una LDC
      # And contrato el producto "Línea de Crédito PYME"
 @run
-  Scenario:
-    Given DateTime check period from "10" to "{}" is {}seconds
+  Scenario: Pruebas
+    Given pruebo algo

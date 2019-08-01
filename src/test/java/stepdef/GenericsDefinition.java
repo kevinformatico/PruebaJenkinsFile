@@ -1,7 +1,7 @@
 package stepdef;
 
+import Generics.database.SqlClient;
 import Generics.util;
-import Managers.driver.DriverFactory;
 import com.neovisionaries.ws.client.WebSocketException;
 import com.pgtoopx.BuilderMessages;
 import com.pgtoopx.ChromeDevTools;
@@ -12,7 +12,6 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
-import org.openqa.selenium.JavascriptExecutor;
 import pageobjects.*;
 
 import java.io.IOException;
@@ -117,6 +116,12 @@ public class GenericsDefinition {
         //String netData = ((JavascriptExecutor) DriverFactory.getDriver()).executeScript(scriptToExecute).toString();
         //System.out.println(netData);
 
+       SqlClient conector = new SqlClient("jdbc:oracle:thin:@152.139.146.170:1521/DIANA.bch.bancodechile.cl","Siebel","siebelqa", "oracle.jdbc.OracleDriver");
+
+       conector.connect();
+       conector.prepareStatement("SELECT * FROM SIEBEL.S_ASSET");
+       System.out.println(conector.executeQueryAndGetRsAsList());
+       conector.close();
         
 
     }

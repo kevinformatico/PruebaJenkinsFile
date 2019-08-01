@@ -13,6 +13,8 @@ public class BasePage {
     private static final int TIMEOUT = 10;
     private static final int POLLING = 100;
 
+    private
+
     final WebDriver driver;
     private final WebDriverWait wait;
 
