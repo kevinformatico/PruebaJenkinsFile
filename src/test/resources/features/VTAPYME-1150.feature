@@ -55,7 +55,7 @@ PARA una LDC nueva
   Scenario: Validar Frecuencia entrega cartola "Mensual"
     Then se refleja frecuencia entrega cartola "Mensual"
 
-@notrun @run
+@notrun
   Scenario: Validar monto de cupo segun parametros de taller
     Given pruebo algo
     When contrato el producto "Línea de Crédito PYME" con los siguientes valores:

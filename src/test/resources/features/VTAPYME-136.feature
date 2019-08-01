@@ -17,13 +17,13 @@ Feature: Configuración Líneas de Crédito PYME
     And contrato el producto "Línea de Crédito PYME"
 
 
-  @TestCaseKey=VTAPYME-T1419
+  @TestCaseKey=VTAPYME-T1419 @run
   Scenario: Validar fallo al ingreso de monto de cupo menor al minimo segun parametros de taller
     When ingreso el monto a solicitar 200000
     And lo agrego a oportunidad
     Then se muestra el mensaje de error "Menor al monto mínimo"
 
-  @TestCaseKey=VTAPYME-T1420
+  @TestCaseKey=VTAPYME-T1420 @run
   Scenario: Validar fallo al ingreso de monto de cupo mayor al maximo segun parametros de taller
     When ingreso el monto a solicitar 300000000
     And lo agrego a oportunidad
