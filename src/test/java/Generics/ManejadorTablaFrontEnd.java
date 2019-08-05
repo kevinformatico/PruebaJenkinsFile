@@ -1,18 +1,22 @@
 package Generics;
 
-import Generics.util;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class ManejadorTablaFrontEnd {
 
     public static JsonArray extraerDatosDeTablaAJson(WebElement table){
+        util.log("Se extrae la tabla para el objeto: "+ table);
         ArrayList<String> columnnas= getNameColumns(table);
+        util.log("Las columnas son: "+ columnnas);
         ArrayList<WebElement> filas = getFilasConDatos(table);
         return joinData(columnnas, filas);
     }
@@ -23,6 +27,7 @@ public class ManejadorTablaFrontEnd {
             JsonObject filaJson = new JsonObject();
             ArrayList<String> datosFila= getDataFila(fila);
             for (int i=0; i<columnas.size();i++){
+                util.log("Enlazando -->" + columnas.get(i)+":"+datosFila.get(i));
                 filaJson.addProperty(columnas.get(i), datosFila.get(i));
             }
             tablaJson.add(filaJson);
@@ -38,6 +43,7 @@ public class ManejadorTablaFrontEnd {
                 datosReales.add(extraerTexto(element));
             }
         }
+        util.log("Los datos de la fila son: " + datosReales);
         return datosReales;
     }
 
@@ -60,6 +66,7 @@ public class ManejadorTablaFrontEnd {
                 filaConDatos.add(fila);
             }
         }
+        util.log("Se encontrados "+filaConDatos.size()+"filas");
         return filaConDatos;
     }
 

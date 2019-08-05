@@ -2,6 +2,8 @@ package pageobjects.ventaEmpresa;
 
 import Managers.driver.DriverFactory;
 import io.cucumber.datatable.DataTable;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -18,10 +20,11 @@ public class ConfiguracionDeProductosPO extends BasePage {
         super(DriverFactory.getDriver());
     }
 
+    private Logger log = LogManager.getLogger(ConfiguracionDeProductosPO.class);
     String botonAgregarAOportunidad = "//button[contains(@class,'agregar-producto') and contains(text(),'Agregar a oportunidad')]";
     String familia;
 
-
+    final String SELECTOR_ASOCIAR_LIMITES="//article[.//span[contains(text(),'Asociar límites')]]//div[contains(@class,'actions')]/a[ .//i[contains(@class,'arrow-right')]]";
     final String SELECT_ELEMENT="%s//li//a[contains(span,'%s')]";
     final String SELECT_FIRST_ELEMENT="%s//li//a[1]";
     final String SELECT_RAMDOM_ELEMENT="%s//li//a[%s]";
@@ -46,6 +49,10 @@ public class ConfiguracionDeProductosPO extends BasePage {
     * Funcionalidades de la pagina
     * */
 
+    public void clickAsociarLimites(){
+        getElementFrom(By.xpath(selectorFamilia(familia)+SELECTOR_ASOCIAR_LIMITES)).click();
+    }
+
     public void expanderFamilia(String nombreFamilia){
         this.familia=nombreFamilia;
         waitUntilEscritorioComercialIsLoaded();
@@ -61,8 +68,10 @@ public class ConfiguracionDeProductosPO extends BasePage {
 
     public void ingresarValoresAlProducto(DataTable datos){
         List<Map<String,String>> tablaProducto = datos.asMaps();
+        log.debug("---Ingresando Valores a la tabla---");
         for (Map<String, String> fila :tablaProducto){
-                ingresarValorEnInput(fila.get("clave"), fila.get("valor"));
+            log.debug(fila.get("clave")+": "+ fila.get("valor"));
+            ingresarValorEnInput(fila.get("clave"), fila.get("valor"));
         }
     }
 
@@ -149,12 +158,17 @@ public class ConfiguracionDeProductosPO extends BasePage {
 
     public void ingresarValorEnInput(String campo, String valor){
         String inputDiv=String.format(SELECTOR_INPUT_FORMULARIO,selectorFamilia(familia),campo);
+        waitUntilEscritorioComercialIsLoaded();
+        log.debug("Xpath input: "+inputDiv);
         if(getElementFrom(By.xpath(inputDiv+"//input")).getAttribute("class").contains("select")){
+            log.debug("el input es select");
             seleccionarValorEnSelect(inputDiv, valor);
         }else{
+            log.debug("el input es text");
             getElementFrom(By.xpath(inputDiv+"//input")).sendKeys(valor);
         }
-        getElementFrom(By.xpath(inputDiv+"//input")).sendKeys(Keys.TAB);
+        //log.debug("Se realiza el tab");
+        //getElementFrom(By.xpath(inputDiv+"//input")).sendKeys(Keys.TAB);
     }
 
     public void limpiarValorEnInput(String campo){
@@ -182,7 +196,6 @@ public class ConfiguracionDeProductosPO extends BasePage {
         if(isVisible(getDriver().findElement(By.xpath(inputDiv+"//label[contains(@class,'bch-custom-check')]//input[@value=1]")))){
             return getDriver().findElement(By.xpath(inputDiv+"//label[contains(@class,'bch-custom-check')]//input[@value=1]")).getText();
         }
-
         return null;
     }
 
@@ -190,6 +203,7 @@ public class ConfiguracionDeProductosPO extends BasePage {
 
     public void clickFlechaSelect(String elementXpath){
         WebElement btnDesplegarLista = getDriver().findElement(By.xpath(String.format(SELECT_BOTON_DESPLEGAR_LISTA, elementXpath)));
+        log.debug("Se despliega la lista para el elemento: "+btnDesplegarLista);
         click(btnDesplegarLista);
     }
 
@@ -221,6 +235,7 @@ public class ConfiguracionDeProductosPO extends BasePage {
 
     public void seleccionarValorEnSelect(String elementXpath, String valor){
         clickFlechaSelect(elementXpath);
+        log.debug("El select tiene el xpath: "+elementXpath);
         WebElement valorSelect;
         if(valor.equals("FIRST")){
             valorSelect = getElementFrom(By.xpath(String.format(SELECT_FIRST_ELEMENT,elementXpath)));
@@ -230,6 +245,7 @@ public class ConfiguracionDeProductosPO extends BasePage {
         }else{
             valorSelect = getElementFrom(By.xpath(String.format(SELECT_ELEMENT,elementXpath,valor)));
         }
+        log.debug("El xpath con el valor es: " +valorSelect);
         click(valorSelect);
     }
 

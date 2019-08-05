@@ -15,6 +15,7 @@ import org.junit.Assert;
 import pageobjects.*;
 
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -22,7 +23,7 @@ public class GenericsDefinition {
 
     final String PERFIL_EMPRESA="empresa";
     final String PERFIL_PERSONA="persona";
-    final String DEFAULT_USERNAME="aestela";
+    final String DEFAULT_USERNAME="mnilos";
     final String DEFAULT_PASSWORD="Venta75";
 
     PageObjectManager pageObjectManager;
@@ -116,12 +117,7 @@ public class GenericsDefinition {
         //String netData = ((JavascriptExecutor) DriverFactory.getDriver()).executeScript(scriptToExecute).toString();
         //System.out.println(netData);
 
-       SqlClient conector = new SqlClient("jdbc:oracle:thin:@152.139.146.170:1521/DIANA.bch.bancodechile.cl","Siebel","siebelqa", "oracle.jdbc.OracleDriver");
-
-       conector.connect();
-       conector.prepareStatement("SELECT * FROM SIEBEL.S_ASSET");
-       System.out.println(conector.executeQueryAndGetRsAsList());
-       conector.close();
+        System.out.println(getRutFromDB());
         
 
     }
@@ -155,6 +151,32 @@ public class GenericsDefinition {
             case "MNILOS": return "Venta01";
             default: return DEFAULT_PASSWORD;
         }
+    }
+
+    private String getRutFromDB() throws SQLException{
+        SqlClient v360qa = new SqlClient("jdbc:oracle:thin:@200.14.169.238:1521/ORION","VISTA_360_CN","VISTA_360_CN_ORION2K16", "oracle.jdbc.OracleDriver");
+        SqlClient coreqa = new SqlClient("jdbc:oracle:thin:@10.30.100.231:1521/ATEQA","flexcube","flexcube", "oracle.jdbc.OracleDriver");
+
+        String QUERY_GET_RUT="SELECT T1.NAME RUT FROM S_ORG_EXT T1, S_INDUST T2, S_CON_ADDR T3, S_ADDR_PER T4 WHERE CUST_STAT_CD='Cliente' AND OU_TYPE_CD='Activo' AND ROWNUM = 1" ;
+        String QUERY_CORE="SELECT b.cust_no as RUT, a.CUST_AC_NO as 'CTA CTE', a.BRANCH_CODE as Oficina, a.LOC_ACC_NO as 'LDC', b.acy_avl_bal as Saldo_Cta_Cte, a.*" +
+                "FROM STTMS_CUSAC_LOC_DETAIL a, sttm_cust_account b" +
+                "Where a.cust_ac_no = b.cust_ac_no";
+        //consulta rut
+        v360qa.connect();
+        v360qa.prepareStatement(QUERY_GET_RUT);
+        ResultSet rs = v360qa.executeQuery();
+        rs.next();
+        String resutaldo = rs.getString("RUT");
+        v360qa.close();
+
+        //Consulta Core
+
+        coreqa.connect();
+        coreqa.prepareStatement(QUERY_CORE);
+        System.out.println(coreqa.executeQueryAndGetRsAsList());
+        coreqa.close();
+
+        return resutaldo;
     }
 
 }

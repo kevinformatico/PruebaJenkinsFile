@@ -2,6 +2,7 @@ package stepdef;
 
 import Managers.driver.SharedDriver;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -22,6 +23,7 @@ public class VentaEmpresaDefinition {
     ConfiguracionDeProductosPO configuracionDeProductosPO;
     PresentacionDeProductosPO presentacionDeProductosPO;
     DatosAdicionalesPO datosAdicionalesPO;
+    AsociarLimitesPo asociarLimitesPo;
     DocumentosAdjuntosPO documentosAdjuntosPO;
     ArrayList<byte[]> screenshotList;
     String producto;
@@ -45,6 +47,7 @@ public class VentaEmpresaDefinition {
                               PresentacionDeProductosPO presentacionDeProductosPO,
                               DatosAdicionalesPO datosAdicionalesPO,
                               DocumentosAdjuntosPO documentosAdjuntosPO,
+                              AsociarLimitesPo asociarLimitesPo,
                               Vista360ResumenEmpresaPO vista360ResumenEmpresaPO)
     {
         this.screenshotList=screenshotList;
@@ -55,6 +58,7 @@ public class VentaEmpresaDefinition {
         this.configuracionDeProductosPO=configuracionDeProductosPO;
         this.presentacionDeProductosPO=presentacionDeProductosPO;
         this.datosAdicionalesPO=datosAdicionalesPO;
+        this.asociarLimitesPo=asociarLimitesPo;
         this.documentosAdjuntosPO=documentosAdjuntosPO;
     }
 
@@ -93,7 +97,6 @@ public class VentaEmpresaDefinition {
         this.producto=producto;
         configuracionDeProductosPO.seleccionoElProducto(producto);
         configuracionDeProductosPO.ingresarValoresAlProducto(tabla);
-        configuracionDeProductosPO.clickAgregarAOportunidad();
     }
     
     @Given("continuo a presentación de productos")
@@ -214,4 +217,11 @@ public class VentaEmpresaDefinition {
         if(valores.size() != 1) Assert.fail("Tiene mas de un valor\n valores:"+valores.toString());
         Assert.assertEquals(valor, valores.get(0));
     }
+
+    @And("asocio los limites")
+    public void asocio_los_limites(){
+        configuracionDeProductosPO.clickAsociarLimites();
+        asociarLimitesPo.ExtraerDatosTabla();
+    }
+
 }

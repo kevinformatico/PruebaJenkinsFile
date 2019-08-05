@@ -3,9 +3,14 @@ package Generics;
 import Managers.driver.DriverFactory;
 import io.cucumber.core.api.Scenario;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pageobjects.BasePage;
+
+import javax.rmi.CORBA.Util;
 
 public class util {
     public static void printCurrentThread(){
@@ -86,5 +91,10 @@ public class util {
         if(widthDimAnterior<widthDimNueva) seExpande = true;
         if(heightDimAnterior<heightDimNueva) seExpande =true;
         return seExpande;
+    }
+
+    public static void log (String mensaje){
+        Logger log = LogManager.getLogger(util.class);
+        log.debug(mensaje);
     }
 }
