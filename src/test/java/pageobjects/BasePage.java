@@ -1,18 +1,22 @@
 package pageobjects;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pageobjects.ventaEmpresa.ConfiguracionDeProductosPO;
 
 
 public class BasePage {
 
-    private static final int TIMEOUT = 10;
+    private static final int WAIT_TIMEOUT = 30;
+    private static final int DEFAULT_TIMEOUT = 1;
     private static final int POLLING = 100;
-
+    private Logger log = LogManager.getLogger(BasePage.class);
     private
 
     final WebDriver driver;
@@ -23,8 +27,8 @@ public class BasePage {
 
     protected BasePage(WebDriver driver){
         this.driver=driver;
-        this.wait= new WebDriverWait(driver, TIMEOUT, POLLING);
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, TIMEOUT), this);
+        this.wait= new WebDriverWait(driver, WAIT_TIMEOUT, POLLING);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver,DEFAULT_TIMEOUT), this);
     }
 
     protected BasePage(WebDriver driver, int timeOutSec){
@@ -58,16 +62,26 @@ public class BasePage {
     protected boolean isVisible(WebElement webElement){
         boolean isVisible;
         try {
-            isVisible = webElement.isDisplayed();
-        }catch (NoSuchElementException e){
-            isVisible=false;
+            return webElement.isDisplayed();
+        }catch (NoSuchElementException | StaleElementReferenceException e){
+            return false;
+        }catch (Exception e){
+            log.error("Error Desconocido: ", e);
+            return false;
         }
-        return isVisible;
+    }
+
+    protected boolean isInvisible(WebElement element){
+        try {
+            return !element.isDisplayed();
+        } catch (NoSuchElementException e){
+            return true;
+        }
     }
 
     public void waitUntilEscritorioComercialIsLoaded() {
         while (isVisible(barraCargando)){
-            waitFor(1);
+
         }
     }
 
