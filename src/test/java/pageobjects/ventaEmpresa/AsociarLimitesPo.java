@@ -9,12 +9,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import pageobjects.BasePage;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class AsociarLimitesPo extends BasePage {
 
     public AsociarLimitesPo(){
         super(DriverFactory.getDriver());
     }
-
     Logger log = Logger.getLogger(AsociarLimitesPo.class);
     final String SELECTOR_VALOR_RESUMEN="//div[contains(h3,'Asociar a Límites')]//article[contains(@class,'resume-box')]//ul[contains(li,'%S')]//li[2]";
     final String SELECTOR_TABLA_LIMITES="//article[contains(h5,'Límites disponibles')]//div[contains(@tabla-select,'') and contains(@class,'table')]//table[contains(@class,'tabla-interactiva')]";
@@ -53,12 +57,22 @@ public class AsociarLimitesPo extends BasePage {
         log.debug("Cantidad de filas: " + Row_count);
         int Col_count = getDriver().findElements(By.xpath(tabla + "/tbody/tr[1]/td")).size();
         log.debug("Cantidad de columnas: " + Col_count);
+        int Head_count = getDriver().findElements(By.xpath(tabla+ "/thead/tr/th")).size();
+        log.debug("Cantidad de columnas en el thead: " + Head_count);
 
+        List<Map<String, String>> datosTabla = new ArrayList<>();
         for(int row=1;row<=Row_count;row++){
+            HashMap<String, String> objeto = new HashMap<>();
             for (int col=1; col<=Col_count;col++){
-                log.debug("Valor: "+ getDriver().findElement(By.xpath(tabla+String.format("/tbody/tr[%s]/td[%s]",row, col))).getText());
+                String nombreColumna = getDriver().findElement(By.xpath(tabla+String.format("/thead/tr/th[%s]",col))).getText();
+                String valor = getDriver().findElement(By.xpath(tabla+String.format("/tbody/tr[%s]/td[%s]",row, col))).getText();
+                objeto.put(nombreColumna, valor);
             }
+            log.debug("Objeto actual: "+objeto);
+            datosTabla.add(objeto);
         }
+        log.debug("Datos Tabla: "+datosTabla);
+
 
     }
 }

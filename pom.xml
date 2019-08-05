@@ -89,9 +89,14 @@
 							<includes>
 								<include>**/Runner*.java</include>
 							</includes>
+							<!--
+							<rerunFailingTestsCount>2</rerunFailingTestsCount>
+							-->
 
-							<!--<parallel>methods</parallel>
-							<useUnlimitedThreads>true</useUnlimitedThreads>-->
+							<!--
+							<parallel>methods</parallel>
+							<useUnlimitedThreads>true</useUnlimitedThreads>
+							-->
 						</configuration>
 					</execution>
 				</executions>
