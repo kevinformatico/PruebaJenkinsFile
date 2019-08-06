@@ -1,5 +1,6 @@
 package stepdef;
 
+import Generics.util;
 import Managers.driver.SharedDriver;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -221,7 +222,10 @@ public class VentaEmpresaDefinition {
     @And("asocio los limites")
     public void asocio_los_limites(){
         configuracionDeProductosPO.clickAsociarLimites();
-        asociarLimitesPo.ExtraerDatosTabla();
+        asociarLimitesPo.insertarMontoReservaALimites("1",asociarLimitesPo.getTotalMontoReserva());
+        asociarLimitesPo.asociarLimites();
+
+        util.waitFor(5);
     }
 
 }

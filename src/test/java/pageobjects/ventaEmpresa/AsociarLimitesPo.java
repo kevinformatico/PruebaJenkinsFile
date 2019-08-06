@@ -1,18 +1,12 @@
 package pageobjects.ventaEmpresa;
 
-import Generics.ManejadorTablaFrontEnd;
-import Generics.ManejadorTablaFrontEnd.*;
 import Managers.driver.DriverFactory;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.FindBy;
 import pageobjects.BasePage;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AsociarLimitesPo extends BasePage {
 
@@ -22,6 +16,8 @@ public class AsociarLimitesPo extends BasePage {
     Logger log = Logger.getLogger(AsociarLimitesPo.class);
     final String SELECTOR_VALOR_RESUMEN="//div[contains(h3,'Asociar a Límites')]//article[contains(@class,'resume-box')]//ul[contains(li,'%S')]//li[2]";
     final String SELECTOR_TABLA_LIMITES="//article[contains(h5,'Límites disponibles')]//div[contains(@tabla-select,'') and contains(@class,'table')]//table[contains(@class,'tabla-interactiva')]";
+
+
 
     @FindBy(xpath = "//div[contains(@class,'caja-resumen-inicio')]//div[contains(p,'Producto')]//p[2]")
     private WebElement nombreProducto ;
@@ -47,19 +43,57 @@ public class AsociarLimitesPo extends BasePage {
     @FindBy(xpath = "//article[contains(h5,'Límites disponibles')]//div[contains(@tabla-select,'') and contains(@class,'table')]//table[contains(@class,'tabla-interactiva')]")
     private WebElement tablaLimites;
 
-    public void ExtraerDatosTabla() {
+    @FindBy(xpath = "//button[contains(@class,'success') and text()='Asociar']")
+    private WebElement btnAsociar;
+
+    public void insertarMontoReservaALimites(String nroLimite, String monto){
         waitUntilEscritorioComercialIsLoaded();
-        log.debug(ManejadorTablaFrontEnd.extraerDatosDeTablaAJson(tablaLimites));
+        List<String> limites = getNrosLimites(SELECTOR_TABLA_LIMITES);
+        log.debug("Limites: "+  limites);
+        int indexLimite = getIndexTablaForNroLimite(limites.get(0), SELECTOR_TABLA_LIMITES);
+        log.debug("Index limite 1: " + indexLimite);
+        WebElement input =  getDriver().findElement(By.xpath(SELECTOR_TABLA_LIMITES+String.format("/tbody/tr[%s]/td[%s]//input[@type='text']",indexLimite, 6)));
+        log.debug(input);
+        input.sendKeys(monto);
+    }
 
-        String tabla="//article[contains(h5,'Límites disponibles')]//div[contains(@tabla-select,'') and contains(@class,'table')]//table[contains(@class,'tabla-interactiva')]";
+    public void asociarLimites(){
+        waitUntilEscritorioComercialIsLoaded();
+        btnAsociar.click();
+    }
 
+    public String getMontoNacionalLimite(){
+        waitUntilEscritorioComercialIsLoaded();
+        try {
+            return montoNacional.getText();
+        }catch (StaleElementReferenceException | NoSuchElementException e){
+            return "";
+        }
+    }
+
+    public String getMontoUSDLimite(){
+        waitUntilEscritorioComercialIsLoaded();
+        try {
+        return montoUsd.getText();
+        }catch (StaleElementReferenceException | NoSuchElementException e){
+            return "";
+        }
+    }
+
+    public String getTotalMontoReserva(){
+        waitUntilEscritorioComercialIsLoaded();
+        log.debug("Total Monto Reserva: "+totalMontoReserva.getText());
+        return totalMontoReserva.getText();
+    }
+
+    public  List<Map<String, String>> ExtraerDatosTabla(String tabla) {
+        waitUntilEscritorioComercialIsLoaded();
         int Row_count = getDriver().findElements(By.xpath(tabla + "/tbody/tr")).size();
         log.debug("Cantidad de filas: " + Row_count);
         int Col_count = getDriver().findElements(By.xpath(tabla + "/tbody/tr[1]/td")).size();
         log.debug("Cantidad de columnas: " + Col_count);
         int Head_count = getDriver().findElements(By.xpath(tabla+ "/thead/tr/th")).size();
         log.debug("Cantidad de columnas en el thead: " + Head_count);
-
         List<Map<String, String>> datosTabla = new ArrayList<>();
         for(int row=1;row<=Row_count;row++){
             HashMap<String, String> objeto = new HashMap<>();
@@ -68,11 +102,34 @@ public class AsociarLimitesPo extends BasePage {
                 String valor = getDriver().findElement(By.xpath(tabla+String.format("/tbody/tr[%s]/td[%s]",row, col))).getText();
                 objeto.put(nombreColumna, valor);
             }
-            log.debug("Objeto actual: "+objeto);
+
             datosTabla.add(objeto);
         }
-        log.debug("Datos Tabla: "+datosTabla);
-
-
+        log.debug("Datos extraidos de la Tabla: "+ datosTabla);
+        return datosTabla;
     }
+
+    public int getIndexTablaForNroLimite(String nroLimite, String tabla){
+        waitUntilEscritorioComercialIsLoaded();
+        int Row_count = getDriver().findElements(By.xpath(tabla + "/tbody/tr")).size();
+        log.debug("Cantidad de filas: " + Row_count);
+        for(int row=1;row<=Row_count;row++){
+             if(getDriver().findElement(By.xpath(tabla+String.format("/tbody/tr[%s]/td[%s]",row, 1))).getText().equals(nroLimite)){
+                 return row;
+             }
+        }
+        return 0;
+    }
+
+    public ArrayList<String> getNrosLimites(String tabla){
+        waitUntilEscritorioComercialIsLoaded();
+        int Row_count = getDriver().findElements(By.xpath(tabla + "/tbody/tr")).size();
+        log.debug("Cantidad de filas: " + Row_count);
+        ArrayList<String> nroLimites = new ArrayList<>();
+        for(int row=1;row<=Row_count;row++){
+            nroLimites.add(getDriver().findElement(By.xpath(tabla+String.format("/tbody/tr[%s]/td[%s]",row, 1))).getText());
+        }
+        return nroLimites;
+    }
+
 }

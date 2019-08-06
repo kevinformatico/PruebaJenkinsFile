@@ -18,4 +18,4 @@
     | N° de cuenta asociada | FIRST |
     | Plazo     |  4   |
     And asocio los limites
-  Then se agrega al carro correctamente
+ # Then se agrega al carro correctamente
