@@ -46,6 +46,9 @@ public class AsociarLimitesPo extends BasePage {
     @FindBy(xpath = "//button[contains(@class,'success') and text()='Asociar']")
     private WebElement btnAsociar;
 
+    @FindBy(xpath = "//button[contains(@class,'close-modal')]")
+    private WebElement btnCerrarModal;
+
     public void insertarMontoReservaALimites(String nroLimite, String monto){
         waitUntilEscritorioComercialIsLoaded();
         List<String> limites = getNrosLimites(SELECTOR_TABLA_LIMITES);
@@ -62,6 +65,9 @@ public class AsociarLimitesPo extends BasePage {
         btnAsociar.click();
     }
 
+    public void cerrar(){
+        btnCerrarModal.click();
+    }
     public String getMontoNacionalLimite(){
         waitUntilEscritorioComercialIsLoaded();
         try {

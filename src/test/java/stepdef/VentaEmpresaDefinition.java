@@ -25,6 +25,7 @@ public class VentaEmpresaDefinition {
     PresentacionDeProductosPO presentacionDeProductosPO;
     DatosAdicionalesPO datosAdicionalesPO;
     AsociarLimitesPo asociarLimitesPo;
+    ApoderadosPO apoderadosPO;
     DocumentosAdjuntosPO documentosAdjuntosPO;
     ArrayList<byte[]> screenshotList;
     String producto;
@@ -49,6 +50,7 @@ public class VentaEmpresaDefinition {
                               DatosAdicionalesPO datosAdicionalesPO,
                               DocumentosAdjuntosPO documentosAdjuntosPO,
                               AsociarLimitesPo asociarLimitesPo,
+                              ApoderadosPO apoderadosPO,
                               Vista360ResumenEmpresaPO vista360ResumenEmpresaPO)
     {
         this.screenshotList=screenshotList;
@@ -60,6 +62,7 @@ public class VentaEmpresaDefinition {
         this.presentacionDeProductosPO=presentacionDeProductosPO;
         this.datosAdicionalesPO=datosAdicionalesPO;
         this.asociarLimitesPo=asociarLimitesPo;
+        this.apoderadosPO=apoderadosPO;
         this.documentosAdjuntosPO=documentosAdjuntosPO;
     }
 
@@ -224,8 +227,17 @@ public class VentaEmpresaDefinition {
         configuracionDeProductosPO.clickAsociarLimites();
         asociarLimitesPo.insertarMontoReservaALimites("1",asociarLimitesPo.getTotalMontoReserva());
         asociarLimitesPo.asociarLimites();
+        screenshotList.add(asociarLimitesPo.takeScreenshot());
+        asociarLimitesPo.cerrar();
+    }
 
-        util.waitFor(5);
+    @And("agrego el {string} como representante legal")
+    public void agrego_el_string_como_representante_legal(String rutRepresentante){
+        configuracionDeProductosPO.clickApoderados();
+        apoderadosPO.ingresarApoderado(rutRepresentante);
+        screenshotList.add(apoderadosPO.takeScreenshot());
+        apoderadosPO.cerrar();
+
     }
 
 }

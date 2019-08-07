@@ -25,6 +25,7 @@ public class ConfiguracionDeProductosPO extends BasePage {
     String familia;
 
     final String SELECTOR_ASOCIAR_LIMITES="//article[.//span[contains(text(),'Asociar límites')]]//div[contains(@class,'actions')]/a[ .//i[contains(@class,'arrow-right')]]";
+    final String SELECTOR_APODERADOS="//article[.//span[contains(text(),'Apoderados')]]//div[contains(@class,'actions')]/a[ .//i[contains(@class,'arrow-right')]]";
     final String SELECT_ELEMENT="%s//li//a[contains(span,'%s')]";
     final String SELECT_FIRST_ELEMENT="%s//li//a[1]";
     final String SELECT_RAMDOM_ELEMENT="%s//li//a[%s]";
@@ -51,6 +52,10 @@ public class ConfiguracionDeProductosPO extends BasePage {
 
     public void clickAsociarLimites(){
         getElementFrom(By.xpath(selectorFamilia(familia)+SELECTOR_ASOCIAR_LIMITES)).click();
+    }
+
+    public void clickApoderados(){
+        getElementFrom(By.xpath(selectorFamilia(familia)+SELECTOR_APODERADOS)).click();
     }
 
     public void expanderFamilia(String nombreFamilia){
