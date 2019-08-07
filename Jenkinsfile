@@ -11,7 +11,7 @@ pipeline {
         sh 'mvn clean install -Dheadless=true -Ddocker=true'
       }
     }
-  }
+  
   post {
     always {
       archiveArtifacts(artifacts: 'target/', fingerprint: true)
