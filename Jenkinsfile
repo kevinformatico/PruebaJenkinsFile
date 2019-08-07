@@ -6,17 +6,17 @@ pipeline {
     }
   }
   stages {
-    stage('No impacto')
+    stage('No impacto'){
       steps {
         sh 'mvn clean install -Dheadless=true -Ddocker=true'
       }
     }
+  }
   post {
     always {
       archiveArtifacts(artifacts: 'target/', fingerprint: true)
       junit 'target/cucumber.xml'
       publishTestResults(serverAddress: 'http://jira.bch.bancodechile.cl:8080', projectKey: 'VTAPYME', filePath: 'target/cucumber-report/cucumber.json', format: 'Cucumber', autoCreateTestCases: false)
     }
-
-  }
+  } 
 }
