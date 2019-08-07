@@ -106,7 +106,6 @@ public class VentaEmpresaDefinition {
     @Given("continuo a presentación de productos")
     public void continuo_a_presentacion_de_productos(){
         configuracionDeProductosPO.continuarAPresentacionDelProducto();
-        presentacionDeProductosPO.extraerDatosPresentacionDelProducto();
     }
 
     @Given("agrego los siguientes datos adicionales")
@@ -237,7 +236,11 @@ public class VentaEmpresaDefinition {
         apoderadosPO.ingresarApoderado(rutRepresentante);
         screenshotList.add(apoderadosPO.takeScreenshot());
         apoderadosPO.cerrar();
+    }
 
+    @Then("se validan los datos de configuracion en presentacion")
+    public void se_validan_los_datos_de_configuracion_en_presentacion(){
+        presentacionDeProductosPO.extraerDatosPresentacionDelProducto();
     }
 
 }
