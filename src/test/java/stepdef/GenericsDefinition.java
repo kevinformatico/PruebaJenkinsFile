@@ -5,7 +5,6 @@ import Generics.util;
 import com.neovisionaries.ws.client.WebSocketException;
 import com.pgtoopx.BuilderMessages;
 import com.pgtoopx.ChromeDevTools;
-import Managers.PageObjectManager;
 import Managers.driver.SharedDriver;
 
 import io.cucumber.java.en.Given;
@@ -26,7 +25,6 @@ public class GenericsDefinition {
     final String DEFAULT_USERNAME="mnilos";
     final String DEFAULT_PASSWORD="Venta75";
 
-    PageObjectManager pageObjectManager;
 
     PaginaInicioPO paginaInicioPO;
     EscritorioComercialPO escritorioComercialPO;

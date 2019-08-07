@@ -16,7 +16,6 @@ public class Runner {
     @BeforeClass
     public static void configure(){
         BasicConfigurator.configure();
-        //Logger.getRootLogger().setLevel(Level.INFO);
     }
 
 }

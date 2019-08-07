@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 public class Hooks {
 
     public Scenario scenario;
-    public ArrayList<byte[]> screenshotList = new ArrayList<>();
+    public ArrayList<byte[]> screenshotList;
 
     public Hooks(ArrayList<byte[]> screenshotList){
         this.screenshotList=screenshotList;
@@ -31,8 +31,6 @@ public class Hooks {
         this.scenario=scenario;
         if(DriverFactory.getDriver()!= null){
             DriverFactory.getDriver().manage().deleteAllCookies();
-            DriverFactory.getDriver().manage().window().maximize();
-            DriverFactory.getDriver().manage().window().setSize(new Dimension(1440,808));
         }
     }
 

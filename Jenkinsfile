@@ -1,12 +1,12 @@
 pipeline {
   agent {
     docker {
-      image 'pgtoopx/bch-maven-chrome'
+      image '152.139.146.94:5000/bch-maven-chrome:1'
       args '--add-host="portalcomercial.qa.labchile.cl:200.14.169.120"'
     }
   }
   stages {
-    stage('No impacto') {
+    stage('No impacto')
       steps {
         sh 'mvn clean install -Dheadless=true -Ddocker=true'
       }
