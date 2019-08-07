@@ -49,7 +49,7 @@
 			<groupId>io.github.bonigarcia</groupId>
 			<artifactId>webdrivermanager</artifactId>
 			<version>${webdrivermanager.version}</version>
-		</dependency>  -->
+		</dependency>    -->
 		<dependency>
 			<groupId>io.webfolder</groupId>
 			<artifactId>cdp4j</artifactId>
