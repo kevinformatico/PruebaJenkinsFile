@@ -1,7 +1,7 @@
 package Managers.driver;
 
 import Generics.util;
-import io.github.bonigarcia.wdm.WebDriverManager;
+//import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -24,12 +24,12 @@ public class SharedDriver {
 		if (DriverFactory.getDriver() == null) {
 			switch(webdriver) {
 				case "firefox":
-					WebDriverManager.firefoxdriver().setup();
+					//WebDriverManager.firefoxdriver().setup();
 					DriverFactory.addDriver(new FirefoxDriver());
 					break;
 				case "chrome":
 					System.setProperty(ChromeDriverService.CHROME_DRIVER_LOG_PROPERTY, System.getProperty("user.dir") + "/target/chromedriver.log");
-					if(isOnDocker.equals("false"))WebDriverManager.chromedriver().setup();
+					//if(isOnDocker.equals("false"))//WebDriverManager.chromedriver().setup();
 					DriverFactory.addDriver(new ChromeDriver(options));
 					break;
 				case "safari":
