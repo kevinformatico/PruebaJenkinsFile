@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import org.apache.log4j.BasicConfigurator;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(glue = {"stepdef"}, features = "src/test/resources/features/", tags = {"@run"},
+@CucumberOptions(glue = {"stepdef"}, features = "src/test/resources/features/", tags = {"@NOIMPACTO-R32"},
 plugin = {"pretty","json:target/cucumber-report/cucumber.json", "junit:target/cucumber.xml", "html:target/cucumber-report"})
 public class Runner {
     @BeforeClass

@@ -24,7 +24,9 @@ public class GenericsDefinition {
     final String PERFIL_PERSONA="persona";
     final String DEFAULT_USERNAME="mnilos";
     final String DEFAULT_PASSWORD="Venta75";
-
+    final String DEFAULT_USERNAME_DOCKER="KTELLEZ";
+    final String DEFAULT_PASSWORD_DOCKER="Venta75";
+    String isOnDocker= System.getProperty("docker", "false");
 
     PaginaInicioPO paginaInicioPO;
     EscritorioComercialPO escritorioComercialPO;
@@ -71,7 +73,11 @@ public class GenericsDefinition {
 
     @Given("el usuario busca el rut {string} con perfil empresa")
     public void  el_usuario_busca_el_rut_string_con_perfil_empresa(String rut){
-        paginaInicioPO.iniciarSesion(DEFAULT_USERNAME, getPasswordForUsuario(DEFAULT_USERNAME));
+        if(isOnDocker.equalsIgnoreCase("true")){
+            paginaInicioPO.iniciarSesion( DEFAULT_USERNAME_DOCKER, DEFAULT_PASSWORD_DOCKER);
+        }else{
+            paginaInicioPO.iniciarSesion( DEFAULT_USERNAME, DEFAULT_PASSWORD);
+        }
         escritorioComercialPO.buscarPorRut(rut);
         configurarPerfil(PERFIL_EMPRESA);
     }
