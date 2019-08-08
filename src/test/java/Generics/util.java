@@ -2,7 +2,6 @@ package Generics;
 
 import Managers.driver.DriverFactory;
 import io.cucumber.core.api.Scenario;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
@@ -76,10 +75,6 @@ public class util {
         }catch (InterruptedException e){
             e.getMessage();
         }
-    }
-
-    public static String elimininarTildes(String cadena){
-        return StringUtils.stripAccents(cadena);
     }
 
     public static boolean seExpande(Dimension dimAnterior, Dimension dimNueva){
