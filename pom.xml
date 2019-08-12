@@ -14,7 +14,7 @@
 
 		<cucumber.version>4.6.0</cucumber.version>
 		<junit.version>4.12</junit.version>
-		<selenium.version>3.141.59</selenium.version>
+		<selenium.version>4.0.0-alpha-2</selenium.version>
 		<webdrivermanager.version>3.6.2</webdrivermanager.version>
 		<log4j.version>2.12.0</log4j.version>
 	</properties>

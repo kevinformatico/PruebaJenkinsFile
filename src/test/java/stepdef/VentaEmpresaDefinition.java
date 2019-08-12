@@ -77,6 +77,12 @@ public class VentaEmpresaDefinition {
         configuracionDeProductosPO.expanderFamilia("Líneas");
     }
 
+    @Given("voy a contratar una Banconexión")
+    public void voy_a_contratar_una_banconexion(){
+        vista360ResumenEmpresaPO.clickBotonContratarProductos();
+        configuracionDeProductosPO.expanderFamilia("Canales remotos");
+    }
+
     @Given("despliego familia {string}")
     public void despliego_familia_string(String nombreFamilia){
         configuracionDeProductosPO.expanderFamilia(nombreFamilia);
@@ -241,6 +247,8 @@ public class VentaEmpresaDefinition {
     @Then("se validan los datos de configuracion en presentacion")
     public void se_validan_los_datos_de_configuracion_en_presentacion(){
         presentacionDeProductosPO.extraerDatosPresentacionDelProducto();
+        assert true;
+
     }
 
 }

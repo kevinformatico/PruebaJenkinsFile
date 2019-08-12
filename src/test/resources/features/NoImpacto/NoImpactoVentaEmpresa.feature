@@ -6,6 +6,8 @@
      # Given el usuario busca el rut "4.889.509-3" con perfil empresa
      # And voy a contratar una LDC
      # And contrato el producto "Línea de Crédito PYME"
+
+
   @TestCaseKey=VTAPYME-T1499
   Scenario: Validar flujo para LDC Automatica Empresas con PJ
     Given el usuario busca el rut "96.684.990-8" con perfil empresa
