@@ -1,6 +1,7 @@
 package stepdef;
 
-import Generics.util;
+import Generics.componentHandler.InputFormulario;
+import Managers.context.TestContext;
 import Managers.driver.SharedDriver;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
@@ -17,6 +18,7 @@ import java.util.List;
 
 public class VentaEmpresaDefinition {
 
+    //Page Object Model
     PaginaInicioPO paginaInicioPO;
     EscritorioComercialPO escritorioComercialPO;
     Vista360ResumenPersonaPO vista360ResumenPersonaPO;
@@ -27,6 +29,9 @@ public class VentaEmpresaDefinition {
     AsociarLimitesPo asociarLimitesPo;
     ApoderadosPO apoderadosPO;
     DocumentosAdjuntosPO documentosAdjuntosPO;
+
+    //Data sharing state
+
     ArrayList<byte[]> screenshotList;
     String producto;
     ArrayList<InputFormulario> datosFormulario = new ArrayList<>();
@@ -39,31 +44,21 @@ public class VentaEmpresaDefinition {
     String DEGRAVAMEN_LINEA_DE_CREDITO = "Desgravamen Línea de Crédito";
     String TIPO_PLAZO = "Tipo Plazo";
     String PLAZO = "Plazo";
+    String PRODUCTO = "Producto";
 
-    public VentaEmpresaDefinition(SharedDriver driver,
-                              ArrayList<byte[]> screenshotList,
-                              PaginaInicioPO paginaInicioPO,
-                              EscritorioComercialPO escritorioComercialPO,
-                              Vista360ResumenPersonaPO vista360ResumenPersonaPO,
-                              ConfiguracionDeProductosPO configuracionDeProductosPO,
-                              PresentacionDeProductosPO presentacionDeProductosPO,
-                              DatosAdicionalesPO datosAdicionalesPO,
-                              DocumentosAdjuntosPO documentosAdjuntosPO,
-                              AsociarLimitesPo asociarLimitesPo,
-                              ApoderadosPO apoderadosPO,
-                              Vista360ResumenEmpresaPO vista360ResumenEmpresaPO)
+    public VentaEmpresaDefinition(TestContext testContext)
     {
-        this.screenshotList=screenshotList;
-        this.paginaInicioPO= paginaInicioPO;
-        this.escritorioComercialPO= escritorioComercialPO;
-        this.vista360ResumenPersonaPO= vista360ResumenPersonaPO;
-        this.vista360ResumenEmpresaPO=vista360ResumenEmpresaPO;
-        this.configuracionDeProductosPO=configuracionDeProductosPO;
-        this.presentacionDeProductosPO=presentacionDeProductosPO;
-        this.datosAdicionalesPO=datosAdicionalesPO;
-        this.asociarLimitesPo=asociarLimitesPo;
-        this.apoderadosPO=apoderadosPO;
-        this.documentosAdjuntosPO=documentosAdjuntosPO;
+        this.screenshotList=testContext.screenshotList;
+        this.paginaInicioPO= testContext.paginaInicioPO;
+        this.escritorioComercialPO= testContext.escritorioComercialPO;
+        this.vista360ResumenPersonaPO= testContext.vista360ResumenPersonaPO;
+        this.vista360ResumenEmpresaPO=testContext.vista360ResumenEmpresaPO;
+        this.configuracionDeProductosPO=testContext.configuracionDeProductosPO;
+        this.presentacionDeProductosPO=testContext.presentacionDeProductosPO;
+        this.datosAdicionalesPO=testContext.datosAdicionalesPO;
+        this.asociarLimitesPo=testContext.asociarLimitesPo;
+        this.apoderadosPO=testContext.apoderadosPO;
+        this.documentosAdjuntosPO=testContext.documentosAdjuntosPO;
     }
 
     @When("voy a contratar un producto")
@@ -133,7 +128,6 @@ public class VentaEmpresaDefinition {
     @Then("se muestra el mensaje de error {string}")
     public void se_muestra_el_mensaje_de_error_string (String mensaje){
         configuracionDeProductosPO.clickAgregarAOportunidad();
-        //configuracionDeProductosPO.waitUntilEscritorioComercialIsLoaded();
         Assert.assertEquals(mensaje, configuracionDeProductosPO.obtenerMensajeDeErrorDelInput(mensaje));
     }
 
@@ -244,11 +238,26 @@ public class VentaEmpresaDefinition {
         apoderadosPO.cerrar();
     }
 
+    @And("despliego el aside Rep. Legal/Apoderados")
+    public void despliego_el_aside_replegal_apoderados(){
+        configuracionDeProductosPO.clickApoderados();
+    }
+
     @Then("se validan los datos de configuracion en presentacion")
     public void se_validan_los_datos_de_configuracion_en_presentacion(){
         presentacionDeProductosPO.extraerDatosPresentacionDelProducto();
-        assert true;
+    }
 
+    @Then("no se visualiza el producto {string}")
+    public void no_se_visualiza_el_producto_string (String producto){
+        for (String e:configuracionDeProductosPO.getValoresInput(PRODUCTO)) {
+            assert !e.equals(producto);
+        }
+    }
+
+    @Then("se muestra el mensaje {string}")
+    public void se_muestra_el_mensaje_string(String mensaje){
+        //TODO: validar mensaje de error
     }
 
 }

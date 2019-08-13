@@ -37,28 +37,17 @@ public class ApoderadosPO extends BasePage {
     @FindBy(xpath = "//button[contains(@class,'close-modal')]") 
     private WebElement btnCerrarModal;
 
-    public void extraerData(){
-        log.debug("--------Prueba--------------");
-        log.debug(formularioApoderados.getText());
-        log.debug(formularioApoderados.findElement(By.xpath(".//article")).getText());
-    }
-
     public void cerrar(){
         btnCerrarModal.click();
     }
 
     public void ingresarApoderado(String rut){
         waitUntilEscritorioComercialIsLoaded();
-        log.debug("--------Prueba--------------");
         WebElement contenedorApoderado = formularioApoderados.findElement(By.xpath("./div[contains(@ng-repeat,'representante')]"));
-        log.debug("Contenedor de apoderados: "+ contenedorApoderado);
         WebElement inputRut = contenedorApoderado.findElement(By.xpath(".//div[contains(@class,'form-group')]/input"));
-        log.debug("Xpath input rut: "+inputRut);
         inputRut.sendKeys(rut);
         waitUntilEscritorioComercialIsLoaded();
-        log.debug("Rut: "+inputRut.getText());
         WebElement lupa = contenedorApoderado.findElement(By.xpath(".//button[@id='buscar_0']"));
-        log.debug("xpath lupa: "+lupa);
         lupa.click();
         waitUntilEscritorioComercialIsLoaded();
         WebElement direccion = contenedorApoderado.findElement(By.xpath(String.format(SELECTOR_INPUT_FORMULARIO,"Dirección")));

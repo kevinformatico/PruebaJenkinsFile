@@ -1,6 +1,7 @@
 package stepdef;
 
 import Generics.util;
+import Managers.context.TestContext;
 import Managers.driver.DriverFactory;
 
 import io.cucumber.core.api.Scenario;
@@ -22,8 +23,8 @@ public class Hooks {
     public Scenario scenario;
     public ArrayList<byte[]> screenshotList;
 
-    public Hooks(ArrayList<byte[]> screenshotList){
-        this.screenshotList=screenshotList;
+    public Hooks(TestContext testContext){
+        this.screenshotList=testContext.screenshotList;
     }
 
     @Before

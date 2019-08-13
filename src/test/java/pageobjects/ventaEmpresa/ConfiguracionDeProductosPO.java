@@ -182,9 +182,7 @@ public class ConfiguracionDeProductosPO extends BasePage {
     }
 
     public List<String> getValoresInput(String campo){
-        List<String> values = getTextFromSelectValues(String.format(SELECTOR_INPUT_FORMULARIO,selectorFamilia(familia),campo));
-        System.out.println("Los valores del campo "+campo+" son: "+values);
-        return values;
+        return getTextFromSelectValues(String.format(SELECTOR_INPUT_FORMULARIO,selectorFamilia(familia),campo));
     }
 
     public boolean existeProductoEnElCarro(String nombreProducto){

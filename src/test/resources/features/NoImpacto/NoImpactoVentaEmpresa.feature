@@ -11,6 +11,7 @@
   @TestCaseKey=VTAPYME-T1499
   Scenario: Validar flujo para LDC Automatica Empresas con PJ
     Given el usuario busca el rut "96.684.990-8" con perfil empresa
+    And se pierde la conexion de internet
     And voy a contratar una LDC
     And contrato el producto "Línea de Crédito Automática Empresas" con los siguientes valores:
     | clave | valor |

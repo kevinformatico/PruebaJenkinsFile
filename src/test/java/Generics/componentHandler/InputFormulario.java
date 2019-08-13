@@ -1,4 +1,4 @@
-package pageobjects.ventaEmpresa;
+package Generics.componentHandler;
 
 public class InputFormulario {
 
