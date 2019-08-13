@@ -4,14 +4,6 @@
     <!--<pluginGroups>
         <pluginGroup>com.oracle.weblogic</pluginGroup>
     </pluginGroups>-->
-    <mirrors>
-        <mirror>
-            <id>maven-central</id>
-            <name>maven-central</name>
-            <url>http://nexus.bch.bancodechile.cl:8081/repository/maven-central/</url>
-            <mirrorOf>central</mirrorOf>
-        </mirror>
-    </mirrors>
 
     <profiles>
         <profile>
@@ -129,6 +121,12 @@
             <id>nexus</id>
             <mirrorOf>madeUp</mirrorOf>
             <url>http://nexus.bch.bancodechile.cl:8081/repository/maven-public/</url>
+        </mirror>
+        <mirror>
+            <id>maven-central</id>
+            <name>maven-central</name>
+            <url>http://nexus.bch.bancodechile.cl:8081/repository/maven-central/</url>
+            <mirrorOf>central</mirrorOf>
         </mirror>
     </mirrors>
 

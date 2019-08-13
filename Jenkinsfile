@@ -1,7 +1,7 @@
 pipeline {
   agent {
     docker {
-      image '152.139.146.94:5000/bch-maven-chrome:1.1.0'
+      image '152.139.146.94:5000/bch-maven-chrome:1.1.1'
       args '--add-host="portalcomercial.qa.labchile.cl:200.14.169.120"'
     }
   }
