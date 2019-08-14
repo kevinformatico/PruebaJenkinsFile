@@ -16,11 +16,12 @@ import java.util.Map;
 
 public class ConfiguracionDeProductosPO extends BasePage {
 
+    private Logger log = LogManager.getLogger(ConfiguracionDeProductosPO.class);
+
     public ConfiguracionDeProductosPO(){
         super(DriverFactory.getDriver());
     }
 
-    private Logger log = LogManager.getLogger(ConfiguracionDeProductosPO.class);
     String botonAgregarAOportunidad = "//button[contains(@class,'agregar-producto') and contains(text(),'Agregar a oportunidad')]";
     String familia;
 
@@ -44,6 +45,9 @@ public class ConfiguracionDeProductosPO extends BasePage {
 
     @FindBy(xpath = "//div[contains(@ng-if,'vm.showCarro')]//a[contains(text(),'Continuar')]")
     private WebElement botonContinuarAPresentacionDelProducto;
+
+    @FindBy(xpath = "")
+    private WebElement componenteFamilias;
 
 
     /*

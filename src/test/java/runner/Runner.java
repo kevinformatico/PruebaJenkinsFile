@@ -2,9 +2,6 @@ package runner;
 
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
-import org.apache.log4j.Appender;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.apache.log4j.BasicConfigurator;
@@ -17,5 +14,4 @@ public class Runner {
     public static void configure(){
         BasicConfigurator.configure();
     }
-
 }

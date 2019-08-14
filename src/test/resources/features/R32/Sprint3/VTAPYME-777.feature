@@ -11,7 +11,7 @@ Feature: Configuración Líneas de Crédito PYME
 
   # Verificar atributos para un cliente PCG que tiene al menos una cta cte Normal MN vigente sin LDC
 
-  @TestCaseKey=VTAPYME-T1515
+  @TestCaseKey=VTAPYME-T1515 @run
   Scenario: Validar Cliente  que no pertenezca  a los Segmento o Bca  No se visualize Banconexion 2.0 PYME
     Given el usuario busca el rut "4.889.509-3" con perfil empresa
     And voy a contratar una Banconexión
@@ -124,18 +124,3 @@ Feature: Configuración Líneas de Crédito PYME
 
 
 
-
-
-
-  Scenario: Validar el ingreso requerido de Rep. Legal/Apoderados para personas juridicas
-    Given el usuario busca el rut "96.684.990-8" con perfil empresa
-    And voy a contratar una Banconexión
-    And contrato el producto "Banconexión 2.0 PYME"
-    Then el ingreso a "Rep. Legal/Apoderados" debe ser requerido
-    And agrego el "9408742-2" como representante legal
-
-  Scenario: Validar el ingreso opcional de Rep. Legal/Apoderados para personas con giro
-    Given el usuario busca el rut "4.889.509-3" con perfil empresa
-    And voy a contratar una Banconexión
-    And contrato el producto "Banconexión 2.0 PYME"
-    Then el ingreso a "Rep. Legal/Apoderados" debe ser opcional

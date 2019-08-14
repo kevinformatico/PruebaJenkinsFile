@@ -6,7 +6,6 @@ import org.openqa.selenium.support.FindBy;
 
 public class EscritorioComercialPO extends BasePage {
 
-
     @FindBy(id="rut")
     private WebElement inputRut;
     @FindBy(name="searchButton")

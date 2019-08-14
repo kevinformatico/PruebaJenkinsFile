@@ -31,7 +31,7 @@ public class ManejadorTablaFrontEnd {
     }
 
     public static ArrayList<String> getDataFila(WebElement fila){
-        List<WebElement> datosFila = fila.findElements(By.xpath("//td"));
+        List<WebElement> datosFila = fila.findElements(By.xpath(".//td"));
         ArrayList<String> datosReales = new ArrayList<>();
         for (WebElement element: datosFila){
             if(!element.getText().trim().equals("")){

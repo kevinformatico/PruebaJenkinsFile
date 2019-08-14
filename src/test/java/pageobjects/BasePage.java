@@ -25,20 +25,26 @@ public class BasePage {
 
     protected BasePage(WebDriver driver){
         this.driver=driver;
+        log.debug("Configuración WebDriverWait: TimeOut: "+WAIT_TIMEOUT+", Polling: "+POLLING);
         this.wait= new WebDriverWait(driver, WAIT_TIMEOUT, POLLING);
+        log.debug("Pagina "+this.getClass()+" se inicializo con un TimeOut de " + DEFAULT_TIMEOUT);
         PageFactory.initElements(new AjaxElementLocatorFactory(driver,DEFAULT_TIMEOUT), this);
     }
 
     protected BasePage(WebDriver driver, int timeOutSec){
         this.driver=driver;
+        log.debug("Configuración WebDriverWait: TimeOut: "+timeOutSec+", Polling: "+POLLING);
         this.wait= new WebDriverWait(driver, timeOutSec, POLLING);
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, timeOutSec), this);
+        log.debug("Pagina "+this.getClass()+" se inicializo con un TimeOut de " + DEFAULT_TIMEOUT);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, DEFAULT_TIMEOUT), this);
     }
 
     protected BasePage(WebDriver driver, int timeOutSec, int pollingSec){
         this.driver=driver;
+        log.debug("Configuración WebDriverWait: TimeOut: "+timeOutSec+", Polling: "+pollingSec);
         this.wait= new WebDriverWait(driver, timeOutSec, pollingSec);
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver, timeOutSec), this);
+        log.debug("Pagina "+this.getClass()+" se inicializo con un TimeOut de " + DEFAULT_TIMEOUT);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, DEFAULT_TIMEOUT), this);
     }
 
     protected WebDriver getDriver(){
@@ -64,7 +70,7 @@ public class BasePage {
         }catch (NoSuchElementException | StaleElementReferenceException e){
             return false;
         }catch (Exception e){
-            log.error("Error Desconocido: ", e);
+            log.error(e);
             return false;
         }
     }
@@ -78,25 +84,27 @@ public class BasePage {
     }
 
     public void waitUntilEscritorioComercialIsLoaded() {
-        while (isVisible(barraCargando)){
-
-        }
+        while (isVisible(barraCargando));
     }
 
     protected void waitFor(int segundos){
         try {
+            log.debug("Esperando por "+segundos+" segundos");
+            log.warn("Usar con precaución!!");
             Thread.sleep(segundos*1000);
         }catch (InterruptedException e){
-            System.out.println(e.getMessage());
+            log.error(e);
         }
     }
 
     protected void scrollEndPage() {
         try {
+            log.debug("Realizando un scroll hasta el final de la pagina");
+            log.warn("Usar con precaución!!");
             JavascriptExecutor js = ((JavascriptExecutor) driver);
             js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         } catch (Exception e){
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
