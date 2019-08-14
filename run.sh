@@ -2,7 +2,7 @@
 
 # This script allows you run this test on docker engine. Only you have to run with ./run.sh
 
-DOCKER_IMAGE=152.139.146.94:5000/bch-maven-chrome:1.1.0
+DOCKER_IMAGE=152.139.146.94:5000/bch-maven-chrome:1.1.1
 echo "Building Image"
 #docker build . -t $DOCKER_IMAGE
 echo "Ejecutando pruebas"

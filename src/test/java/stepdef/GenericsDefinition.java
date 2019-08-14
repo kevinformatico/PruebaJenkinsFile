@@ -3,6 +3,7 @@ package stepdef;
 import Generics.database.SqlClient;
 import Generics.util;
 import Managers.context.TestContext;
+import Managers.driver.SharedDriver;
 import com.neovisionaries.ws.client.WebSocketException;
 
 import io.cucumber.java.en.Given;
@@ -32,14 +33,18 @@ public class GenericsDefinition {
     Vista360ResumenEmpresaPO vista360ResumenEmpresaPO;
     ArrayList<byte[]> screenshotList;
 
-    public GenericsDefinition(TestContext testContext)
+    public GenericsDefinition(SharedDriver driver,
+                              ArrayList<byte[]> screenshotList,
+                              PaginaInicioPO paginaInicioPO,
+                              EscritorioComercialPO escritorioComercialPO,
+                              Vista360ResumenPersonaPO vista360ResumenPersonaPO,
+                              Vista360ResumenEmpresaPO vista360ResumenEmpresaPO)
     {
-        this.testContext=testContext;
-        this.screenshotList=testContext.screenshotList;
-        this.paginaInicioPO= testContext.paginaInicioPO;
-        this.escritorioComercialPO= testContext.escritorioComercialPO;
-        this.vista360ResumenPersonaPO= testContext.vista360ResumenPersonaPO;
-        this.vista360ResumenEmpresaPO= testContext.vista360ResumenEmpresaPO;
+        this.screenshotList=screenshotList;
+        this.paginaInicioPO= paginaInicioPO;
+        this.escritorioComercialPO= escritorioComercialPO;
+        this.vista360ResumenPersonaPO= vista360ResumenPersonaPO;
+        this.vista360ResumenEmpresaPO=vista360ResumenEmpresaPO;
     }
 
 

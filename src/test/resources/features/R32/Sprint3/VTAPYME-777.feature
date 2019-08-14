@@ -11,15 +11,15 @@ Feature: Configuración Líneas de Crédito PYME
 
   # Verificar atributos para un cliente PCG que tiene al menos una cta cte Normal MN vigente sin LDC
 
-  @TestCaseKey=VTAPYME-T1515 @run
+  @TestCaseKey=VTAPYME-T1515
   Scenario: Validar Cliente  que no pertenezca  a los Segmento o Bca  No se visualize Banconexion 2.0 PYME
-    Given el usuario busca el rut "4.889.509-3" con perfil empresa
-    And voy a contratar una Banconexión
-    Then no se visualiza el producto "Banconexión 2.0 PYME"
+    Given el usuario busca el rut "4.670.992-6" con perfil empresa
+    And voy a contratar un producto
+    Then no se visualiza la familia "Canales Remotos"
 
-  @TestCaseKey=VTAPYME-T1514 @todo
+  @TestCaseKey=VTAPYME-T1514 @todo @run
   Scenario: Banconexion 2.0 PYME Cliente  PJ o PG y Bca Empresas y Privada  sin cuenta corriente MN validar mensaje
-    Given el usuario busca el rut "4.889.509-3" con perfil empresa
+    Given el usuario busca el rut "4489455-6" con perfil empresa
     And voy a contratar una Banconexión
     Then se muestra el mensaje "No se puede vender este producto"
     And se muestra el mensaje "Cliente no tiene cuentas corrientes vigentes para vincular"

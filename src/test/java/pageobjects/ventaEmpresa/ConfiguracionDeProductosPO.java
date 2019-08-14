@@ -46,9 +46,8 @@ public class ConfiguracionDeProductosPO extends BasePage {
     @FindBy(xpath = "//div[contains(@ng-if,'vm.showCarro')]//a[contains(text(),'Continuar')]")
     private WebElement botonContinuarAPresentacionDelProducto;
 
-    @FindBy(xpath = "")
-    private WebElement componenteFamilias;
-
+    @FindBy(xpath = "//cdn-venta-taller-directive[contains(@on-agregar,'agregarProductoCarro')]//div[contains(@ng-repeat,'listadoFamilias') and .//div[contains(h5,'')]]")
+    private List<WebElement> familias;
 
     /*
     * Funcionalidades de la pagina
@@ -56,6 +55,17 @@ public class ConfiguracionDeProductosPO extends BasePage {
 
     public void clickAsociarLimites(){
         getElementFrom(By.xpath(selectorFamilia(familia)+SELECTOR_ASOCIAR_LIMITES)).click();
+    }
+
+    public boolean isFamiliaVisible(String familia){
+        log.debug("La familia a buscar es: " +familia);
+        log.debug("El largo es: "+ familias.size());
+        waitUntilEscritorioComercialIsLoaded();
+        for (WebElement familiaElement: familias) {
+            log.debug("El texto que tiene es: "+familiaElement.getText());
+            if(familiaElement.getText().contains(familia)) return true;
+        }
+        return false;
     }
 
     public void clickApoderados(){
@@ -66,6 +76,7 @@ public class ConfiguracionDeProductosPO extends BasePage {
         this.familia=nombreFamilia;
         waitUntilEscritorioComercialIsLoaded();
         WebElement familia = getElementFrom(By.xpath(String.format(XPATH_PARA_FLECHA_DESPLEGAR_FAMILIA,selectorFamilia(nombreFamilia))));
+        waitForElementToAppear(familia);
         familia.click();
     }
 

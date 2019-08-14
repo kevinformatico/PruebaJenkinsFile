@@ -17,12 +17,7 @@ public class PaginaInicioPO extends BasePage {
 
     public PaginaInicioPO() {
         super(DriverFactory.getDriver());
-        //abrirPagina("http://200.14.169.120:8888/login/logout/platcom");
-        abrirPagina("portalcomercial.qa.labchile.cl:8888/login/logout/platcom");
-    }
-
-    public void abrirPagina(String url){
-        getDriver().get(url);
+        DriverFactory.getDriver().get("http://200.14.169.120:8888/login/logout/platcom");
     }
 
     public void iniciarSesion(String user, String pass){

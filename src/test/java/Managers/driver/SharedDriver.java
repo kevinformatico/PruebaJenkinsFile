@@ -23,7 +23,7 @@ public class SharedDriver {
 		if (DriverFactory.getDriver() == null) {
 			switch(webdriver) {
 				case "firefox":
-					WebDriverManager.firefoxdriver().setup();
+					//WebDriverManager.firefoxdriver().setup();
 					DriverFactory.addDriver(new FirefoxDriver());
 					break;
 				case "chrome":

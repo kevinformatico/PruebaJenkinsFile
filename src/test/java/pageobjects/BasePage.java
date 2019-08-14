@@ -23,6 +23,9 @@ public class BasePage {
     @FindBy(id = "loading-bar")
     private WebElement barraCargando;
 
+    @FindBy(id = "loading")
+    private WebElement paginaCargando;
+
     protected BasePage(WebDriver driver){
         this.driver=driver;
         log.debug("Configuración WebDriverWait: TimeOut: "+WAIT_TIMEOUT+", Polling: "+POLLING);
@@ -84,7 +87,7 @@ public class BasePage {
     }
 
     public void waitUntilEscritorioComercialIsLoaded() {
-        while (isVisible(barraCargando));
+        while (isVisible(barraCargando)){};
     }
 
     protected void waitFor(int segundos){

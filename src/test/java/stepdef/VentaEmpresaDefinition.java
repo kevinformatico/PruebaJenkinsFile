@@ -46,19 +46,30 @@ public class VentaEmpresaDefinition {
     String PLAZO = "Plazo";
     String PRODUCTO = "Producto";
 
-    public VentaEmpresaDefinition(TestContext testContext)
+    public VentaEmpresaDefinition(SharedDriver driver,
+                                  ArrayList<byte[]> screenshotList,
+                                  PaginaInicioPO paginaInicioPO,
+                                  EscritorioComercialPO escritorioComercialPO,
+                                  Vista360ResumenPersonaPO vista360ResumenPersonaPO,
+                                  ConfiguracionDeProductosPO configuracionDeProductosPO,
+                                  PresentacionDeProductosPO presentacionDeProductosPO,
+                                  DatosAdicionalesPO datosAdicionalesPO,
+                                  DocumentosAdjuntosPO documentosAdjuntosPO,
+                                  AsociarLimitesPo asociarLimitesPo,
+                                  ApoderadosPO apoderadosPO,
+                                  Vista360ResumenEmpresaPO vista360ResumenEmpresaPO)
     {
-        this.screenshotList=testContext.screenshotList;
-        this.paginaInicioPO= testContext.paginaInicioPO;
-        this.escritorioComercialPO= testContext.escritorioComercialPO;
-        this.vista360ResumenPersonaPO= testContext.vista360ResumenPersonaPO;
-        this.vista360ResumenEmpresaPO=testContext.vista360ResumenEmpresaPO;
-        this.configuracionDeProductosPO=testContext.configuracionDeProductosPO;
-        this.presentacionDeProductosPO=testContext.presentacionDeProductosPO;
-        this.datosAdicionalesPO=testContext.datosAdicionalesPO;
-        this.asociarLimitesPo=testContext.asociarLimitesPo;
-        this.apoderadosPO=testContext.apoderadosPO;
-        this.documentosAdjuntosPO=testContext.documentosAdjuntosPO;
+        this.screenshotList=screenshotList;
+        this.paginaInicioPO= paginaInicioPO;
+        this.escritorioComercialPO= escritorioComercialPO;
+        this.vista360ResumenPersonaPO= vista360ResumenPersonaPO;
+        this.vista360ResumenEmpresaPO=vista360ResumenEmpresaPO;
+        this.configuracionDeProductosPO=configuracionDeProductosPO;
+        this.presentacionDeProductosPO=presentacionDeProductosPO;
+        this.datosAdicionalesPO=datosAdicionalesPO;
+        this.asociarLimitesPo=asociarLimitesPo;
+        this.apoderadosPO=apoderadosPO;
+        this.documentosAdjuntosPO=documentosAdjuntosPO;
     }
 
     @When("voy a contratar un producto")
@@ -250,9 +261,13 @@ public class VentaEmpresaDefinition {
 
     @Then("no se visualiza el producto {string}")
     public void no_se_visualiza_el_producto_string (String producto){
-        for (String e:configuracionDeProductosPO.getValoresInput(PRODUCTO)) {
-            assert !e.equals(producto);
-        }
+
+    }
+
+    @Then("no se visualiza la familia {string}")
+    public void no_se_visualiza_la_familia_string (String familia){
+        Assert.assertFalse("La familia \""+familia+"\" se visualiza",
+                configuracionDeProductosPO.isFamiliaVisible(familia));
     }
 
     @Then("se muestra el mensaje {string}")
