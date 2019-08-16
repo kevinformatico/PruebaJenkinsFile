@@ -196,8 +196,8 @@ public class ConfiguracionDeProductosPO extends BasePage {
     }
 
     public void ingresarValorEnInput(String campo, String valor){
-        WebElement input = familiaElement.findElement(By.xpath(String.format(SELECTOR_INPUT_FORMULARIO,campo)));
         waitUntilEscritorioComercialIsLoaded();
+        WebElement input = familiaElement.findElement(By.xpath(String.format(SELECTOR_INPUT_FORMULARIO,campo)));
         if(input.findElement(By.xpath(".//input")).getAttribute("class").contains("select")){
             seleccionarValorEnSelect(input, valor);
         }else{
@@ -235,25 +235,8 @@ public class ConfiguracionDeProductosPO extends BasePage {
         element.findElement(By.xpath(".//i[contains(@ng-click,'event')]")).click();
     }
 
-    public void clickFlechaSelect(String elementXpath){
-        WebElement btnDesplegarLista = getDriver().findElement(By.xpath(String.format(SELECT_BOTON_DESPLEGAR_LISTA, elementXpath)));
-        log.debug("Se despliega la lista para el elemento: "+btnDesplegarLista);
-        click(btnDesplegarLista);
-    }
-
     public void click(WebElement element){
-        //System.out.println("El boton a hacer click es: " + element);
         element.click();
-    }
-
-    public List<String> getTextFromSelectValues(String elementXpath){
-        ArrayList<String> valores = new ArrayList<>();
-        clickFlechaSelect(elementXpath);//se expande
-        List<WebElement> vals = getDriver().findElements(By.xpath(elementXpath+"//li//a[contains(span,'')]"));
-        for (WebElement el : vals) {
-            if(!el.getText().equals("")) valores.add(el.getText());
-        }
-        return valores;
     }
 
     public List<String> getTextFromSelectValues(WebElement elementXpath){
@@ -266,10 +249,10 @@ public class ConfiguracionDeProductosPO extends BasePage {
         return valores;
     }
 
-    public ArrayList<WebElement> getWebElememtFromSelect(String elementXpath){
+    public ArrayList<WebElement> getWebElememtFromSelect(WebElement elementXpath){
         ArrayList<WebElement> valores = new ArrayList<>();
         clickFlechaSelect(elementXpath);//se expande
-        List<WebElement> vals = getDriver().findElements(By.xpath(elementXpath+"//li//a[contains(span,'')]"));
+        List<WebElement> vals = elementXpath.findElements(By.xpath(".//li//a[contains(span,'')]"));
         for (WebElement el : vals) {
             if(!el.getText().equals("")) valores.add(el);
         }
@@ -287,21 +270,6 @@ public class ConfiguracionDeProductosPO extends BasePage {
             default: element.findElement(By.xpath(String.format("//li//a[contains(span,'%s')]",valor))).click();
                 break;
         }
-    }
-
-    public void seleccionarValorEnSelect(String elementXpath, String valor){
-        clickFlechaSelect(elementXpath);
-        WebElement valorSelect;
-        if(valor.equals("FIRST")){
-            valorSelect = getElementFrom(By.xpath(String.format(SELECT_FIRST_ELEMENT,elementXpath)));
-        }else if(valor.equals("RANDOM")){
-            // TODO: 2019-07-18 pgtoopx Validar numero dentro de la cantidad de opciones que tiene
-            valorSelect=getElementFrom(By.xpath(String.format(SELECT_RAMDOM_ELEMENT,elementXpath,"1")));
-        }else{
-            valorSelect = getElementFrom(By.xpath(String.format(SELECT_ELEMENT,elementXpath,valor)));
-        }
-        log.debug("El xpath con el valor es: " +valorSelect);
-        click(valorSelect);
     }
 
 }
