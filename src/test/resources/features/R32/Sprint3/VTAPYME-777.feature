@@ -17,7 +17,15 @@ Feature: Configuración Líneas de Crédito PYME
     And voy a contratar un producto
     Then no se visualiza la familia "Canales Remotos"
 
-  @TestCaseKey=VTAPYME-T1514 @todo @run
+@run
+  Scenario: Banconexion 2.0 PYME Cliente  PJ o PG y Bca Empresas y Privada  sin cuenta corriente MN validar mensaje
+    Given el usuario busca el rut "4489455-6" con perfil empresa
+    And voy a contratar un producto
+    Then probemos esto
+      | clave | valor |
+      | Cuenta cargo comisión | FIRST |
+
+  @TestCaseKey=VTAPYME-T1514 @todo
   Scenario: Banconexion 2.0 PYME Cliente  PJ o PG y Bca Empresas y Privada  sin cuenta corriente MN validar mensaje
     Given el usuario busca el rut "4489455-6" con perfil empresa
     And voy a contratar una Banconexión

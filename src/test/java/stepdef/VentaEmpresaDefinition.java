@@ -275,4 +275,9 @@ public class VentaEmpresaDefinition {
         //TODO: validar mensaje de error
     }
 
+    @Then("probemos esto")
+    public void probemos_esto (DataTable dataTable){
+        configuracionDeProductosPO.pruebas(dataTable);
+    }
+
 }
