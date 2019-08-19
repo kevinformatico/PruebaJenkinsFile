@@ -235,10 +235,6 @@ public class ConfiguracionDeProductosPO extends BasePage {
         element.findElement(By.xpath(".//i[contains(@ng-click,'event')]")).click();
     }
 
-    public void click(WebElement element){
-        element.click();
-    }
-
     public List<String> getTextFromSelectValues(WebElement elementXpath){
         ArrayList<String> valores = new ArrayList<>();
         clickFlechaSelect(elementXpath);//se expande
