@@ -1,4 +1,4 @@
-package Generics.support.ui;
+package support.ui.interfaces;
 
 import org.openqa.selenium.WebElement;
 
@@ -18,7 +18,7 @@ public interface ISelect {
 
     void selectByVisibleText(String s);
 
-    void selectByIndex(int i);
-
     void selectByValue(String s);
+
+    void selectFirstValue();
 }

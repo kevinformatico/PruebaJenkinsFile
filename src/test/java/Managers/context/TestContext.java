@@ -28,6 +28,7 @@ public class TestContext {
     public ArrayList<byte[]> screenshotList;
 
     public TestContext(SharedDriver driver){
+        //TODO: Instanciación del driver se pierde por alguna razon
         this.driver=DriverFactory.getDriver();
         this.paginaInicioPO= new PaginaInicioPO();
         this.escritorioComercialPO= new EscritorioComercialPO();

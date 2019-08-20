@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import pageobjects.BasePage;
+import support.ui.elements.Select;
 
 import java.util.List;
 
@@ -46,40 +47,16 @@ public class ApoderadosPO extends BasePage {
         WebElement contenedorApoderado = formularioApoderados.findElement(By.xpath("./div[contains(@ng-repeat,'representante')]"));
         WebElement inputRut = contenedorApoderado.findElement(By.xpath(".//div[contains(@class,'form-group')]/input"));
         inputRut.sendKeys(rut);
-        waitUntilEscritorioComercialIsLoaded();
-        WebElement lupa = contenedorApoderado.findElement(By.xpath(".//button[@id='buscar_0']"));
-        lupa.click();
-        waitUntilEscritorioComercialIsLoaded();
-        WebElement direccion = contenedorApoderado.findElement(By.xpath(String.format(SELECTOR_INPUT_FORMULARIO,"Dirección")));
-        waitForElementToAppear(direccion);
-        seleccionarValorEnSelect(direccion, "FIRST");
-        WebElement telefono = contenedorApoderado.findElement(By.xpath(String.format(SELECTOR_INPUT_FORMULARIO,"Teléfono")));
-        waitForElementToAppear(telefono);
-        seleccionarValorEnSelect(telefono, "FIRST");
+        clickBotonBuscarDeContenedorApoderado(contenedorApoderado);
+        new Select(contenedorApoderado.findElement(By.xpath(String.format(SELECTOR_INPUT_FORMULARIO,"Dirección")))).selectFirstValue();
+        new Select(contenedorApoderado.findElement(By.xpath(String.format(SELECTOR_INPUT_FORMULARIO,"Teléfono")))).selectFirstValue();
         waitUntilEscritorioComercialIsLoaded();
         btnGuardar.click();
     }
 
-
-    public void clickFlechaSelect(WebElement select){
-        final String SELECT_BOTON_DESPLEGAR_LISTA=".//i[contains(@ng-click,'event')]";
-        log.debug("Desplegando select: "+ select);
-        select.findElement(By.xpath(SELECT_BOTON_DESPLEGAR_LISTA)).click();
-    }
-
-    public void seleccionarValorEnSelect(WebElement select, String valor){
-        final String SELECT_ELEMENT=".//li//a[contains(span,'%s')]";
-        final String SELECT_FIRST_ELEMENT=".//li//a[1]";
-        final String SELECT_RAMDOM_ELEMENT=".//li//a[%s]";
-        clickFlechaSelect(select);
-        if(valor.equals("FIRST")){
-            select.findElement(By.xpath(SELECT_FIRST_ELEMENT)).click();
-        }else if(valor.equals("RANDOM")){
-            // TODO: 2019-07-18 pgtoopx Validar numero dentro de la cantidad de opciones que tiene
-            select.findElement(By.xpath(String.format(SELECT_RAMDOM_ELEMENT,"1"))).click();
-        }else{
-            select.findElement(By.xpath(String.format(SELECT_ELEMENT,valor))).click();
-        }
+    public void clickBotonBuscarDeContenedorApoderado(WebElement contenedor){
+        waitUntilEscritorioComercialIsLoaded();
+        contenedor.findElement(By.id("buscar_0")).click();
     }
 
 }

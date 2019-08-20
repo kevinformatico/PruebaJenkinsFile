@@ -1,7 +1,7 @@
 package stepdef;
 
-import Generics.database.SqlClient;
-import Generics.util;
+import support.database.SqlClient;
+import support.util;
 import Managers.context.TestContext;
 import Managers.driver.SharedDriver;
 import com.neovisionaries.ws.client.WebSocketException;

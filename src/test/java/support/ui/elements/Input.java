@@ -1,11 +1,12 @@
-package Generics.support.ui;
+package support.ui.elements;
 
+import support.ui.interfaces.IInput;
+import support.ui.throwable.UnexpectedClassNameException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.WrapsElement;
-import org.openqa.selenium.support.ui.UnexpectedTagNameException;
 
-public class Input implements WrapsElement {
+public class Input implements WrapsElement, IInput{
     private final WebElement element;
 
     public Input(WebElement element){
@@ -32,7 +33,7 @@ public class Input implements WrapsElement {
         return !(d.isEmpty()|| d.toLowerCase().equals("true"));
     }
 
-    private WebElement getInputTag(){
+    public WebElement getInputTag(){
         return element.findElement(By.tagName("input"));
     }
 

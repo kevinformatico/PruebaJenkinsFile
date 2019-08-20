@@ -1,6 +1,6 @@
 package stepdef;
 
-import Generics.util;
+import support.util;
 import Managers.context.TestContext;
 import Managers.driver.DriverFactory;
 
@@ -9,14 +9,9 @@ import io.cucumber.java.After;
 import io.cucumber.java.AfterStep;
 import io.cucumber.java.Before;
 import io.cucumber.java.BeforeStep;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.logging.LogEntries;
-import org.openqa.selenium.logging.LogEntry;
-import org.openqa.selenium.logging.LogType;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 public class Hooks {
 

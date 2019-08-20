@@ -1,4 +1,4 @@
-package Generics;
+package support;
 
 import Managers.driver.DriverFactory;
 import io.cucumber.core.api.Scenario;

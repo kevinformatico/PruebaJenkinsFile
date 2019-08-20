@@ -1,4 +1,4 @@
-package Generics.componentHandler;
+package support.componentHandler;
 
 public class InputFormulario {
 

@@ -1,4 +1,4 @@
-package Generics.support.ui;
+package support.ui.throwable;
 
 import org.openqa.selenium.WebDriverException;
 

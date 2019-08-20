@@ -1,7 +1,6 @@
 package stepdef;
 
-import Generics.componentHandler.InputFormulario;
-import Managers.context.TestContext;
+import support.componentHandler.InputFormulario;
 import Managers.driver.SharedDriver;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;

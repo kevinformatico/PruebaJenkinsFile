@@ -1,14 +1,14 @@
-package Generics.support.ui;
+package support.ui.elements;
 
+import support.ui.interfaces.ISelect;
+import support.ui.throwable.UnexpectedClassNameException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.WrapsElement;
-import org.openqa.selenium.support.ui.ISelect;
 import org.openqa.selenium.support.ui.UnexpectedTagNameException;
 
 import java.util.List;
 
-public class Select extends Input {
+public class Select extends Input implements ISelect {
 
     private final WebElement element;
     private final boolean isMulti;
@@ -70,15 +70,21 @@ public class Select extends Input {
         });
     }
 
-    public void selectByIndex(int i) {
-        getOptions().forEach((e) ->{
-            if(e.getAttribute("id").equals(String.format("ui-select-choices-row-1-%s",i))) e.click();
-        });
-    }
-
     public void selectByValue(String s) {
         getOptions().forEach((e) -> {
             if(e.findElement(By.tagName("a")).getText().equals(s)) e.click();
         });
+    }
+
+    public void selectByIndex(int i) {
+        getOptions().get(i).click();
+    }
+
+    public void selectByRandom(){
+        getOptions().get((int)(Math.random()*(getOptions().size()+1))).click();
+    }
+
+    public void selectFirstValue(){
+        getOptions().get(1).click();
     }
 }
