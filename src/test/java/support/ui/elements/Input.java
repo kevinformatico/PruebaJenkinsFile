@@ -11,7 +11,8 @@ public class Input implements WrapsElement, IInput{
 
     public Input(WebElement element){
         String  className = element.getAttribute("class");
-        if(className.contains("form-group"))throw new UnexpectedClassNameException("form-group",className);
+        String expected = "form-group";
+        if(!className.contains(expected))throw new UnexpectedClassNameException(expected,className);
         this.element = element;
     }
 

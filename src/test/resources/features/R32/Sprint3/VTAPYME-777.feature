@@ -19,11 +19,13 @@ Feature: Configuración Líneas de Crédito PYME
 
 @run
   Scenario: Banconexion 2.0 PYME Cliente  PJ o PG y Bca Empresas y Privada  sin cuenta corriente MN validar mensaje
-    Given el usuario busca el rut "4489455-6" con perfil empresa
+    Given el usuario busca el rut "16.879.879-2" con perfil empresa
     And voy a contratar un producto
     Then probemos esto
       | clave | valor |
-      | Cuenta cargo comisión | FIRST |
+      | Monto a Solicitar ($) | 600000 |
+      | Tipo Plazo | Indefinido |
+      | Aumento programado de cupo | 3 veces ingreso mensual |
 
   @TestCaseKey=VTAPYME-T1514 @todo
   Scenario: Banconexion 2.0 PYME Cliente  PJ o PG y Bca Empresas y Privada  sin cuenta corriente MN validar mensaje

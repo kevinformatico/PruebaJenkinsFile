@@ -32,6 +32,9 @@ public class ApoderadosPO extends BasePage {
     @FindBy(xpath = "//div[contains(@class,'modal-body')]//div[contains(@ng-if,'vm.modoEdicion')]/form") 
     private WebElement formularioApoderados;
 
+    @FindBy(xpath = "//div[contains(@class,'modal-body')]//div[contains(@ng-if,'vm.modoEdicion')]/form/div[contains(@ng-repeat,'vm.representantes')]")
+    private List<WebElement> listadoApoderados;
+
     @FindBy(xpath = "//div[contains(@class,'modal-footer')]//button['Guardar']")
     private WebElement btnGuardar;
     

@@ -4,18 +4,15 @@ import Managers.driver.DriverFactory;
 import io.cucumber.datatable.DataTable;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.jsoup.select.Collector;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import pageobjects.BasePage;
+import support.ui.elements.Select;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 public class ConfiguracionDeProductosPO extends BasePage {
 
@@ -63,17 +60,25 @@ public class ConfiguracionDeProductosPO extends BasePage {
     public void pruebas(DataTable dataTable){
         log.debug("----------Pruebas------------");
         waitUntilEscritorioComercialIsLoaded();
-        String nombreFamilia="Canales Remotos";
+        String nombreFamilia="Líneas";
         expanderFamilia(nombreFamilia);
-        seleccionoElProducto("Banconexion");
-        waitUntilEscritorioComercialIsLoaded();
-        ingresarValoresAlProducto(dataTable);
-        waitUntilEscritorioComercialIsLoaded();
+        log.debug("La familia se expandio");
+        seleccionoElProducto("Línea de Crédito Automática Personas");
+        log.debug("Se selecciono el producto");
+        //ingresarValoresAlProducto(dataTable);
+        /*
+        List<Map<String,String>> tablaProducto = dataTable.asMaps();
+        log.debug("--------------------------------------");
+        log.debug("Se comienza el llenado de los campos");
+        tablaProducto.forEach((e) -> {
+            ingresarValorEnInput(e.get("clave"), e.get("valor"));
+        });*/
 
     }
 
     public void clickAsociarLimites(){
         if(familiaElement!=null) familiaElement.findElement(By.xpath(".//article[.//span[contains(text(),'Asociar límites')]]//div[contains(@class,'actions')]/a[ .//i[contains(@class,'arrow-right')]]")).click();
+        //TODO: generar throw para cuando la familia no este expandida
     }
 
     public boolean isFamiliaVisible(String familia){
@@ -83,6 +88,7 @@ public class ConfiguracionDeProductosPO extends BasePage {
 
     public void clickApoderados(){
         if(familiaElement!=null) familiaElement.findElement(By.xpath(".//article[.//span[contains(text(),'Apoderados')]]//div[contains(@class,'actions')]/a[ .//i[contains(@class,'arrow-right')]]")).click();
+        //TODO: generar throw para cuando la familia no este expandida
     }
 
     public void expanderFamilia(String nombreFamilia){
@@ -198,6 +204,7 @@ public class ConfiguracionDeProductosPO extends BasePage {
     public void ingresarValorEnInput(String campo, String valor){
         waitUntilEscritorioComercialIsLoaded();
         WebElement input = familiaElement.findElement(By.xpath(String.format(SELECTOR_INPUT_FORMULARIO,campo)));
+        log.debug(String.format("El xpath para el campo \"%s\" es: %s",campo, input));
         if(input.findElement(By.xpath(".//input")).getAttribute("class").contains("select")){
             seleccionarValorEnSelect(input, valor);
         }else{
@@ -257,13 +264,14 @@ public class ConfiguracionDeProductosPO extends BasePage {
     }
 
     public void seleccionarValorEnSelect(WebElement element, String valor){
-        clickFlechaSelect(element);
+        log.debug("Select ---> "+valor);
+        Select select = new Select(element);
         switch (valor){
-            case "FIRST": element.findElement(By.xpath(".//li//a[1]")).click();
+            case "FIRST": select.selectFirstValue();
                 break;
-            case "RANDOM": element.findElement(By.xpath(".//li//a[1]")).click();
+            case "RANDOM": select.selectByRandom();
                 break;
-            default: element.findElement(By.xpath(String.format("//li//a[contains(span,'%s')]",valor))).click();
+            default: select.selectByVisibleText(valor);
                 break;
         }
     }

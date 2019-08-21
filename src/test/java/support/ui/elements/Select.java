@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.UnexpectedTagNameException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Select extends Input implements ISelect {
 
@@ -23,7 +24,7 @@ public class Select extends Input implements ISelect {
     public Select(WebElement element) {
         super(element);
         String className =  element.findElement(By.tagName("input")).getAttribute("class");
-        if(null==className|| className.toLowerCase().contains("select")){
+        if(null==className|| !className.toLowerCase().contains("select")){
             throw new UnexpectedClassNameException("select", className);
         }
 
@@ -49,6 +50,11 @@ public class Select extends Input implements ISelect {
                 By.xpath(".//ul[contains(@class,'ui-select-choices')]//li[contains(@class,'ui-select-choices-group')]//div[contains(@class,'ui-select-choices-row')]"));
     }
 
+    public List<String> getTextOptions(){
+        return getOptions().stream().filter((e)-> e.getText().equals("algo"))
+                .map(WebElement::getText).collect(Collectors.toList());
+    }
+
     public WebElement expand(){
         element.findElement(By.xpath(".//i[contains(@class,'caret pull-right') and contains(@ng-click,'')]")).click();
         return element;
@@ -63,17 +69,13 @@ public class Select extends Input implements ISelect {
     }
 
     public void selectByVisibleText(String s) {
-        getOptions().forEach((e) -> {
-            if(e.getText().contains(s)) {
-                e.click();
-            }
-        });
+        getOptions().stream().limit(1).filter((e)-> e.getText().contains(s))
+                .collect(Collectors.toList()).get(0).click();
     }
 
     public void selectByValue(String s) {
-        getOptions().forEach((e) -> {
-            if(e.findElement(By.tagName("a")).getText().equals(s)) e.click();
-        });
+        getOptions().stream().limit(1).filter((e)-> e.getText().equals(s))
+                .collect(Collectors.toList()).get(0).click();
     }
 
     public void selectByIndex(int i) {
@@ -85,6 +87,6 @@ public class Select extends Input implements ISelect {
     }
 
     public void selectFirstValue(){
-        getOptions().get(1).click();
+        getOptions().get(0).click();
     }
 }
