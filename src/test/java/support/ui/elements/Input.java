@@ -1,10 +1,14 @@
 package support.ui.elements;
 
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.remote.RemoteWebElement;
 import support.ui.interfaces.IInput;
 import support.ui.throwable.UnexpectedClassNameException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.WrapsElement;
+
+import java.util.List;
 
 public class Input implements WrapsElement, IInput{
     private final WebElement element;
@@ -36,6 +40,22 @@ public class Input implements WrapsElement, IInput{
 
     public WebElement getInputTag(){
         return element.findElement(By.tagName("input"));
+    }
+
+    public void clear(){
+        getInputTag().clear();
+    }
+
+    public boolean isError(){
+        try {
+            return !getVisiblesError().isEmpty();
+        }catch (NoSuchElementException e){
+            return false;
+        }
+    }
+
+    public List<WebElement> getVisiblesError(){
+        return element.findElements(By.xpath(".//small[contains(@class,'invalid') and not(contains(@class,'ng-hide'))]"));
     }
 
 

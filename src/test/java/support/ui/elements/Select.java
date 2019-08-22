@@ -34,6 +34,19 @@ public class Select extends Input implements ISelect {
         isMulti = (value != null && !"false".equals(value));
     }
 
+    public Select(Input element){
+        super(element.getWrappedElement());
+        String className =  element.getWrappedElement().findElement(By.tagName("input")).getAttribute("class");
+        if(null==className|| !className.toLowerCase().contains("select")){
+            throw new UnexpectedClassNameException("select", className);
+        }
+
+        this.element = element.getWrappedElement();
+        String value = element.getWrappedElement().getAttribute("multiple");
+
+        isMulti = (value != null && !"false".equals(value));
+    }
+
 
     @Override
     public WebElement getWrappedElement() {

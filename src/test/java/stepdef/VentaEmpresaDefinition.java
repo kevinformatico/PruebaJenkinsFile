@@ -162,7 +162,8 @@ public class VentaEmpresaDefinition {
     @When("ingreso el monto a solicitar {}")
     public void ingreso_el_monto_a_solicitar_int (String monto){
         datosFormulario.add(new InputFormulario(MONTO_A_SOLICITAR_SELECTOR,monto));
-        configuracionDeProductosPO.ingresarValorEnInput(MONTO_A_SOLICITAR_SELECTOR, monto);
+        //configuracionDeProductosPO.ingresarValorEnInput(MONTO_A_SOLICITAR_SELECTOR, monto);
+        Assert.fail("No implementado");
     }
 
     @When("ingreso un spread de {}%")
@@ -170,7 +171,8 @@ public class VentaEmpresaDefinition {
         datosFormulario.add(new InputFormulario(SPREAD_SELECTOR,porcentajeSpread));
         configuracionDeProductosPO.waitUntilEscritorioComercialIsLoaded();
         configuracionDeProductosPO.limpiarValorEnInput(SPREAD_SELECTOR);
-        configuracionDeProductosPO.ingresarValorEnInput(SPREAD_SELECTOR, porcentajeSpread);
+        Assert.fail("No implementado");
+        //configuracionDeProductosPO.ingresarValorEnInput(SPREAD_SELECTOR, porcentajeSpread);
     }
 
     @When("lo agrego a oportunidad")
@@ -188,25 +190,29 @@ public class VentaEmpresaDefinition {
     @When("ingreso {string} en aumento programado de cupo")
     public void ingreso_string_en_aumento_programado_de_cupo(String aumento){
         datosFormulario.add(new InputFormulario(AUMENTO_PROGRAMADO_DE_CUPO_SELECTOR,aumento));
-        configuracionDeProductosPO.ingresarValorEnInput(AUMENTO_PROGRAMADO_DE_CUPO_SELECTOR, aumento);
+        //configuracionDeProductosPO.ingresarValorEnInput(AUMENTO_PROGRAMADO_DE_CUPO_SELECTOR, aumento);
+        Assert.fail("No implementado");
     }
 
     @When("ingreso tipo plazo {string}")
     public void ingreso_tipo_plazo_string(String plazo){
         datosFormulario.add(new InputFormulario(TIPO_PLAZO, plazo));
-        configuracionDeProductosPO.ingresarValorEnInput(TIPO_PLAZO, plazo);
+        //configuracionDeProductosPO.ingresarValorEnInput(TIPO_PLAZO, plazo);
+        Assert.fail("No implementado");
     }
 
     @Then("me permite ingresar {string} meses en el campo plazo")
     public void me_permite_ingresar_string_meses_en_el_campo_plazo(String meses){
         datosFormulario.add(new InputFormulario(PLAZO, meses));
-        configuracionDeProductosPO.ingresarValorEnInput(PLAZO, meses);
+        //configuracionDeProductosPO.ingresarValorEnInput(PLAZO, meses);
+        Assert.fail("No implementado");
     }
 
     @Then("ingreso {string} meses en el campo plazo")
     public void ingreso_string_meses_en_el_campo_plazo(String meses){
         datosFormulario.add(new InputFormulario(PLAZO, meses));
-        configuracionDeProductosPO.ingresarValorEnInput(PLAZO, meses);
+        //configuracionDeProductosPO.ingresarValorEnInput(PLAZO, meses);
+        Assert.fail("No implementado");
     } 
 
     @When("aparece degravamen de linea de credito habilitado")
@@ -221,14 +227,16 @@ public class VentaEmpresaDefinition {
 
     @Then("el campo {string} contiene los siguientes valores")
     public void el_campo_string_contiene_los_siguientes_valores(String campo, DataTable valores){
-        Assert.assertEquals(valores.asList(), configuracionDeProductosPO.getValoresInput(campo));
+        //Assert.assertEquals(valores.asList(), configuracionDeProductosPO.getValoresInput(campo));
+        Assert.fail("No implementado");
     }
 
     @Then("el campo {string} contiene solo el valor {string}")
     public void el_campo_string_contiene_solo_el_valor_string(String campo, String valor){
-        List<String> valores = configuracionDeProductosPO.getValoresInput(campo);
-        if(valores.size() != 1) Assert.fail("Tiene mas de un valor\n valores:"+valores.toString());
-        Assert.assertEquals(valor, valores.get(0));
+        //List<String> valores = configuracionDeProductosPO.;
+        //if(valores.size() != 1) Assert.fail("Tiene mas de un valor\n valores:"+valores.toString());
+        //Assert.assertEquals(valor, valores.get(0));
+        Assert.fail("No implementado");
     }
 
     @And("asocio los limites")
@@ -260,7 +268,7 @@ public class VentaEmpresaDefinition {
 
     @Then("no se visualiza el producto {string}")
     public void no_se_visualiza_el_producto_string (String producto){
-
+        Assert.fail("No implementado");
     }
 
     @Then("no se visualiza la familia {string}")

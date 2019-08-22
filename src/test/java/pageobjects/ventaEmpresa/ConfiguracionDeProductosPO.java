@@ -8,11 +8,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import pageobjects.BasePage;
+import support.ui.elements.Input;
 import support.ui.elements.Select;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ConfiguracionDeProductosPO extends BasePage {
 
@@ -22,9 +22,12 @@ public class ConfiguracionDeProductosPO extends BasePage {
         super(DriverFactory.getDriver());
     }
 
-    String botonAgregarAOportunidad = ".//button[contains(@class,'agregar-producto') and contains(text(),'Agregar a oportunidad')]";
-    String familia;
+    final String BOTON_AGREGAR_A_OPORTUNIDAD = ".//button[contains(@class,'agregar-producto') and contains(text(),'Agregar a oportunidad')]";
     WebElement familiaElement;
+    String nombreProducto;
+    String familia;
+
+    final String SELECTOR_PRODUCTO_POR_FAMILIA =".//cdn-detalle-familia-directive//div[label[contains(text(),'Producto')]]";
 
     final String SELECTOR_ASOCIAR_LIMITES="//article[.//span[contains(text(),'Asociar límites')]]//div[contains(@class,'actions')]/a[ .//i[contains(@class,'arrow-right')]]";
     final String SELECTOR_APODERADOS="//article[.//span[contains(text(),'Apoderados')]]//div[contains(@class,'actions')]/a[ .//i[contains(@class,'arrow-right')]]";
@@ -32,7 +35,6 @@ public class ConfiguracionDeProductosPO extends BasePage {
     final String SELECT_FIRST_ELEMENT="%s//li//a[1]";
     final String SELECT_RAMDOM_ELEMENT="%s//li//a[%s]";
     final String SELECT_BOTON_DESPLEGAR_LISTA="%s//i[contains(@ng-click,'event')]";
-    final String SELECTOR_PRODUCTO_DE_FAMILIA="%s//cdn-detalle-familia-directive//div[label[contains(text(),'Producto')]]";
     final String SELECCIONAR_FAMILIA_XPATH = "//cdn-venta-taller-directive[contains(@on-agregar,'agregarProductoCarro')]//div[contains(@ng-repeat,'listadoFamilias') and .//div[contains(h5,'%s')]]";
     final String XPATH_PARA_FLECHA_DESPLEGAR_FAMILIA = "%s//div[contains(@class,'actions')]/a[contains(@ng-click,'productos')]";
     final String XPATH_PARA_CARRITO = "//div[contains(@role,'ROLE_VTAPYMECONTR_EJECUTAR')]/div[contains(@ng-class,'vm.compraActiva')]//div[contains(@class,'body')]//div[contains(@ng-repeat,'compraActiva')]//div[contains(p,'Línea de Crédito Privada')]";
@@ -53,10 +55,6 @@ public class ConfiguracionDeProductosPO extends BasePage {
     @FindBy(xpath = "//div[contains(@role,'ROLE_VTAPYMECONTR_EJECUTAR')]/div[contains(@ng-class,'vm.compraActiva')]")
     private WebElement carroCompra;
 
-    /*
-    * Funcionalidades de la pagina
-    * */
-
     public void pruebas(DataTable dataTable){
         log.debug("----------Pruebas------------");
         waitUntilEscritorioComercialIsLoaded();
@@ -65,15 +63,7 @@ public class ConfiguracionDeProductosPO extends BasePage {
         log.debug("La familia se expandio");
         seleccionoElProducto("Línea de Crédito Automática Personas");
         log.debug("Se selecciono el producto");
-        //ingresarValoresAlProducto(dataTable);
-        /*
-        List<Map<String,String>> tablaProducto = dataTable.asMaps();
-        log.debug("--------------------------------------");
-        log.debug("Se comienza el llenado de los campos");
-        tablaProducto.forEach((e) -> {
-            ingresarValorEnInput(e.get("clave"), e.get("valor"));
-        });*/
-
+        ingresarValoresAlProducto(dataTable);
     }
 
     public void clickAsociarLimites(){
@@ -81,35 +71,9 @@ public class ConfiguracionDeProductosPO extends BasePage {
         //TODO: generar throw para cuando la familia no este expandida
     }
 
-    public boolean isFamiliaVisible(String familia){
-        waitUntilEscritorioComercialIsLoaded();
-        return familias.stream().anyMatch((f) -> f.getText().contains(familia));
-    }
-
     public void clickApoderados(){
         if(familiaElement!=null) familiaElement.findElement(By.xpath(".//article[.//span[contains(text(),'Apoderados')]]//div[contains(@class,'actions')]/a[ .//i[contains(@class,'arrow-right')]]")).click();
         //TODO: generar throw para cuando la familia no este expandida
-    }
-
-    public void expanderFamilia(String nombreFamilia){
-        this.familia=nombreFamilia;
-        waitUntilEscritorioComercialIsLoaded();
-        WebElement familia = getFamiliaElement(nombreFamilia).findElement(By.xpath(".//div[contains(@class,'actions')]/a[contains(@ng-click,'productos')]"));
-        waitForElementToAppear(familia);
-        familia.click();
-    }
-
-    public void seleccionoElProducto(String nombreProducto){
-        WebElement selectProducto= familiaElement.findElement(By.xpath(".//cdn-detalle-familia-directive//div[label[contains(text(),'Producto')]]"));
-        seleccionarValorEnSelect(selectProducto, nombreProducto);
-        waitUntilEscritorioComercialIsLoaded();
-    }
-
-    public void ingresarValoresAlProducto(DataTable datos){
-        List<Map<String,String>> tablaProducto = datos.asMaps();
-        for (Map<String, String> fila :tablaProducto){
-            ingresarValorEnInput(fila.get("clave"), fila.get("valor"));
-        }
     }
 
     public void clickLinkFacilitadoresYPreferenciasDeAtencion(){
@@ -122,48 +86,55 @@ public class ConfiguracionDeProductosPO extends BasePage {
         botonContinuarAPresentacionDelProducto.click();
     }
 
-    public String obtenerMensajeDeErrorDelInput(String mensaje){
+    public void clickAgregarAOportunidad(){
         waitUntilEscritorioComercialIsLoaded();
-        return familiaElement.findElement(By.xpath(String.format(GET_ERROR_MESSAGE_OF_INPUT, mensaje))).getText();
+        familiaElement.findElement(By.xpath(BOTON_AGREGAR_A_OPORTUNIDAD)).click();
     }
 
-    public Boolean existeMensajeDeErrorDelInput(String mensaje){
+    public boolean isFamiliaVisible(String familia){
         waitUntilEscritorioComercialIsLoaded();
-        return isVisible(familiaElement.findElement(By.xpath(String.format(GET_ERROR_MESSAGE_OF_INPUT, mensaje))));
+        return familias.stream().anyMatch((f) -> f.getText().contains(familia));
     }
 
-    public String obtenerValorDeInput(String campo){
+    public void expanderFamilia(String nombreFamilia){
         waitUntilEscritorioComercialIsLoaded();
-        return familiaElement.findElement(By.xpath(String.format(SELECTOR_INPUT_FORMULARIO,campo))).getText();
+        this.familia=nombreFamilia;
+        getFamiliaElement(nombreFamilia).findElement(By.xpath(".//div[contains(@class,'actions')]/a[contains(@ng-click,'productos')]")).click();
     }
 
-    public String obtenerEmisionCartolaText(){
+    public void seleccionoElProducto(String nombreProducto){
+        this.nombreProducto = nombreProducto;
+        seleccionarValorEnSelect(new Select(familiaElement.findElement(By.xpath(SELECTOR_PRODUCTO_POR_FAMILIA))), nombreProducto);
         waitUntilEscritorioComercialIsLoaded();
-        return familiaElement.findElement(By.xpath(String.format(SELECTOR_INPUT_FORMULARIO,"Emisión Cartola"))).getText();
     }
 
-    public void ingresarMontoASolicitar(int monto){
-        ingresarValorEnInput("Monto a Solicitar ($)", monto+"");
+    public String getSelectedProduct(){
+        return this.nombreProducto;
     }
 
-    public void ingresarSpread(String porcentaje){
-        ingresarValorEnInput("Spread(%)", porcentaje);
+    public void ingresarValoresAlProducto(DataTable datos){
+        datos.asMaps().forEach((e)-> {
+            ingresarValorEnInput(getInputFromCampo(e.get("clave")), e.get("valor"));
+        });
     }
 
-    public String getMensajeDeErrorFromInput(String campo){
+    //TODO: errores mejorar
+
+    public List<String> getMensajesDeErrorFromInput(String campo){
         waitUntilEscritorioComercialIsLoaded();
-        WebElement input = familiaElement.findElement(By.xpath(String.format(SELECTOR_INPUT_FORMULARIO,campo)));
-        return input.findElement(By.xpath(GET_ERROR_MESSAGE_OF_INPUT_FROM_INPUT)).getText();
+        return getInputFromCampo(campo).getVisiblesError().stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
     public Boolean contieneErrorElInput(String campo){
         waitUntilEscritorioComercialIsLoaded();
-        WebElement input = familiaElement.findElement(By.xpath(String.format(SELECTOR_INPUT_FORMULARIO,campo)));
-        try {
-            return input.findElement(By.xpath(GET_ERROR_MESSAGE_OF_INPUT_FROM_INPUT)).isDisplayed();
-        }catch (Exception e){
-            return false;
-        }
+        return getInputFromCampo(campo).isError();
+    }
+
+    //Manejadores especificos para formulario de la familia
+
+    public String getEmisionCartolaText(){
+        waitUntilEscritorioComercialIsLoaded();
+        return getInputFromCampo("Emisión Cartola").getWrappedElement().getText();
     }
 
     public String getValorSpread(){
@@ -171,101 +142,52 @@ public class ConfiguracionDeProductosPO extends BasePage {
         return getValorDelCampo("Spread (%)");
     }
 
-
-    /*
-    * Utilidades
-    * */
-
-
-
     public String getValorDelCampo(String campo){
-        waitUntilEscritorioComercialIsLoaded();
-        WebElement input = familiaElement.findElement(By.xpath(String.format(SELECTOR_INPUT_FORMULARIO,campo)));
-        return input.findElement(By.xpath(".//input")).getAttribute("value");
+        return getInputFromCampo(campo).getValue();
     }
 
-
-    public WebElement getFamiliaElement(String nombreFamilia){
-        for (WebElement f: familias) {
-            if(f.findElement(By.xpath(".//h5[contains(@class,'text-color-11')]"))
-                    .getText().trim().equals(nombreFamilia)) {
-                familiaElement = f;
-                return f;
-            }
-        }
-        return null;
+    public void ingresarMontoASolicitar(int monto){
+        ingresarValorEnInput(getInputFromCampo("Monto a Solicitar ($)"), monto+"");
     }
 
-    public void clickAgregarAOportunidad(){
-        waitUntilEscritorioComercialIsLoaded();
-        familiaElement.findElement(By.xpath(botonAgregarAOportunidad)).click();
-    }
-
-    public void ingresarValorEnInput(String campo, String valor){
-        waitUntilEscritorioComercialIsLoaded();
-        WebElement input = familiaElement.findElement(By.xpath(String.format(SELECTOR_INPUT_FORMULARIO,campo)));
-        log.debug(String.format("El xpath para el campo \"%s\" es: %s",campo, input));
-        if(input.findElement(By.xpath(".//input")).getAttribute("class").contains("select")){
-            seleccionarValorEnSelect(input, valor);
-        }else{
-            input.findElement(By.xpath(".//input")).sendKeys(valor);
-        }
-    }
-
-    public void limpiarValorEnInput(String campo){
-        WebElement input = familiaElement.findElement(By.xpath(String.format(SELECTOR_INPUT_FORMULARIO,campo)));
-        input.findElement(By.xpath(".//input")).clear();
-    }
-
-    public List<String> getValoresInput(String campo){
-        WebElement input = familiaElement.findElement(By.xpath(String.format(SELECTOR_INPUT_FORMULARIO,campo)));
-        return getTextFromSelectValues(input);
+    public void ingresarSpread(String porcentaje){
+        ingresarValorEnInput(getInputFromCampo("Spread(%)"), porcentaje);
     }
 
     public boolean existeProductoEnElCarro(String nombreProducto){
         List<WebElement> productos = carroCompra.findElements(By.xpath(".//div[contains(@ng-repeat,'listProductos')]"));
         return productos.stream().anyMatch((f) -> f.getText().contains(familia));
     }
+    /*
+    * Utilidades
+    * */
 
-    public String getSeleccionDegravamen(String campo){
-        WebElement input = familiaElement.findElement(By.xpath(String.format(SELECTOR_INPUT_FORMULARIO,campo)));
-        WebElement checkSeleccion = input.findElement(By.xpath(".//label[contains(@class,'bch-custom-check')]//input[@value=1]"));
-        if(isVisible(checkSeleccion)){
-            return input.findElement(By.xpath(".//label[contains(@class,'bch-custom-check')]//input[@value=1]")).getText();
+    private Input getInputFromCampo(String campo){
+        return new Input(familiaElement.findElement(By.xpath(String.format(SELECTOR_INPUT_FORMULARIO,campo))));
+    }
+
+    private WebElement getFamiliaElement(String nombreFamilia){
+        this.familiaElement= familias.stream().filter((f) -> f.findElement(By.xpath(".//h5[contains(@class,'text-color-11')]")).getText().trim().equals(nombreFamilia) )
+                .limit(1)
+                .collect(Collectors.toList()).get(0);
+        return this.familiaElement;
+    }
+
+    private void ingresarValorEnInput(Input input, String valor){
+        // TODO: 2019-08-22 pgtoopx agregar todos los elementos que se utilizan en la pagina
+        waitUntilEscritorioComercialIsLoaded();
+        if(input.getWrappedElement().findElement(By.tagName("input")).getAttribute("class").contains("select")){
+            seleccionarValorEnSelect(new Select(input.getWrappedElement()), valor);
+        }else{
+            input.setValue(valor);
         }
-        return null;
     }
 
-    // Manejador de select
-
-    public void clickFlechaSelect(WebElement element){
-        element.findElement(By.xpath(".//i[contains(@ng-click,'event')]")).click();
+    public void limpiarValorEnInput(String campo){
+        getInputFromCampo(campo).clear();
     }
 
-    public List<String> getTextFromSelectValues(WebElement elementXpath){
-        ArrayList<String> valores = new ArrayList<>();
-        clickFlechaSelect(elementXpath);//se expande
-        List<WebElement> vals = elementXpath.findElements((By.xpath(elementXpath+".//li//a[contains(span,'')]")));
-        for (WebElement el : vals) {
-            if(!el.getText().equals("")) valores.add(el.getText());
-        }
-        return valores;
-    }
-
-    public ArrayList<WebElement> getWebElememtFromSelect(WebElement elementXpath){
-        ArrayList<WebElement> valores = new ArrayList<>();
-        clickFlechaSelect(elementXpath);//se expande
-        List<WebElement> vals = elementXpath.findElements(By.xpath(".//li//a[contains(span,'')]"));
-        for (WebElement el : vals) {
-            if(!el.getText().equals("")) valores.add(el);
-        }
-        clickFlechaSelect(elementXpath);
-        return valores;
-    }
-
-    public void seleccionarValorEnSelect(WebElement element, String valor){
-        log.debug("Select ---> "+valor);
-        Select select = new Select(element);
+    private void seleccionarValorEnSelect(Select select, String valor){
         switch (valor){
             case "FIRST": select.selectFirstValue();
                 break;
