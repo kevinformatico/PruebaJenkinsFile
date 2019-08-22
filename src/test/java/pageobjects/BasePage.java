@@ -28,25 +28,19 @@ public class BasePage {
 
     protected BasePage(WebDriver driver){
         this.driver=driver;
-        log.debug("Configuración WebDriverWait: TimeOut: "+WAIT_TIMEOUT+", Polling: "+POLLING);
         this.wait= new WebDriverWait(driver, WAIT_TIMEOUT, POLLING);
-        log.debug("Pagina "+this.getClass()+" se inicializo con un TimeOut de " + DEFAULT_TIMEOUT);
         PageFactory.initElements(new AjaxElementLocatorFactory(driver,DEFAULT_TIMEOUT), this);
     }
 
     protected BasePage(WebDriver driver, int timeOutSec){
         this.driver=driver;
-        log.debug("Configuración WebDriverWait: TimeOut: "+timeOutSec+", Polling: "+POLLING);
         this.wait= new WebDriverWait(driver, timeOutSec, POLLING);
-        log.debug("Pagina "+this.getClass()+" se inicializo con un TimeOut de " + DEFAULT_TIMEOUT);
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, DEFAULT_TIMEOUT), this);
     }
 
     protected BasePage(WebDriver driver, int timeOutSec, int pollingSec){
         this.driver=driver;
-        log.debug("Configuración WebDriverWait: TimeOut: "+timeOutSec+", Polling: "+pollingSec);
         this.wait= new WebDriverWait(driver, timeOutSec, pollingSec);
-        log.debug("Pagina "+this.getClass()+" se inicializo con un TimeOut de " + DEFAULT_TIMEOUT);
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, DEFAULT_TIMEOUT), this);
     }
 
