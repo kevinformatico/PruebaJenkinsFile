@@ -138,7 +138,7 @@ public class VentaEmpresaDefinition {
     @Then("se muestra el mensaje de error {string}")
     public void se_muestra_el_mensaje_de_error_string (String mensaje){
         configuracionDeProductosPO.clickAgregarAOportunidad();
-        Assert.assertEquals(mensaje, configuracionDeProductosPO.obtenerMensajeDeErrorDelInput(mensaje));
+        // TODO: 2019-08-22 pgtoopx crear estrategia de lectura de errores
     }
 
     @Then("permite seleccionar el valor {string}")
@@ -156,14 +156,13 @@ public class VentaEmpresaDefinition {
 
     @Then("se refleja frecuencia entrega cartola {string}")
     public void se_refleja_frecuencia_entrega_cartola_string (String valor){
-        Assert.assertEquals(valor,configuracionDeProductosPO.obtenerEmisionCartolaText());
+        Assert.assertEquals(valor,configuracionDeProductosPO.getEmisionCartolaText());
     }
 
     @When("ingreso el monto a solicitar {}")
     public void ingreso_el_monto_a_solicitar_int (String monto){
         datosFormulario.add(new InputFormulario(MONTO_A_SOLICITAR_SELECTOR,monto));
-        //configuracionDeProductosPO.ingresarValorEnInput(MONTO_A_SOLICITAR_SELECTOR, monto);
-        Assert.fail("No implementado");
+        configuracionDeProductosPO.ingresarMontoASolicitar(monto);
     }
 
     @When("ingreso un spread de {}%")
@@ -171,8 +170,7 @@ public class VentaEmpresaDefinition {
         datosFormulario.add(new InputFormulario(SPREAD_SELECTOR,porcentajeSpread));
         configuracionDeProductosPO.waitUntilEscritorioComercialIsLoaded();
         configuracionDeProductosPO.limpiarValorEnInput(SPREAD_SELECTOR);
-        Assert.fail("No implementado");
-        //configuracionDeProductosPO.ingresarValorEnInput(SPREAD_SELECTOR, porcentajeSpread);
+        configuracionDeProductosPO.ingresarSpread(porcentajeSpread);
     }
 
     @When("lo agrego a oportunidad")
@@ -190,34 +188,30 @@ public class VentaEmpresaDefinition {
     @When("ingreso {string} en aumento programado de cupo")
     public void ingreso_string_en_aumento_programado_de_cupo(String aumento){
         datosFormulario.add(new InputFormulario(AUMENTO_PROGRAMADO_DE_CUPO_SELECTOR,aumento));
-        //configuracionDeProductosPO.ingresarValorEnInput(AUMENTO_PROGRAMADO_DE_CUPO_SELECTOR, aumento);
-        Assert.fail("No implementado");
+        configuracionDeProductosPO.ingresarValorAlProducto(AUMENTO_PROGRAMADO_DE_CUPO_SELECTOR, aumento);
     }
 
     @When("ingreso tipo plazo {string}")
     public void ingreso_tipo_plazo_string(String plazo){
         datosFormulario.add(new InputFormulario(TIPO_PLAZO, plazo));
-        //configuracionDeProductosPO.ingresarValorEnInput(TIPO_PLAZO, plazo);
-        Assert.fail("No implementado");
+        configuracionDeProductosPO.ingresarValorAlProducto(TIPO_PLAZO, plazo);
     }
 
     @Then("me permite ingresar {string} meses en el campo plazo")
     public void me_permite_ingresar_string_meses_en_el_campo_plazo(String meses){
         datosFormulario.add(new InputFormulario(PLAZO, meses));
-        //configuracionDeProductosPO.ingresarValorEnInput(PLAZO, meses);
-        Assert.fail("No implementado");
+        configuracionDeProductosPO.ingresarValorAlProducto(PLAZO, meses);
     }
 
     @Then("ingreso {string} meses en el campo plazo")
     public void ingreso_string_meses_en_el_campo_plazo(String meses){
         datosFormulario.add(new InputFormulario(PLAZO, meses));
-        //configuracionDeProductosPO.ingresarValorEnInput(PLAZO, meses);
-        Assert.fail("No implementado");
-    } 
+        configuracionDeProductosPO.ingresarValorAlProducto(PLAZO, meses);
+    }
 
     @When("aparece degravamen de linea de credito habilitado")
     public void aparece_degravamen(){
-        Assert.assertEquals("Si", configuracionDeProductosPO.getSeleccionDegravamen(DEGRAVAMEN_LINEA_DE_CREDITO));
+        Assert.fail("No Implementado");
     }
 
     @Then("el spread debe debe ser {}%")

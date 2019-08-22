@@ -118,6 +118,10 @@ public class ConfiguracionDeProductosPO extends BasePage {
         });
     }
 
+    public void ingresarValorAlProducto(String campo, String valor){
+        ingresarValorEnInput(getInputFromCampo(campo), valor);
+    }
+
     //TODO: errores mejorar
 
     public List<String> getMensajesDeErrorFromInput(String campo){
@@ -146,8 +150,8 @@ public class ConfiguracionDeProductosPO extends BasePage {
         return getInputFromCampo(campo).getValue();
     }
 
-    public void ingresarMontoASolicitar(int monto){
-        ingresarValorEnInput(getInputFromCampo("Monto a Solicitar ($)"), monto+"");
+    public void ingresarMontoASolicitar(String monto){
+        ingresarValorEnInput(getInputFromCampo("Monto a Solicitar ($)"), monto);
     }
 
     public void ingresarSpread(String porcentaje){
