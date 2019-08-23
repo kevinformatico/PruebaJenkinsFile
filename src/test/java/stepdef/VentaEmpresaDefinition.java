@@ -306,7 +306,7 @@ public class VentaEmpresaDefinition {
         });
     }
 
-    @Then("aparece el mensaje de error {string} y el subtitulo {string}")
+    @Then("aparece el mensaje de advertencia {string} y el subtitulo {string}")
     public void aparece_el_mensaje_de_error_string_y_el_sub_string (String mensaje, String subtitulo){
         Assert.fail("No Implementado");
     }

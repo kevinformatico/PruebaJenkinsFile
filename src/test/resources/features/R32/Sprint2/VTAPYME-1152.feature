@@ -75,7 +75,7 @@ Feature: Configuración Líneas de Crédito Privada
       | Tipo Plazo|
       | N° de cuenta asociada |
       | Aumento programado de cupo |
-    And aparece el mensaje de error "Campos Incompletos" y el subtitulo "Verifique elementos en rojo"
+    And aparece el mensaje de advertencia "Campos Incompletos" y el subtitulo "Verifique elementos en rojo"
 
     @todo
   Scenario: Validar check para seguro de desgravamen
