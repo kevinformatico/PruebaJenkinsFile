@@ -1,5 +1,9 @@
 package Managers.context;
 
 public enum Context {
-    SCENARIO;
+    SCENARIO,
+    LOG_USER,
+    LOG_PASSWORD,
+    PERFIL,
+    RUT;
 }

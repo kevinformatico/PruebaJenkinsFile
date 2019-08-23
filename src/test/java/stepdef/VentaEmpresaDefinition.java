@@ -1,5 +1,8 @@
 package stepdef;
 
+import Managers.context.Context;
+import Managers.context.ScenarioContext;
+import Managers.driver.DriverFactory;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -12,6 +15,7 @@ import org.junit.Assert;
 import pageobjects.*;
 import pageobjects.ventaEmpresa.*;
 
+import java.sql.Driver;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +38,7 @@ public class VentaEmpresaDefinition {
     ArrayList<byte[]> screenshotList;
     String producto;
     ArrayList<InputFormulario> datosFormulario = new ArrayList<>();
+    ScenarioContext scenarioContext;
 
     // Constantes
 
@@ -46,6 +51,7 @@ public class VentaEmpresaDefinition {
     String PRODUCTO = "Producto";
 
     public VentaEmpresaDefinition(SharedDriver driver,
+                                  ScenarioContext scenarioContext,
                                   ArrayList<byte[]> screenshotList,
                                   PaginaInicioPO paginaInicioPO,
                                   EscritorioComercialPO escritorioComercialPO,
@@ -59,6 +65,7 @@ public class VentaEmpresaDefinition {
                                   Vista360ResumenEmpresaPO vista360ResumenEmpresaPO)
     {
         this.screenshotList=screenshotList;
+        this.scenarioContext=scenarioContext;
         this.paginaInicioPO= paginaInicioPO;
         this.escritorioComercialPO= escritorioComercialPO;
         this.vista360ResumenPersonaPO= vista360ResumenPersonaPO;
@@ -138,7 +145,10 @@ public class VentaEmpresaDefinition {
     @Then("se muestra el mensaje de error {string}")
     public void se_muestra_el_mensaje_de_error_string (String mensaje){
         configuracionDeProductosPO.clickAgregarAOportunidad();
-        // TODO: 2019-08-22 pgtoopx crear estrategia de lectura de errores
+        List<String> actual = configuracionDeProductosPO.getMensajesDeErrorFromInput(datosFormulario.get(datosFormulario.size()-1).getKey());
+        if (actual.size()!=1)Assert.fail(String.format("Error se encontraron %s errores en el input %s \n Los errores son: %s",
+                actual.size(),datosFormulario.get(datosFormulario.size()-1).getKey(), actual));
+        Assert.assertEquals(mensaje, actual.get(0));
     }
 
     @Then("permite seleccionar el valor {string}")
@@ -168,8 +178,8 @@ public class VentaEmpresaDefinition {
     @When("ingreso un spread de {}%")
     public void ingreso_un_spread_de_porcentaje (String porcentajeSpread){
         datosFormulario.add(new InputFormulario(SPREAD_SELECTOR,porcentajeSpread));
-        configuracionDeProductosPO.waitUntilEscritorioComercialIsLoaded();
         configuracionDeProductosPO.limpiarValorEnInput(SPREAD_SELECTOR);
+        configuracionDeProductosPO.waitUntilEscritorioComercialIsLoaded();
         configuracionDeProductosPO.ingresarSpread(porcentajeSpread);
     }
 
@@ -180,6 +190,7 @@ public class VentaEmpresaDefinition {
 
     @Then("no entrega mensaje de error para los campos llenados")
     public void no_entrega_mensaje_de_error_para_los_campos_llenados (){
+
         for (InputFormulario i:datosFormulario) {
             Assert.assertFalse(configuracionDeProductosPO.contieneErrorElInput(i.getKey()));
         }
@@ -209,7 +220,7 @@ public class VentaEmpresaDefinition {
         configuracionDeProductosPO.ingresarValorAlProducto(PLAZO, meses);
     }
 
-    @When("aparece degravamen de linea de credito habilitado")
+    @When("aparece desgravamen de linea de credito habilitado")
     public void aparece_degravamen(){
         Assert.fail("No Implementado");
     }
@@ -221,16 +232,18 @@ public class VentaEmpresaDefinition {
 
     @Then("el campo {string} contiene los siguientes valores")
     public void el_campo_string_contiene_los_siguientes_valores(String campo, DataTable valores){
-        //Assert.assertEquals(valores.asList(), configuracionDeProductosPO.getValoresInput(campo));
-        Assert.fail("No implementado");
+        List<String> valoresSelect = configuracionDeProductosPO.getValoresDelSelect(campo);
+        Assert.assertEquals(valores.asList(), valoresSelect);
     }
 
-    @Then("el campo {string} contiene solo el valor {string}")
+    @Then("el select {string} contiene solo el valor {string}")
     public void el_campo_string_contiene_solo_el_valor_string(String campo, String valor){
-        //List<String> valores = configuracionDeProductosPO.;
-        //if(valores.size() != 1) Assert.fail("Tiene mas de un valor\n valores:"+valores.toString());
-        //Assert.assertEquals(valor, valores.get(0));
-        Assert.fail("No implementado");
+        List<String> valoresSelect = configuracionDeProductosPO.getValoresDelSelect(campo);
+        if(valoresSelect.size()!=1) Assert
+                .fail(String.format("El select contiene %s valores\n Valores: %s",
+                        valoresSelect.size(),
+                        valoresSelect));
+        Assert.assertEquals(valor, valoresSelect.get(0));
     }
 
     @And("asocio los limites")
@@ -273,12 +286,31 @@ public class VentaEmpresaDefinition {
 
     @Then("se muestra el mensaje {string}")
     public void se_muestra_el_mensaje_string(String mensaje){
-        //TODO: validar mensaje de error
+        Assert.assertEquals(mensaje, configuracionDeProductosPO.getMensajesBchEmpresas().get(0));
     }
 
     @Then("probemos esto")
     public void probemos_esto (DataTable dataTable){
+        System.out.println(scenarioContext.getScenarioContext(Context.LOG_USER));
         configuracionDeProductosPO.pruebas(dataTable);
     }
+
+    @Then("aparece el mensaje {string} en los siguientes campos:")
+    public void aparece_el_mensaje_string_en_los_siguientes_campos(String mensaje, DataTable campos){
+        campos.asList().forEach((c)->{
+            if (configuracionDeProductosPO.contieneErrorElInput(c)){
+                Assert.assertEquals(mensaje, configuracionDeProductosPO.getMensajesDeErrorFromInput(c).get(0));
+            }else{
+                Assert.fail(String.format("El campo %s no contiene error", c));
+            }
+        });
+    }
+
+    @Then("aparece el mensaje de error {string} y el subtitulo {string}")
+    public void aparece_el_mensaje_de_error_string_y_el_sub_string (String mensaje, String subtitulo){
+        Assert.fail("No Implementado");
+    }
+
+
 
 }

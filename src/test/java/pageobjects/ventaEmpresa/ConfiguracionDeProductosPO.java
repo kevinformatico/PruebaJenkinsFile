@@ -5,6 +5,7 @@ import io.cucumber.datatable.DataTable;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import pageobjects.BasePage;
@@ -54,6 +55,9 @@ public class ConfiguracionDeProductosPO extends BasePage {
 
     @FindBy(xpath = "//div[contains(@role,'ROLE_VTAPYMECONTR_EJECUTAR')]/div[contains(@ng-class,'vm.compraActiva')]")
     private WebElement carroCompra;
+
+    @FindBy(xpath = "//section[contains(@class,'bch-mensaje-empresas') and not(contains(@class,'ng-hide'))]")
+    private List<WebElement> bchMensajesEmpresas;
 
     public void pruebas(DataTable dataTable){
         log.debug("----------Pruebas------------");
@@ -138,16 +142,30 @@ public class ConfiguracionDeProductosPO extends BasePage {
 
     public String getEmisionCartolaText(){
         waitUntilEscritorioComercialIsLoaded();
-        return getInputFromCampo("Emisión Cartola").getWrappedElement().getText();
+        return getInputFromCampo("Emisión Cartola").getWrappedElement().findElement(By.tagName("p")).getText();
     }
 
     public String getValorSpread(){
+        String campo= "Spread (%)";
+        getInputFromCampo(campo).getWrappedElement().click();
         waitUntilEscritorioComercialIsLoaded();
-        return getValorDelCampo("Spread (%)");
+        return getValorDelCampo(campo);
     }
 
     public String getValorDelCampo(String campo){
         return getInputFromCampo(campo).getValue();
+    }
+
+    public List<String> getValoresDelSelect(String campo){
+        return new Select(getInputFromCampo(campo)).getOptions()
+                .stream()
+                .map(WebElement::getText)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getMensajesBchEmpresas(){
+        waitUntilEscritorioComercialIsLoaded();
+        return bchMensajesEmpresas.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
     public void ingresarMontoASolicitar(String monto){
@@ -155,13 +173,16 @@ public class ConfiguracionDeProductosPO extends BasePage {
     }
 
     public void ingresarSpread(String porcentaje){
-        ingresarValorEnInput(getInputFromCampo("Spread(%)"), porcentaje);
+        String campo ="Spread (%)";
+        ingresarValorEnInput(getInputFromCampo(campo), porcentaje);
+        getInputFromCampo(campo).getInputTag().sendKeys(Keys.TAB);
     }
 
     public boolean existeProductoEnElCarro(String nombreProducto){
         List<WebElement> productos = carroCompra.findElements(By.xpath(".//div[contains(@ng-repeat,'listProductos')]"));
         return productos.stream().anyMatch((f) -> f.getText().contains(familia));
     }
+
     /*
     * Utilidades
     * */
@@ -171,6 +192,7 @@ public class ConfiguracionDeProductosPO extends BasePage {
     }
 
     private WebElement getFamiliaElement(String nombreFamilia){
+        waitUntilEscritorioComercialIsLoaded();
         this.familiaElement= familias.stream().filter((f) -> f.findElement(By.xpath(".//h5[contains(@class,'text-color-11')]")).getText().trim().equals(nombreFamilia) )
                 .limit(1)
                 .collect(Collectors.toList()).get(0);
@@ -188,6 +210,9 @@ public class ConfiguracionDeProductosPO extends BasePage {
     }
 
     public void limpiarValorEnInput(String campo){
+        waitUntilEscritorioComercialIsLoaded();
+        getInputFromCampo(campo).getWrappedElement().click();
+        waitUntilEscritorioComercialIsLoaded();
         getInputFromCampo(campo).clear();
     }
 
@@ -201,5 +226,7 @@ public class ConfiguracionDeProductosPO extends BasePage {
                 break;
         }
     }
+
+
 
 }

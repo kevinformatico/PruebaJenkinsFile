@@ -1,17 +1,17 @@
 package stepdef;
 
+import Managers.context.Context;
+import Managers.context.ScenarioContext;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 import support.database.SqlClient;
 import support.util;
 import Managers.context.TestContext;
 import Managers.driver.SharedDriver;
-import com.neovisionaries.ws.client.WebSocketException;
 
 import org.junit.Assert;
 import pageobjects.*;
 
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -32,14 +32,17 @@ public class GenericsDefinition {
     Vista360ResumenPersonaPO vista360ResumenPersonaPO;
     Vista360ResumenEmpresaPO vista360ResumenEmpresaPO;
     ArrayList<byte[]> screenshotList;
+    ScenarioContext scenarioContext;
 
     public GenericsDefinition(SharedDriver driver,
+                              ScenarioContext scenarioContext,
                               ArrayList<byte[]> screenshotList,
                               PaginaInicioPO paginaInicioPO,
                               EscritorioComercialPO escritorioComercialPO,
                               Vista360ResumenPersonaPO vista360ResumenPersonaPO,
                               Vista360ResumenEmpresaPO vista360ResumenEmpresaPO)
     {
+        this.scenarioContext = scenarioContext;
         this.screenshotList=screenshotList;
         this.paginaInicioPO= paginaInicioPO;
         this.escritorioComercialPO= escritorioComercialPO;
@@ -50,59 +53,77 @@ public class GenericsDefinition {
 
     @Given("el usuario {string} ingreso a V360")
     public void el_usuario_string_ingresa_a_v360(String usuario){
+        scenarioContext.setScenarioContext(Context.LOG_USER,usuario);
+        scenarioContext.setScenarioContext(Context.LOG_PASSWORD,DEFAULT_PASSWORD);
         paginaInicioPO.iniciarSesion(usuario, DEFAULT_PASSWORD);
     }
 
     @Given("busco el rut {string}")
     public void busco_el_rut_string(String rut){
+        scenarioContext.setScenarioContext(Context.RUT, rut);
         escritorioComercialPO.buscarPorRut(rut);
     }
 
     @Given("busco el rut {string} con perfil empresa")
     public void  busco_el_rut_string_con_perfil_empresa(String rut){
+        scenarioContext.setScenarioContext(Context.RUT, rut);
         escritorioComercialPO.buscarPorRut(rut);
+        scenarioContext.setScenarioContext(Context.PERFIL, PERFIL_EMPRESA);
         configurarPerfil(PERFIL_EMPRESA);
     }
 
     @Given("busco el rut {string} con perfil persona")
     public void  busco_el_rut_string_con_perfil_persona(String rut){
+        scenarioContext.setScenarioContext(Context.RUT, rut);
         escritorioComercialPO.buscarPorRut(rut);
+        scenarioContext.setScenarioContext(Context.PERFIL, PERFIL_PERSONA);
         configurarPerfil(PERFIL_PERSONA);
     }
 
     @Given("el usuario busca el rut {string} con perfil empresa")
     public void  el_usuario_busca_el_rut_string_con_perfil_empresa(String rut){
         if(isOnDocker.equalsIgnoreCase("true")){
+            scenarioContext.setScenarioContext(Context.LOG_USER,DEFAULT_USERNAME_DOCKER);
+            scenarioContext.setScenarioContext(Context.LOG_PASSWORD,DEFAULT_PASSWORD_DOCKER);
             paginaInicioPO.iniciarSesion( DEFAULT_USERNAME_DOCKER, DEFAULT_PASSWORD_DOCKER);
         }else{
+            scenarioContext.setScenarioContext(Context.LOG_USER,DEFAULT_USERNAME);
+            scenarioContext.setScenarioContext(Context.LOG_PASSWORD,DEFAULT_PASSWORD);
             paginaInicioPO.iniciarSesion( DEFAULT_USERNAME, DEFAULT_PASSWORD);
         }
+        scenarioContext.setScenarioContext(Context.RUT, rut);
         escritorioComercialPO.buscarPorRut(rut);
+        scenarioContext.setScenarioContext(Context.PERFIL, PERFIL_EMPRESA);
         configurarPerfil(PERFIL_EMPRESA);
     }
 
     @Given("el usuario busca el rut {string} con perfil persona")
     public void  el_usuario_busca_el_rut_string_con_perfil_persona(String rut){
-        paginaInicioPO.iniciarSesion(DEFAULT_USERNAME, DEFAULT_PASSWORD_DOCKER);
+        if(isOnDocker.equalsIgnoreCase("true")){
+            scenarioContext.setScenarioContext(Context.LOG_USER,DEFAULT_USERNAME_DOCKER);
+            scenarioContext.setScenarioContext(Context.LOG_PASSWORD,DEFAULT_PASSWORD_DOCKER);
+            paginaInicioPO.iniciarSesion( DEFAULT_USERNAME_DOCKER, DEFAULT_PASSWORD_DOCKER);
+        }else{
+            scenarioContext.setScenarioContext(Context.LOG_USER,DEFAULT_USERNAME);
+            scenarioContext.setScenarioContext(Context.LOG_PASSWORD,DEFAULT_PASSWORD);
+            paginaInicioPO.iniciarSesion( DEFAULT_USERNAME, DEFAULT_PASSWORD);
+        }
+        scenarioContext.setScenarioContext(Context.RUT, rut);
         escritorioComercialPO.buscarPorRut(rut);
+        scenarioContext.setScenarioContext(Context.PERFIL, PERFIL_PERSONA);
         configurarPerfil(PERFIL_PERSONA);
     }
 
     @Given("ingreso a Vista 360 persona")
     public void ingreso_a_vista_360_persona(){
         configurarPerfil(PERFIL_PERSONA);
+        scenarioContext.setScenarioContext(Context.PERFIL, PERFIL_PERSONA);
     }
 
     @Given("ingreso a Vista 360 empresa")
     public void ingreso_a_vista_360_empresa(){
         configurarPerfil(PERFIL_EMPRESA);
-    }
-
-    @When("se pierde la conexion de internet")
-    public void se_pierde_la_conexion_de_internet() throws InterruptedException, WebSocketException, IOException {
-        //ChromeDevTools.sendWSMessage(BuilderMessages.buildNetworkEmulationOffline());
-        //dt.createSession();
-        //dt.send(Network.emulateNetworkConditions(true, 100, 1000, 2000, Optional.of(ConnectionType.cellular2g)));
+        scenarioContext.setScenarioContext(Context.PERFIL, PERFIL_EMPRESA);
     }
 
     @When("espero por {int} segundos")

@@ -17,7 +17,6 @@ Feature: Configuración Líneas de Crédito PYME
     And voy a contratar un producto
     Then no se visualiza la familia "Canales Remotos"
 
-@run
   Scenario: Banconexion 2.0 PYME Cliente  PJ o PG y Bca Empresas y Privada  sin cuenta corriente MN validar mensaje
     Given el usuario busca el rut "16.879.879-2" con perfil empresa
     And voy a contratar un producto

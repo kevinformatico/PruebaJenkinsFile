@@ -12,7 +12,7 @@ Feature: Configuración Líneas de Crédito Privada
   Background:
     Given el usuario busca el rut "14.255.888-2" con perfil empresa
     And voy a contratar una LDC
-    And contrato el producto "Línea de Crédito Privada"
+    And contrato el producto "Línea de Crédito Automática Personas"
 
   Scenario: Validar fallo al ingreso de monto de cupo menor al minimo segun parametros de taller
     When ingreso el monto a solicitar 200000
@@ -31,16 +31,20 @@ Feature: Configuración Líneas de Crédito Privada
   Scenario: Validar ingreso de spread con valor numerico y dos decimales
     When ingreso el monto a solicitar 500000
     And ingreso un spread de 1.99%
+    And lo agrego a oportunidad
     Then no entrega mensaje de error para los campos llenados
 
-  Scenario: Validar fallo ingreso de spread con valor negativo
+  @run
+  Scenario: Validar fallo ingreso de spread con valor 0
     When ingreso el monto a solicitar 500000
     And ingreso un spread de 0%
+    And lo agrego a oportunidad
     Then se muestra el mensaje de error "Debe ser mayor a 0"
 
   Scenario: Validar fallo ingreso de spread con mayor a la maxima convencional
     When ingreso el monto a solicitar 500000
     And ingreso un spread de 5.99%
+    And lo agrego a oportunidad
     Then se muestra el mensaje de error "Debe ser inferior a máx. convencional"
 
   Scenario: Validar opciones para aumento Programado de cupo
@@ -52,7 +56,28 @@ Feature: Configuración Líneas de Crédito Privada
     |No aplica|
 
   Scenario: Permitir seleccionar sólo el Tipo de Plazo "Indefinido"
-    Then el campo "Tipo Plazo" contiene solo el valor "Indefinido"
+    Then el select "Tipo Plazo" contiene solo el valor "Indefinido"
 
   Scenario: Validar Frecuencia entrega cartola "Mensual"
     Then se refleja frecuencia entrega cartola "Mensual"
+
+  Scenario: Validar mensaje Spread ingresado requerirá autorización comercial
+    When ingreso el monto a solicitar 1000000
+    And ingreso un spread de 1%
+    Then se muestra el mensaje "Spread ingresado requerirá autorización comercial"
+
+  @todo
+  Scenario: Validar campos requeridos
+    When lo agrego a oportunidad
+    Then aparece el mensaje "Requerido" en los siguientes campos:
+      | Monto a Solicitar ($)|
+      | Spread (%)|
+      | Tipo Plazo|
+      | N° de cuenta asociada |
+      | Aumento programado de cupo |
+    And aparece el mensaje de error "Campos Incompletos" y el subtitulo "Verifique elementos en rojo"
+
+    @todo
+  Scenario: Validar check para seguro de desgravamen
+    Then aparece desgravamen de linea de credito habilitado
+
