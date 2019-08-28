@@ -7,7 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(glue = {"stepdef"}, features = "src/test/resources/features/", tags = {"@run"},
+@CucumberOptions(glue = {"stepdef"}, features = "src/test/resources/features/", tags = {"not @todo"},
 plugin = {"pretty","json:target/cucumber-report/cucumber.json", "junit:target/cucumber.xml", "html:target/cucumber-report"})
 public class Runner {
     @BeforeClass

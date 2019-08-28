@@ -1,4 +1,5 @@
 #encoding:utf-8
+  @todo
 Feature: No Impacto Linea de Credito Automatica Persona
   COMO Ejecutivo de cuenta, asistente comercial, agente, jefe de plataforma
   DESEO configurar las condiciones comerciales
