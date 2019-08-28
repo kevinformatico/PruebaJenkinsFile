@@ -4,10 +4,7 @@ import Managers.driver.DriverFactory;
 import io.cucumber.datatable.DataTable;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import pageobjects.BasePage;
 import support.ui.elements.*;
@@ -258,9 +255,13 @@ public class ConfiguracionDeProductosPO extends BasePage {
 
     private WebElement getFamiliaElement(String nombreFamilia){
         waitUntilEscritorioComercialIsLoaded();
-        this.familiaElement= familias.stream().filter((f) -> f.findElement(By.xpath(".//h5[contains(@class,'text-color-11')]")).getText().trim().equals(nombreFamilia) )
+        try{
+            this.familiaElement= familias.stream().filter((f) -> f.findElement(By.xpath(".//h5[contains(@class,'text-color-11')]")).getText().trim().equals(nombreFamilia) )
                 .limit(1)
                 .collect(Collectors.toList()).get(0);
+        } catch (IndexOutOfBoundsException e){
+            throw new NoSuchElementException("No se encuentra la familia "+ nombreFamilia);
+        }
         return this.familiaElement;
     }
 
