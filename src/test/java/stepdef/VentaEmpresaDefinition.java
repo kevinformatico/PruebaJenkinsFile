@@ -14,6 +14,7 @@ import org.junit.Assert;
 
 import pageobjects.*;
 import pageobjects.ventaEmpresa.*;
+import support.ui.elements.BchMensajeEmpresa;
 
 import java.sql.Driver;
 import java.util.ArrayList;
@@ -271,11 +272,13 @@ public class VentaEmpresaDefinition {
     @Then("se validan los datos de configuracion en presentacion")
     public void se_validan_los_datos_de_configuracion_en_presentacion(){
         presentacionDeProductosPO.extraerDatosPresentacionDelProducto();
+        Assert.fail("No Implementado");
     }
 
     @Then("no se visualiza el producto {string}")
     public void no_se_visualiza_el_producto_string (String producto){
-        Assert.fail("No implementado");
+        Assert.assertFalse(String.format("El producto %s es visible", producto),
+                configuracionDeProductosPO.isProductoVisible(producto));
     }
 
     @Then("no se visualiza la familia {string}")
@@ -286,13 +289,7 @@ public class VentaEmpresaDefinition {
 
     @Then("se muestra el mensaje {string}")
     public void se_muestra_el_mensaje_string(String mensaje){
-        Assert.assertEquals(mensaje, configuracionDeProductosPO.getMensajesBchEmpresas().get(0));
-    }
-
-    @Then("probemos esto")
-    public void probemos_esto (DataTable dataTable){
-        System.out.println(scenarioContext.getScenarioContext(Context.LOG_USER));
-        configuracionDeProductosPO.pruebas(dataTable);
+        Assert.assertEquals(mensaje,configuracionDeProductosPO.getMensajesBchEmpresasSinSubtitulos().get(0));
     }
 
     @Then("aparece el mensaje {string} en los siguientes campos:")
@@ -301,15 +298,24 @@ public class VentaEmpresaDefinition {
             if (configuracionDeProductosPO.contieneErrorElInput(c)){
                 Assert.assertEquals(mensaje, configuracionDeProductosPO.getMensajesDeErrorFromInput(c).get(0));
             }else{
-                Assert.fail(String.format("El campo %s no contiene error", c));
+                Assert.fail(String.format("El campo \"%s\" no contiene error", c));
             }
         });
     }
 
     @Then("aparece el mensaje de advertencia {string} y el subtitulo {string}")
     public void aparece_el_mensaje_de_error_string_y_el_sub_string (String mensaje, String subtitulo){
-        Assert.fail("No Implementado");
+        BchMensajeEmpresa m = configuracionDeProductosPO.getBchMensajesEmpresasWithTitulo(mensaje);
+        Assert.assertEquals(mensaje, m.getTitulo());
+        Assert.assertEquals(subtitulo, m.getSubtitulo());
+        Assert.assertTrue("El mensaje no es un warning", m.isWarning());
     }
+
+    @Then("pruebo esto")
+    public void prueba (){
+        configuracionDeProductosPO.pruebas();
+    }
+
 
 
 

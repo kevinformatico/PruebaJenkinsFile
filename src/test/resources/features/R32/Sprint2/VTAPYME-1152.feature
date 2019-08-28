@@ -1,6 +1,7 @@
 #encoding:utf-8
 @VTAPYME-1152
-Feature: Configuración Líneas de Crédito Privada	
+  @run
+Feature: Configuración Líneas de Crédito Privada
   COMO Ejecutivo de cuenta, asistente comercial, agente, jefe de plataforma
   DESEO configurar las condiciones comerciales
   PARA una LDC nueva
@@ -8,7 +9,7 @@ Feature: Configuración Líneas de Crédito Privada
 # C1: Se debe contar con los atributos necesarios para la configuración de la Línea de Crédito.
 
   # Verificar atributos para un cliente PCG que tiene al menos una cta cte Normal MN vigente sin LDC
-  
+
   Background:
     Given el usuario busca el rut "14.255.888-2" con perfil empresa
     And voy a contratar una LDC
@@ -34,7 +35,6 @@ Feature: Configuración Líneas de Crédito Privada
     And lo agrego a oportunidad
     Then no entrega mensaje de error para los campos llenados
 
-  @run
   Scenario: Validar fallo ingreso de spread con valor 0
     When ingreso el monto a solicitar 500000
     And ingreso un spread de 0%
@@ -66,7 +66,6 @@ Feature: Configuración Líneas de Crédito Privada
     And ingreso un spread de 1%
     Then se muestra el mensaje "Spread ingresado requerirá autorización comercial"
 
-  @todo
   Scenario: Validar campos requeridos
     When lo agrego a oportunidad
     Then aparece el mensaje "Requerido" en los siguientes campos:
@@ -77,7 +76,7 @@ Feature: Configuración Líneas de Crédito Privada
       | Aumento programado de cupo |
     And aparece el mensaje de advertencia "Campos Incompletos" y el subtitulo "Verifique elementos en rojo"
 
-    @todo
   Scenario: Validar check para seguro de desgravamen
     Then aparece desgravamen de linea de credito habilitado
+
 

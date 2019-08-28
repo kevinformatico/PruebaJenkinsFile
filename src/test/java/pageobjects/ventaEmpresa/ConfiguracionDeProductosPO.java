@@ -5,12 +5,12 @@ import io.cucumber.datatable.DataTable;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import pageobjects.BasePage;
-import support.ui.elements.Input;
-import support.ui.elements.Select;
+import support.ui.elements.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -59,15 +59,43 @@ public class ConfiguracionDeProductosPO extends BasePage {
     @FindBy(xpath = "//section[contains(@class,'bch-mensaje-empresas') and not(contains(@class,'ng-hide'))]")
     private List<WebElement> bchMensajesEmpresas;
 
-    public void pruebas(DataTable dataTable){
+    @FindBy(xpath = "//section[contains(@class,'bch-mensaje-empresas') and not(contains(@class,'ng-hide')) and contains(@class,'warning')]")
+    private List<WebElement> warningBchMensajesEmpresa;
+
+    @FindBy(xpath = "//div[contains(label,'Indicador RUT cheques')]//div[contains(@class,'form-group')]")
+    private WebElement checkboxIndicadorRutCheques;
+
+    public void pruebas() {
         log.debug("----------Pruebas------------");
         waitUntilEscritorioComercialIsLoaded();
-        String nombreFamilia="Líneas";
+        String nombreFamilia = "Cuentas";
         expanderFamilia(nombreFamilia);
-        log.debug("La familia se expandio");
-        seleccionoElProducto("Línea de Crédito Automática Personas");
-        log.debug("Se selecciono el producto");
-        ingresarValoresAlProducto(dataTable);
+        seleccionoElProducto("Cta. Cte. Normal - PYME");
+        //ingresarValorAlProducto("Plan Tarifario", "ARMADA1");
+        //ingresarValorAlProducto("Aumento programado de cupo", "No");
+        waitUntilEscritorioComercialIsLoaded();
+        RadioButton radioButton = new RadioButton(checkboxIndicadorRutCheques);
+        List<WebElement> options = radioButton.getOptions();
+
+        JavascriptExecutor js = ((JavascriptExecutor) getDriver());
+        String classname = "bch-custom-check radiobutton col-sm-3 pl-0";
+        //String valor = js.executeScript("return angular.element(document.getElementsByClassName('"+classname+"')[0],this)[0].control.checked").toString();
+        WebElement element = radioButton.getWrappedElement().findElement(By.tagName("input"));
+        log.debug(element);
+        String valor = js.executeScript("return angular.element(arguments[0],this)[0]", element).toString();
+        log.debug("Valor : "+valor);
+
+        log.debug(options.stream().map(WebElement::getText).collect(Collectors.toList()));
+        log.debug(radioButton.getValue());
+        radioButton.setValue("No");
+        waitUntilEscritorioComercialIsLoaded();
+        waitFor(4);
+        log.debug(radioButton.getValue());
+        waitUntilEscritorioComercialIsLoaded();
+        String valor2 = js.executeScript("return angular.element(document.getElementsByClassName('"+classname+"')[0],this)[0].control.checked").toString();
+
+        log.debug("Valor 2:"+valor2);
+
     }
 
     public void clickAsociarLimites(){
@@ -111,6 +139,13 @@ public class ConfiguracionDeProductosPO extends BasePage {
         seleccionarValorEnSelect(new Select(familiaElement.findElement(By.xpath(SELECTOR_PRODUCTO_POR_FAMILIA))), nombreProducto);
         waitUntilEscritorioComercialIsLoaded();
     }
+
+    public boolean isProductoVisible(String nombreProducto){
+        waitUntilEscritorioComercialIsLoaded();
+        Select s = new Select(familiaElement.findElement(By.xpath(SELECTOR_PRODUCTO_POR_FAMILIA)));
+        return s.getOptions().stream().anyMatch((e)-> e.getText().equals(nombreProducto));
+    }
+
 
     public String getSelectedProduct(){
         return this.nombreProducto;
@@ -165,8 +200,38 @@ public class ConfiguracionDeProductosPO extends BasePage {
 
     public List<String> getMensajesBchEmpresas(){
         waitUntilEscritorioComercialIsLoaded();
-        return bchMensajesEmpresas.stream().map(WebElement::getText).collect(Collectors.toList());
+        return bchMensajesEmpresas.stream()
+                .map(BchMensajeEmpresa::new)
+                .map(BchMensajeEmpresa::getTitulo)
+                .collect(Collectors.toList());
     }
+
+    public List<String> getMensajesBchEmpresasSinSubtitulos(){
+        waitUntilEscritorioComercialIsLoaded();
+        return bchMensajesEmpresas.stream()
+                .map(BchMensajeEmpresa::new)
+                .filter((m)-> !m.isContainsSubtitulo())
+                .map(BchMensajeEmpresa::getTitulo)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getWarningMensajesBchEmpresas(){
+        waitUntilEscritorioComercialIsLoaded();
+        return bchMensajesEmpresas.stream()
+                .map(BchMensajeEmpresa::new)
+                .filter(BchMensajeEmpresa::isWarning)
+                .map(BchMensajeEmpresa::getTitulo)
+                .collect(Collectors.toList());
+    }
+
+    public BchMensajeEmpresa getBchMensajesEmpresasWithTitulo(String titulo){
+        return bchMensajesEmpresas.stream()
+                .map(CustomBchMensajeEmpresa::new)
+                .filter((m)-> m.getTitulo().equals(titulo))
+                .limit(1)
+                .collect(Collectors.toList()).get(0);
+    }
+
 
     public void ingresarMontoASolicitar(String monto){
         ingresarValorEnInput(getInputFromCampo("Monto a Solicitar ($)"), monto);

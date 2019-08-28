@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.UnexpectedTagNameException;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class Select extends Input implements ISelect {
@@ -64,7 +65,7 @@ public class Select extends Input implements ISelect {
     }
 
     public List<String> getTextOptions(){
-        return getOptions().stream().filter((e)-> e.getText().equals("algo"))
+        return getOptions().stream()
                 .map(WebElement::getText).collect(Collectors.toList());
     }
 
@@ -82,8 +83,13 @@ public class Select extends Input implements ISelect {
     }
 
     public void selectByVisibleText(String s) {
-        getOptions().stream().limit(1).filter((e)-> e.getText().contains(s))
-                .collect(Collectors.toList()).get(0).click();
+        try {
+            getOptions().stream().filter((e)-> e.getText().contains(s))
+                    .collect(Collectors.toList()).get(0).click();
+        }catch (IndexOutOfBoundsException e){
+            throw new NoSuchElementException(String.format("No se encuentra el producto %s \n Productos: %s",s,
+                    getOptions().stream().map(WebElement::getText).collect(Collectors.toList())));
+        }
     }
 
     public void selectByValue(String s) {
