@@ -20,6 +20,7 @@ public class Vista360ResumenEmpresaPO extends BasePage{
     public void clickBotonGarantiasEmpresa(){
         waitUntilEscritorioComercialIsLoaded();
         botonGarantiasEmpresa.click();
+        waitUntilEscritorioComercialIsLoaded();
     }
 
     public void clickBotonContratarProductos(){
