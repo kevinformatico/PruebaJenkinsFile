@@ -1,4 +1,4 @@
-# V360 testing Junit-Cucumber-Selenium
+# Venta Empresa testing Junit-Cucumber-Selenium
 
 ### __IMPORTANTE__: Se debe configurar la siguiente variable de entorno para asegurar la correcta ejecución del proyecto
 ``JAVA_TOOL_OPTIONS = -Dfile.encoding=UTF8`` 
