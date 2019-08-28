@@ -1,15 +1,14 @@
 package stepdef;
 
-import support.util;
 import Managers.context.TestContext;
 import Managers.driver.DriverFactory;
-
 import io.cucumber.core.api.Scenario;
 import io.cucumber.java.After;
 import io.cucumber.java.AfterStep;
 import io.cucumber.java.Before;
 import io.cucumber.java.BeforeStep;
 import org.openqa.selenium.WebDriverException;
+import support.util;
 
 import java.util.ArrayList;
 

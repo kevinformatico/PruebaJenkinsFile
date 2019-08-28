@@ -1,9 +1,9 @@
 package Managers.driver;
 
+import org.openqa.selenium.WebDriver;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.openqa.selenium.WebDriver;
 
 public final class DriverFactory {
 

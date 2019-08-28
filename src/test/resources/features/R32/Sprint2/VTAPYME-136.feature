@@ -1,6 +1,6 @@
 #encoding:utf-8
 
-@VTAPYME-136
+@VTAPYME-136 @todo
 Feature: Configuración Líneas de Crédito PYME
   COMO Ejecutivo de cuenta, asistente comercial, agente, jefe de plataforma
   DESEO configurar las condiciones comerciales

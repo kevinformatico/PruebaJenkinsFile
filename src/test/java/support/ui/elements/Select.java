@@ -1,10 +1,10 @@
 package support.ui.elements;
 
-import support.ui.interfaces.ISelect;
-import support.ui.throwable.UnexpectedClassNameException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.UnexpectedTagNameException;
+import support.ui.interfaces.ISelect;
+import support.ui.throwable.UnexpectedClassNameException;
 
 import java.util.List;
 import java.util.NoSuchElementException;

@@ -2,7 +2,9 @@ package support;
 
 import Managers.driver.DriverFactory;
 import io.cucumber.core.api.Scenario;
-import org.openqa.selenium.*;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 
 public class util {
 

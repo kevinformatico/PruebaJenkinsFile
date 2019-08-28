@@ -1,10 +1,12 @@
 package support.ui.elements;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.WebElement;
 import support.ui.throwable.UnexpectedClassNameException;
-import org.openqa.selenium.ElementNotInteractableException;
+
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class RadioButton extends Input {
@@ -29,13 +31,17 @@ public class RadioButton extends Input {
     @Override
     public void setValue(String valor){
         if(isEnabled()) {
-            getOptions().stream()
-                    .filter((e) -> e.getText().equals(valor))
-                    .limit(1)
-                    .collect(Collectors.toList())
-                    .get(0)
-                    .findElement(By.tagName("input"))
-                    .click();
+            try {
+                getOptions().stream()
+                        .filter((e) -> e.getText().equals(valor))
+                        .limit(1)
+                        .collect(Collectors.toList())
+                        .get(0)
+                        .findElement(By.tagName("input"))
+                        .click();
+            }catch (IndexOutOfBoundsException e){
+                throw new NoSuchElementException("No se encuentra el Radio button con el valor "+valor);
+            }
         }else{
             throw new ElementNotInteractableException("Checkbox no esta habilitado");
         }
@@ -55,7 +61,7 @@ public class RadioButton extends Input {
     @Override
     public String getValue() {
         return getOptions().stream()
-                .filter((e)-> e.findElement(By.tagName("input")).getAttribute("value").equals("1"))
+                .filter((e)-> e.findElement(By.tagName("input")).getAttribute("checked").equals("checked"))
                 .collect(Collectors.toList()).get(0).getText();
     }
 }

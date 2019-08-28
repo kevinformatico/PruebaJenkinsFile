@@ -184,6 +184,13 @@ public class ConfiguracionDeProductosPO extends BasePage {
         return getValorDelCampo(campo);
     }
 
+    public String getValorSeguroDegravamen(){
+        String campo= "Desgravamen Línea de Crédito";
+        RadioButton radioButton = new RadioButton(getInputFromCampo(campo).getWrappedElement());
+        return radioButton.getValue();
+
+    }
+
     public String getValorDelCampo(String campo){
         return getInputFromCampo(campo).getValue();
     }

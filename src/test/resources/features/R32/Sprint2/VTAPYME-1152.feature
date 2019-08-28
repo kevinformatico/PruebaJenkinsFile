@@ -1,6 +1,5 @@
 #encoding:utf-8
-@VTAPYME-1152
-  @run
+@todo @VTAPYME-1152 @run
 Feature: Configuración Líneas de Crédito Privada
   COMO Ejecutivo de cuenta, asistente comercial, agente, jefe de plataforma
   DESEO configurar las condiciones comerciales

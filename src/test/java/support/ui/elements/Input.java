@@ -1,11 +1,11 @@
 package support.ui.elements;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WrapsElement;
 import support.ui.interfaces.IInput;
 import support.ui.throwable.UnexpectedClassNameException;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import java.util.List;
 

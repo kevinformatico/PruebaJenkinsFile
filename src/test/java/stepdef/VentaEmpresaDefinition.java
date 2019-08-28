@@ -1,22 +1,21 @@
 package stepdef;
 
-import Managers.context.Context;
 import Managers.context.ScenarioContext;
-import Managers.driver.DriverFactory;
+import Managers.driver.SharedDriver;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import support.componentHandler.InputFormulario;
-import Managers.driver.SharedDriver;
 import io.cucumber.datatable.DataTable;
 import org.junit.Assert;
-
-import pageobjects.*;
+import pageobjects.EscritorioComercialPO;
+import pageobjects.PaginaInicioPO;
+import pageobjects.Vista360ResumenEmpresaPO;
+import pageobjects.Vista360ResumenPersonaPO;
 import pageobjects.ventaEmpresa.*;
+import support.componentHandler.InputFormulario;
 import support.ui.elements.BchMensajeEmpresa;
 
-import java.sql.Driver;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -223,7 +222,7 @@ public class VentaEmpresaDefinition {
 
     @When("aparece desgravamen de linea de credito habilitado")
     public void aparece_degravamen(){
-        Assert.fail("No Implementado");
+        Assert.assertEquals("Si", configuracionDeProductosPO.getValorSeguroDegravamen());
     }
 
     @Then("el spread debe debe ser {}%")

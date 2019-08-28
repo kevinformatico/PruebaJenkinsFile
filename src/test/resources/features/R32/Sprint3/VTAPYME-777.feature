@@ -1,5 +1,5 @@
 #encoding:utf-8
-
+@todo
 @VTAPYME-777
 Feature: Configuración Líneas de Crédito PYME
   COMO Ejecutivo de Cuenta, Asistente Comercial, Jefe de Plataforma, Agente, Ejecutivo Banca Transaccional, Asistente Comercial Banca Transaccional

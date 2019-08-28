@@ -2,15 +2,17 @@ package stepdef;
 
 import Managers.context.Context;
 import Managers.context.ScenarioContext;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.When;
-import support.database.SqlClient;
-import support.util;
 import Managers.context.TestContext;
 import Managers.driver.SharedDriver;
-
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.When;
 import org.junit.Assert;
-import pageobjects.*;
+import pageobjects.EscritorioComercialPO;
+import pageobjects.PaginaInicioPO;
+import pageobjects.Vista360ResumenEmpresaPO;
+import pageobjects.Vista360ResumenPersonaPO;
+import support.database.SqlClient;
+import support.util;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

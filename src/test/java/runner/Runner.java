@@ -2,9 +2,9 @@ package runner;
 
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
+import org.apache.log4j.BasicConfigurator;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
-import org.apache.log4j.BasicConfigurator;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(glue = {"stepdef"}, features = "src/test/resources/features/", tags = {"@run"},
