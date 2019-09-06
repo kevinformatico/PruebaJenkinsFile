@@ -1,23 +1,20 @@
 pipeline {
-  agent {
-    docker {
-      image '152.139.146.94:5000/bch-maven-chrome:1.1.1'
-      args '--add-host="portalcomercial.qa.labchile.cl:200.14.169.120"'
-    }
-  }
+
+  agent any
+
   stages {
-    stage('No impacto'){
-      steps {
-        sh 'mvn clean install -X -Dheadless=true -Ddocker=true'
+
+      stage('Limpia el Proyecto') {
+          steps {
+              bat mvn clean
+          }
       }
-    }
+
+      stage('Ejecutpo las pruebas') {
+          steps {
+             bat mvn install
+          }
+      }
   }
-  post {
-    always {
-      archiveArtifacts(artifacts: 'target/', fingerprint: true)
-      junit 'target/cucumber.xml'
-      publishTestResults(serverAddress: 'http://jira.bch.bancodechile.cl:8080', projectKey: 'VTAPYME', filePath: 'target/cucumber-report/cucumber.json', format: 'Cucumber', autoCreateTestCases: true)
-    }
-  } 
 }
 
